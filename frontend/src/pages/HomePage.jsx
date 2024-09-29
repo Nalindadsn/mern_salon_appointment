@@ -40,17 +40,18 @@ const HomePage = () => {
   };
 
   const handleSearch = (value) => {
-    setSearchQuery(value.trim().toLowerCase());
+    setSearchQuery(value?.trim().toLowerCase());
   };
 
   const filteredServices = services.filter(
     (service) =>
-      service.name.toLowerCase().includes(searchQuery) ||
-      service.description.toLowerCase().includes(searchQuery) 
+      service?.name?.toLowerCase().includes(searchQuery) ||
+      service?.description?.toLowerCase().includes(searchQuery) 
   );
 
   return (
     <Layout>
+      {JSON.stringify(services)}
       <HeroSection/>
       <div className="container" >
       <Row justify="center" style={{ marginBottom: "24px" }} >
