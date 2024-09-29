@@ -1,10 +1,11 @@
-import { DatePicker, TimePicker, message } from "antd";
+import {  DatePicker, TimePicker, message } from "antd";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import Layout from "../components/Layout";
 import { hideLoading, showLoading } from "../redux/features/alertSlice";
+import { Col, Row } from "react-bootstrap";
 // import "./../_styles/LayoutStyles.css";
 
 const BookingPage = () => {
@@ -113,21 +114,23 @@ const BookingPage = () => {
 
   return (
     <Layout>
-      <div className="container">
+      <div className="container pb-5">
         <h3 className="text-center my-4">Book an Appointment</h3>
         {services && (
-          <div className="card mx-auto mb-4" style={{ maxWidth: "350px" }}>
-            <div className="card-body">
-              <h5 className="card-title text-center">
-                 {services.firstName} {services.lastName}
+          <Row  style={{width: "100%",}}>
+            <Col md={6}>
+          <div className="  mb-4" >
+            <div className="">
+              <h5 className=" text-center">
+                 {services.name} 
               </h5>
-              <h6 className="card-subtitle mb-2 text-muted text-center">
-                Fees: {services.feesPerConsultation}
+              <h6 className=" mb-2 text-muted text-center">
+                Fees: LKR {services.feesPerConsultation}
               </h6>
-              <h6 className="card-subtitle mb-2 text-muted text-center">
+              <h6 className=" mb-2 text-muted text-center">
                 Timings: {services.starttime} - {services.endtime}
               </h6>
-              <div className="appoint-card-body">
+              <div className="">
                 <div className="d-flex flex-column w-50 mx-auto">
                   <DatePicker
                     className="m-2 date-picker"
@@ -164,6 +167,16 @@ const BookingPage = () => {
               </div>
             </div>
           </div>
+          </Col>
+          <Col md={6} >
+          <img
+            src={services.image}
+            alt={services.name}
+            className="img-fluid"
+            style={{ width: "100%" }}
+          />
+          </Col>
+          </Row>
         )}
       </div>
     </Layout>

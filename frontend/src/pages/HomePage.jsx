@@ -51,7 +51,7 @@ const HomePage = () => {
 
   return (
     <Layout>
-      {JSON.stringify(services)}
+      {/* {JSON.stringify(services)} */}
       <HeroSection/>
       <div className="container" >
       <Row justify="center" style={{ marginBottom: "24px" }} >
