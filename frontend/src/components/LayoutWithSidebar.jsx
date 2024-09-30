@@ -15,6 +15,7 @@ import {
   CDBSidebarMenuItem,
 } from 'cdbreact';
 import { NavLink } from 'react-router-dom';
+import { FaCopyright } from "react-icons/fa";
 const LayoutWithSidebar = ({ children }) => {
   const  {user} = useSelector((state) => state.user);
   const location = useLocation();
@@ -82,7 +83,7 @@ const LayoutWithSidebar = ({ children }) => {
               padding: '20px 5px',
             }}
           >
-            Sidebar Footer
+           <FaCopyright/> 2024
           </div>
         </CDBSidebarFooter>
       </CDBSidebar>
