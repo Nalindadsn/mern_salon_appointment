@@ -5,13 +5,14 @@ const {
   getserviceByIdController,
   serviceAppointmentsController,
   updateStatusController,
+  getAllServicesController,
 } = require("../controllers/serviceController");
 const authMiddleware = require("../middlewares/authMiddleware");
 const router = express.Router();
 
 // Endpoint to post single service info
 router.post("/getserviceInfo", authMiddleware, getserviceInfoController);
-
+router.get("/getAllServices", getAllServicesController);
 // Endpoint to update service profile
 router.post("/updateProfile", authMiddleware, updateProfileController);
 

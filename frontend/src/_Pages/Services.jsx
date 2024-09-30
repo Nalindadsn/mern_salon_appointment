@@ -23,7 +23,7 @@ const Services = () => {
   const fetchServices = async () => {
     try {
       setLoading(true);
-      const res = await axios.get("/api/user/getAllServices", {
+      const res = await axios.get("/api/service/getAllServices", {
         headers: {
           Authorization: "Bearer " + localStorage.getItem("token"),
         },

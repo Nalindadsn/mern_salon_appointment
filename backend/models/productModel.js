@@ -38,6 +38,7 @@ const docSchema = Joi.object({
   name: Joi.string().required().min(2),
   description: Joi.string(),
   brand: Joi.string(),
+  brand: Joi.string(),
   image: Joi.string().required().min(2),
   status: Joi.string().default("pending"),
   createdAt: Joi.date().default(Date.now),

@@ -116,8 +116,25 @@ const updateStatusController = async (req, res) => {
     });
   }
 };
-
+const getAllServicesController = async (req, res) => {
+  try {
+    const services = await serviceModel.find({ status: "approved" });
+    res.status(200).send({
+      success: true,
+      message: "services lists fetched successfully",
+      data: services,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      error,
+      message: "error while fetching service",
+    });
+  }
+};
 module.exports = {
+  getAllServicesController,
   getserviceInfoController,
   updateProfileController,
   getserviceByIdController,
