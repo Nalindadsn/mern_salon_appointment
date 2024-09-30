@@ -1,6 +1,18 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
-
+import { Link, useNavigate } from "react-router-dom";
+import {
+  MDBContainer,
+  MDBRow,
+  MDBCol,
+  MDBCard,
+  MDBCardBody,
+  MDBCardImage,
+  MDBIcon,
+  MDBBtn,
+  MDBRipple,
+} from "mdb-react-ui-kit";
+import { Card } from "react-bootstrap";
+import { Button } from "antd";
 const ServiceList = ({ service }) => {
   const navigate = useNavigate();
 
@@ -13,6 +25,29 @@ const ServiceList = ({ service }) => {
   };
 
   return (
+    <>
+      <Card className="p-2">
+        <img
+          src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/12.webp"
+          style={{ width: "100%" }}
+        />
+        <hr />
+        <b> {service.name} </b>
+
+        <p>
+          <b>Fees Per Consultation:</b>{" "}
+          {formatFees(service.feesPerConsultation)}
+        </p>
+        <p>
+          <b>Timings:</b> {formatTimings(service.starttime, service.endtime)}
+        </p>
+        <Link to={`/service/book-appointment/${service._id}`}>
+          <Button type="primary" style={{ width: "100%" }}>
+            Book Now
+          </Button>
+        </Link>
+      </Card>
+      {/*     
     <div
       className="border m-2"
       style={{ cursor: "pointer" }}
@@ -36,9 +71,10 @@ const ServiceList = ({ service }) => {
         </p>
       </div>
        
-        {/* Additional features can be added here */}
+        Additional features can be added here 
       </div>
-    </div>
+    </div>*/}
+    </>
   );
 };
 
