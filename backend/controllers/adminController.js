@@ -1,6 +1,7 @@
 const productModel = require("../models/productModel");
 const serviceModel = require("../models/serviceModel");
 const userModel = require("../models/userModel");
+const appointmentModel = require("../models/appointmentModel");
 
 const getAllUsersController = async (req, res) => {
   try {
@@ -29,6 +30,56 @@ const getAllServicesController = async (req, res) => {
       success: true,
       message: "services data list",
       data: services,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "error while getting services data",
+      error,
+    });
+  }
+};
+
+const getSummaryController = async (req, res) => {
+  try {
+    const services = await serviceModel.find({});
+    const products = await productModel.find({});
+    const totalUsers = await userModel.find({});
+
+    const admin=totalUsers.filter((user)=>user.isAdmin)
+    const users=totalUsers.filter((user)=>user.isAdmin==false)
+
+    // // const totalServices = services.length;
+    // const totalProducts = products.length;
+    const appointments=await appointmentModel.find({}).sort({createdAt:-1})
+    const pendingAppointments=appointments.filter((appointment)=>appointment.status=="pending")
+    const approvedAppointments=appointments.filter((appointment)=>appointment.status=="approved")
+
+    const pendingServices=services.filter((service)=>service.status=="pending")
+    const approvedServices=services.filter((service)=>service.status=="approved")
+
+    const pendingProducts=products.filter((product)=>product.status=="pending")
+    const approvedProducts=products.filter((product)=>product.status=="approved")
+
+    res.status(200).send({
+      success: true,
+      message: "services data list",
+      data: {products:products,
+        services:services,
+        totalUsers:totalUsers,
+        admin:admin,
+        users:users,
+        pendingAppointments:pendingAppointments,
+        approvedAppointments:approvedAppointments,
+        pendingServices:pendingServices,
+        approvedServices:approvedServices,
+        pendingProducts:pendingProducts,
+        approvedProducts:approvedProducts
+
+
+      },
+      // data: {pendingAppointments,completedAppointments,totalUsers,admin,users,totalServices,totalProducts},
     });
   } catch (error) {
     console.log(error);
@@ -110,6 +161,7 @@ const changeAccountStatusController = async (req, res) => {
 
 module.exports = {
   getAllServicesController,
+  getSummaryController,
   getAllProductsController,
   getAllUsersController,
   changeAccountStatusController,
