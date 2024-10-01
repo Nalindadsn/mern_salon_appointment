@@ -48,6 +48,7 @@ const AdminDashboard = () => {
   return (
     <>
       <LayoutWithSidebar>
+        <h2>DASHBOARD </h2>
         <div className="row">
           <div className="col-md-3">
             <div className="m-2 border p-2 rounded">
@@ -139,7 +140,7 @@ const AdminDashboard = () => {
 
         </div>
         {/* {JSON.stringify(data?.pendingAppointments.length)} */}
-        <h3 className="mt-5">Pending Appointments</h3>
+        <h3 className="mt-4">Pending Appointments</h3>
         <ul class="list-group">
           {data?.pendingAppointments &&
                   data?.pendingAppointments.length>0? data?.pendingAppointments.map((appointment) => (

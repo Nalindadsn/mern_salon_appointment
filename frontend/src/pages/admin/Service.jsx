@@ -162,6 +162,7 @@ const Service = () => {
             <p>
               Name: {`${selectedService.name} `}
             </p>
+            <img src={selectedService.image} alt={selectedService.name}  style={{width: "100%"}}/>
             <p>Description: {selectedService.description}</p>
 
             <p>Status: {selectedService.status}</p>

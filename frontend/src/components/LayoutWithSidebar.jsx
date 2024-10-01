@@ -43,7 +43,7 @@ const LayoutWithSidebar = ({ children }) => {
     <div className="main">
 
 <div style={{ display: 'flex', height: '100vh', overflow: 'scroll initial' }}>
-      <CDBSidebar textColor="#fff" backgroundColor="#333">
+      <CDBSidebar textColor="#fff" backgroundColor="#333" style={{zIndex:"999"}}>
         <CDBSidebarHeader prefix={<i className="fa fa-bars fa-large"></i>}>
            <Link to={`/`} style={{color:"white",textDecoration:"none"}}>SALON OLIVIA</Link> 
          
@@ -89,7 +89,7 @@ const LayoutWithSidebar = ({ children }) => {
       </CDBSidebar>
       <div style={{width:"100%",overflow:"auto"}}>
       <HeaderAdmin/>
-<div className="p-3"> {children}</div>
+<div className="p-3"  style={{zIndex:"1000"}}> {children}</div>
        
         </div>
     </div>

@@ -90,7 +90,7 @@ const Users = () => {
     {
       title: "Is Admin",
       dataIndex: "isAdmin",
-      render: (text, record) => <Badge>{record.isAdmin ? "Admin" : "User"}</Badge>,
+      render: (text, record) => <Badge className={`text-white ${record.isAdmin ? "bg-success" : "bg-primary"}`}>{record.isAdmin ? "Admin" : "User"}</Badge>,
     },
     {
       title: "Date Joined",
