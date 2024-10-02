@@ -320,8 +320,9 @@ const userAppointmentsController = async (req, res) => {
         }
       }
     ]
-
+console.log(req.body.userId+"--")
     const appointments = await appointmentModel.aggregate([
+      { $match : { userId : req.body.userId } },
       {$set: {userId: {$toObjectId: "$userId"} }},
       {$set: {serviceId: {$toObjectId: "$serviceId"} }},
       {
