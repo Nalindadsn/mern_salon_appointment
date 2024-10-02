@@ -25,7 +25,7 @@ const productSchema = new mongoose.Schema({
  
   status: {
     type: String,
-    default: "approved",
+    default: "published",
   },
   createdAt: {
     type: Date,
@@ -40,7 +40,7 @@ const docSchema = Joi.object({
   brand: Joi.string(),
   brand: Joi.string(),
   image: Joi.string().required().min(2),
-  status: Joi.string().default("pending"),
+  status: Joi.string().default("published"),
   createdAt: Joi.date().default(Date.now),
 });
 

@@ -77,9 +77,9 @@ const ServiceAppointments = () => {
             <div className="d-flex">
               <button
                 className="m-1 btn btn-success "
-                onClick={() => handleStatus(record, "approved")}
+                onClick={() => handleStatus(record, "published")}
               >
-                Approve
+                Publish
               </button>
               <button
                 className="m-1 btn btn-danger ms-2"

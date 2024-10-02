@@ -103,10 +103,10 @@ const Service = () => {
           <Button
             className="m-1"
             type="primary"
-            onClick={() => handleAccountStatus(record, "approved")}
-            disabled={record.status === "approved"}
+            onClick={() => handleAccountStatus(record, "published")}
+            disabled={record.status === "published"}
           >
-            Approve
+            Publish
           </Button>
           <Button
             className="m-1"

@@ -57,10 +57,10 @@ const getSummaryController = async (req, res) => {
     const approvedAppointments=appointments.filter((appointment)=>appointment.status=="approved")
 
     const pendingServices=services.filter((service)=>service.status=="pending")
-    const approvedServices=services.filter((service)=>service.status=="approved")
+    const approvedServices=services.filter((service)=>service.status=="published")
 
     const pendingProducts=products.filter((product)=>product.status=="pending")
-    const approvedProducts=products.filter((product)=>product.status=="approved")
+    const approvedProducts=products.filter((product)=>product.status=="published")
 
     res.status(200).send({
       success: true,
@@ -142,7 +142,7 @@ const changeAccountStatusController = async (req, res) => {
       message: `your service account request has ${status}`,
       onClickPath: "/notification",
     });
-    user.isservice = status === "approved" ? true : false;
+    user.isservice = status === "published" ? true : false;
     await user.save();
     res.status(201).send({
       success: true,

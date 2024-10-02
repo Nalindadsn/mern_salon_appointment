@@ -28,7 +28,7 @@ const serviceSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    default: "approved",
+    default: "published",
   },
   starttime: {
     type: String,

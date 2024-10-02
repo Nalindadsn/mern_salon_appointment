@@ -166,7 +166,7 @@ const deleteAllNotificationController = async (req, res) => {
 // get all services
 const getAllServicesController = async (req, res) => {
   try {
-    const services = await serviceModel.find({ status: "approved" });
+    const services = await serviceModel.find({ status: "published" });
     res.status(200).send({
       success: true,
       message: "services lists fetched successfully",
@@ -310,9 +310,47 @@ console.log(service.starttime, service.endtime);
 // get user appointments
 const userAppointmentsController = async (req, res) => {
   try {
-    const appointments = await appointmentModel.find({
-      userId: req.body.userId,
-    });
+    const pipeline = [
+      {
+        '$lookup' : {
+            'from' : 'users',
+            'localField' : 'user_id',
+            'foreignField' : '_id',
+            'as' : 'users'
+        }
+      }
+    ]
+
+    const appointments = await appointmentModel.aggregate([
+      {$set: {userId: {$toObjectId: "$userId"} }},
+      {$set: {serviceId: {$toObjectId: "$serviceId"} }},
+      {
+$lookup : {
+            from : 'users',
+            localField : 'userId',
+            foreignField : '_id',
+            as : 'users'
+        }
+      },
+      {
+$lookup : {
+            from : 'services',
+            localField : 'serviceId',
+            foreignField : '_id',
+            as : 'service'
+        }
+      }
+    ])
+    console.log(appointments[appointments.length-1])
+
+
+
+    // const appointments = await appointmentModel.find({
+    //   userId: req.body.userId,
+    // });
+    
+    
+    
     res.status(200).send({
       success: true,
       message: "users appointments fetch successfully",

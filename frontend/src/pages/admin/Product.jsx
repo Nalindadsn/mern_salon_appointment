@@ -103,10 +103,10 @@ const Product = () => {
           <Button
             className="m-1"
             type="primary"
-            onClick={() => handleAccountStatus(record, "approved")}
-            disabled={record.status === "approved"}
+            onClick={() => handleAccountStatus(record, "published")}
+            disabled={record.status === "published"}
           >
-            Approve
+            Publish
           </Button>
           <Button
             className="m-1"
@@ -162,6 +162,7 @@ const Product = () => {
             <p>
               Name: {`${selectedProduct.name} `}
             </p>
+            <img src={selectedProduct.image} alt="Product" style={{ width: "100%"}}/>
             <p>Description: {selectedProduct.description}</p>
 
             <p>Status: {selectedProduct.status}</p>

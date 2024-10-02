@@ -118,7 +118,7 @@ const updateStatusController = async (req, res) => {
 };
 const getAllServicesController = async (req, res) => {
   try {
-    const services = await serviceModel.find({ status: "approved" });
+    const services = await serviceModel.find({ status: "published" });
     res.status(200).send({
       success: true,
       message: "services lists fetched successfully",
