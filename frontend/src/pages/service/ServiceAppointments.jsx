@@ -5,6 +5,7 @@ import axios from "axios";
 
 import { message, Table } from "antd";
 import moment from "moment";
+import LayoutWithSidebar from "../../components/LayoutwithSidebar";
 
 const ServiceAppointments = () => {
   const [appointments, setAppointments] = useState([]);
@@ -94,10 +95,10 @@ const ServiceAppointments = () => {
     },
   ];
   return (
-    <Layout>
+    <LayoutWithSidebar>
       <h3>Appointments Lists</h3>
       <Table columns={columns} dataSource={appointments} />
-    </Layout>
+    </LayoutWithSidebar>
   );
 };
 
