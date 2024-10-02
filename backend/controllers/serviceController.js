@@ -67,7 +67,7 @@ const serviceAppointmentsController = async (req, res) => {
   try {
     const service = await serviceModel.findOne({ userId: req.body.userId });
     const appointments = await appointmentModel.find({
-      serviceId: service._id,
+      // serviceId: service._id,
     });
     res.status(200).send({
       success: true,

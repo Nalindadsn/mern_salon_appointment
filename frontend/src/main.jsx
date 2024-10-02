@@ -120,7 +120,7 @@ const router = createBrowserRouter(
               path="/admin/appointments"
               element={
                 <ProtectedRoute>
-                  <Appointments />
+                  <ServiceAppointments />
                 </ProtectedRoute>
               }
             />
