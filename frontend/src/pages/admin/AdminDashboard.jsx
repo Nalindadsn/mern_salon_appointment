@@ -1,13 +1,14 @@
 
 
 import React, { useEffect, useState } from "react";
-import { Row, Col, Spin, Empty, Input, Typography, Space } from "antd";
+import { Row, Col, Spin, Empty, Input, Typography, Space, Badge } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import axios from "axios";
 import ServiceList from "../../components/ServiceList";
 import LayoutWithSidebar from "../../components/LayoutwithSidebar";
-import { FaBookmark, FaCalendar, FaCalendarAlt, FaList, FaUsers } from "react-icons/fa";
+import { FaBookmark, FaCalendar, FaCalendarAlt, FaCalendarCheck, FaCalendarTimes, FaCalendarWeek, FaList, FaUser, FaUsers } from "react-icons/fa";
 // import {moment}
+import moment from "moment";
 
 const { Search } = Input;
 const { Title, Text } = Typography;
@@ -145,12 +146,29 @@ const AdminDashboard = () => {
           {data?.pendingAppointments &&
                   data?.pendingAppointments.length>0? data?.pendingAppointments.map((appointment) => (
                     <li class="list-group-item mb-2" key={appointment?._id}>
-                      #id :{appointment?._id} <br/>
-                      ServiceId: {appointment?.serviceId}<br/>
-                      userId:{appointment?.userId}<br/>
-                      Date:{appointment?.createdAt} <br/>
-                      Time:{appointment?.time}<br/>
-                      {JSON.stringify(appointment)}
+                     <div className="d-flex justify-content-between">
+                      <div>
+
+                      <h4>{appointment?.service[0]?.name}</h4>
+                      <span>#Appoinment id :{appointment?._id} </span>
+                      </div>
+                      <span>
+                      <Badge className="bg-primary py-1 px-2 text-white rounded-pill">Status :{appointment?.status}
+                     </Badge>
+
+                     <br/>
+                     Date:{moment(appointment?.createdAt).format("DD-MM-YYYY")}
+                      
+
+                      </span>
+                      </div>  
+                      {appointment?.service[0]?.name}<br/>
+                      <FaUser/> {appointment?.users[0]?.name}<br/>
+                     
+                      <span className="text-muted border px-2  mt-5 pb-1"><FaCalendarWeek/> Time:{moment(appointment?.createdAt).format("DD-MM-YYYY HH:mm")}</span>
+                       &nbsp;
+                      <br/>
+                      {/* {JSON.stringify(appointment)} */}
 
                       </li>
                   )):"No Pending Appointments"}
