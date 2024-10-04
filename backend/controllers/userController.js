@@ -188,7 +188,7 @@ const getAllProductsController = async (req, res) => {
   console.log("req.body")
   try {
     const products = await productModel.find({ 
-      // status: "published"
+      status: "published"
      });
     res.status(200).send({
       success: true,

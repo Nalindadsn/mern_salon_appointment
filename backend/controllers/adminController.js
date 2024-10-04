@@ -52,7 +52,28 @@ const getSummaryController = async (req, res) => {
 
     // // const totalServices = services.length;
     // const totalProducts = products.length;
-    const appointments=await appointmentModel.find({}).sort({createdAt:-1})
+    const appointments=await appointmentModel.aggregate([
+      { $match : { userId : req.body.userId } },
+      {$set: {userId: {$toObjectId: "$userId"} }},
+      {$set: {serviceId: {$toObjectId: "$serviceId"} }},
+      {
+$lookup : {
+            from : 'users',
+            localField : 'userId',
+            foreignField : '_id',
+            as : 'users'
+        }
+      },
+      {
+$lookup : {
+            from : 'services',
+            localField : 'serviceId',
+            foreignField : '_id',
+            as : 'service'
+        }
+      },
+      { $sort : { createdAt : -1 } }
+    ])
     const pendingAppointments=appointments.filter((appointment)=>appointment.status=="pending")
     const approvedAppointments=appointments.filter((appointment)=>appointment.status=="approved")
 
@@ -131,7 +152,7 @@ const addproductController = async (req, res) => {
 };
 
 // service account status
-const changeAccountStatusController = async (req, res) => {
+const changeServiceStatusController = async (req, res) => {
   try {
     const { serviceId, status } = req.body;
     const service = await serviceModel.findByIdAndUpdate(serviceId, { status });
@@ -158,12 +179,35 @@ const changeAccountStatusController = async (req, res) => {
     });
   }
 };
+// service account status
+const changeProductStatusController = async (req, res) => {
+  try {
+    console.log(req.body)
+    const { productId, status } = req.body;
+    const product = await productModel.findByIdAndUpdate(productId, { status });
+    
+    res.status(201).send({
+      success: true,
+      message: "product status updated",
+      data: product,
+    });
+
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "error in product status",
+      error,
+    });
+  }
+};
 
 module.exports = {
+  changeProductStatusController,
   getAllServicesController,
   getSummaryController,
   getAllProductsController,
   getAllUsersController,
-  changeAccountStatusController,
+  changeServiceStatusController,
   addproductController
 };

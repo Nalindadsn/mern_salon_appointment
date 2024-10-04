@@ -3,7 +3,8 @@ const {
   getAllUsersController,
   getAllServicesController,
   getAllProductsController,
-  changeAccountStatusController,
+  changeServiceStatusController,
+  changeProductStatusController,
   addproductController,
   getSummaryController
 } = require("../controllers/adminController");
@@ -23,9 +24,15 @@ router.post("/add-product", authMiddleware,   addproductController);
 
 // Endpoint to change account status
 router.post(
-  "/changeAccountStatus",
+  "/changeServiceStatus",
   authMiddleware,
-  changeAccountStatusController
+  changeServiceStatusController
+);
+
+router.post(
+  "/changeProductStatus",
+  authMiddleware,
+  changeProductStatusController
 );
 
 module.exports = router;

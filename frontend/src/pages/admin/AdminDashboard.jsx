@@ -140,7 +140,7 @@ const AdminDashboard = () => {
 
         </div>
         {/* {JSON.stringify(data?.pendingAppointments.length)} */}
-        <h3 className="mt-4">Pending Appointments</h3>
+        <h3 className="mt-4">Latest Pending Appointments</h3>
         <ul class="list-group">
           {data?.pendingAppointments &&
                   data?.pendingAppointments.length>0? data?.pendingAppointments.map((appointment) => (
@@ -149,11 +149,13 @@ const AdminDashboard = () => {
                       ServiceId: {appointment?.serviceId}<br/>
                       userId:{appointment?.userId}<br/>
                       Date:{appointment?.createdAt} <br/>
-                      Time:{appointment?.time}
+                      Time:{appointment?.time}<br/>
+                      {JSON.stringify(appointment)}
 
                       </li>
                   )):"No Pending Appointments"}
 </ul>
+
       </LayoutWithSidebar>
     </>
   );

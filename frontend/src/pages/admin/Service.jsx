@@ -43,7 +43,7 @@ const Service = () => {
   const handleAccountStatus = async (record, status) => {
     try {
       const res = await axios.post(
-        "/api/admin/changeAccountStatus",
+        "/api/admin/changeServiceStatus",
         { serviceId: record._id, userId: record.userId, status: status },
         {
           headers: {
@@ -125,6 +125,14 @@ const Service = () => {
           >
             View Details
           </Button>
+          <Button
+            className="m-1"
+            // onClick={() => {
+            //   setSelectedProduct(record);
+            //   setModalVisible(true);
+            // }}
+          >
+            Edit          </Button>
         </div>
       ),
     },
