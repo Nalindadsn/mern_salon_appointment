@@ -1,6 +1,7 @@
 const bcrypt = require("bcryptjs");
 const userModel = require("../models/userModel");
 const serviceModel = require("../models/serviceModel");
+const productModel = require("../models/productModel");
 const appointmentModel = require("../models/appointmentModel");
 const jwt = require("jsonwebtoken");
 const moment = require("moment");
@@ -171,6 +172,28 @@ const getAllServicesController = async (req, res) => {
       success: true,
       message: "services lists fetched successfully",
       data: services,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      error,
+      message: "error while fetching service",
+    });
+  }
+};
+
+// get all services
+const getAllProductsController = async (req, res) => {
+  console.log("req.body")
+  try {
+    const products = await productModel.find({ 
+      // status: "published"
+     });
+    res.status(200).send({
+      success: true,
+      message: "products lists fetched successfully",
+      data: products,
     });
   } catch (error) {
     console.log(error);
@@ -375,6 +398,7 @@ module.exports = {
   getAllNotificationController,
   deleteAllNotificationController,
   getAllServicesController,
+  getAllProductsController,
   bookAppointmentController,
   bookingAvailabilityController,
   userAppointmentsController,

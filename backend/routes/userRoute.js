@@ -7,6 +7,7 @@ const {
   getAllNotificationController,
   deleteAllNotificationController,
   getAllServicesController,
+  getAllProductsController,
   bookAppointmentController,
   bookingAvailabilityController,
   userAppointmentsController,
@@ -44,7 +45,10 @@ router.post(
 );
 
 // GET ALL serviceS
-router.get("/getAllServices", authMiddleware, getAllServicesController);
+router.get("/getAllServices", getAllServicesController);
+
+// GET ALL serviceS
+router.get("/getAllProducts", getAllProductsController);
 
 // BOOK APPOINTMENT
 router.post("/book-appointment", authMiddleware, bookAppointmentController);
