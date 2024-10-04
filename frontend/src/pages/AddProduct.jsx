@@ -208,6 +208,16 @@ const AddProduct = () => {
               <Input type="text" placeholder="Product Name" />
             </Form.Item>
           </Col>
+          <Col xs={24} md={24} lg={24}>
+            <Form.Item
+              label="Brand"
+              name="brand"
+              required
+              rules={[{ required: true, message: "Product brand is required" }]}
+            >
+              <Input type="text" placeholder="Brand Name" />
+            </Form.Item>
+          </Col>
         
           <Col xs={24} md={24} lg={24}>
             <Form.Item

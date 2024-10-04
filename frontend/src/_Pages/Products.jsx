@@ -50,13 +50,18 @@ const Products = () => {
       product?.description?.toLowerCase().includes(searchQuery) 
   );
 
+  const uniqueD = [...new Set(products.map(item => item.brand))];
+  let isNotNull = value => value != null;
+
+  const unique = uniqueD.filter(isNotNull);
+  const brandList=unique.map((v) => ({brand:v,  products:products.filter(item => item.brand == v)}))
+  
   return (
     <>
     <Layout>
      <Background />
      
-    {JSON.stringify(products)}
-     <ProductsHero />
+     <ProductsHero brandList={brandList} />
      
      </Layout> 
     {/* <Layout>

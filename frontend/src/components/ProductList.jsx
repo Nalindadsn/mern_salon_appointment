@@ -13,7 +13,7 @@ import {
 } from "mdb-react-ui-kit";
 import { Card } from "react-bootstrap";
 import { Button } from "antd";
-const ServiceList = ({ service }) => {
+const ProductList = ({ product }) => {
   const navigate = useNavigate();
 
   const formatTimings = (startTime, endTime) => {
@@ -28,20 +28,20 @@ const ServiceList = ({ service }) => {
     <>
       <Card className="p-2">
         <img
-          src={service.image}
+          src={product.image}
           style={{ width: "100%" }}
         />
         <hr />
-        <b> {service.name} </b>
+        <b> {product.name} </b>
 
         <p>
           <b>Fees Per Consultation:</b>{" "}
-          {formatFees(service.feesPerConsultation)}
+          {formatFees(product.feesPerConsultation)}
         </p>
         <p>
-          <b>Timings:</b> {formatTimings(service.starttime, service.endtime)}
+          <b>Timings:</b> {formatTimings(product.starttime, product.endtime)}
         </p>
-        <Link to={`/service/book-appointment/${service._id}`}>
+        <Link to={`/product/book-appointment/${product._id}`}>
           <Button type="primary" style={{ width: "100%" }}>
             Book Now
           </Button>
@@ -51,23 +51,23 @@ const ServiceList = ({ service }) => {
     <div
       className="border m-2"
       style={{ cursor: "pointer" }}
-      onClick={() => navigate(`/service/book-appointment/${service._id}`)}
+      onClick={() => navigate(`/product/book-appointment/${product._id}`)}
     >
       <div className=" bg-white">
-        <img src={service?.image} alt={service?.name} className="responsive w-full" style={{width:"100%"}}/>
+        <img src={product?.image} alt={product?.name} className="responsive w-full" style={{width:"100%"}}/>
        
       <div className="p-2"
         
         style={{  fontWeight: "bold" }}
       >
-        {service.name} 
+        {product.name} 
 <hr/>
         
         <p>
-          <b>Fees Per Consultation:</b> {formatFees(service.feesPerConsultation)}
+          <b>Fees Per Consultation:</b> {formatFees(product.feesPerConsultation)}
         </p>
         <p>
-          <b>Timings:</b> {formatTimings(service.starttime, service.endtime)}
+          <b>Timings:</b> {formatTimings(product.starttime, product.endtime)}
         </p>
       </div>
        
@@ -78,4 +78,4 @@ const ServiceList = ({ service }) => {
   );
 };
 
-export default ServiceList;
+export default ProductList;

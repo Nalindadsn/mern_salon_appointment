@@ -92,8 +92,8 @@ const Product = () => {
       dataIndex: "description",
     },
     {
-      title: "Specialization",
-      dataIndex: "specialization",
+      title: "Brand",
+      dataIndex: "brand",
     },
     {
       title: "Actions",
@@ -163,6 +163,7 @@ const Product = () => {
               Name: {`${selectedProduct.name} `}
             </p>
             <img src={selectedProduct.image} alt="Product" style={{ width: "100%"}}/>
+            <p>Brand: {selectedProduct.brand}</p>
             <p>Description: {selectedProduct.description}</p>
 
             <p>Status: {selectedProduct.status}</p>

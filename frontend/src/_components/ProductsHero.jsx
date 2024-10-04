@@ -30,7 +30,7 @@ const ProductsColumn = ({ title, imgSrc, altText }) => {
   );
 };
 
-const ProductsHero = () => {
+const ProductsHero = ({brandList}) => {
   const navigate = useNavigate();
 
   const handleAppointmentClick = () => {
@@ -49,25 +49,29 @@ const ProductsHero = () => {
           Lankan brands and trusted global names.
         </p>
       </div>
-      <h3 className="text-center mb-4">Spa Ceylon</h3>
+
+
+
+
+{brandList.map((brand) => {
+  return <div>
+    
+    <h3 className="text-center mb-4 ml-5">{brand?.brand}</h3>
       <div className="row d-flex justify-content-center">
+        {brand?.products?.map((product) => {
+          return <>
         <ProductsColumn
-          title="Spa Ceylon Scalp & Hair Oils"
-          imgSrc={sc1}
-          altText="sc1"
-        />
-        <ProductsColumn
-          title="Spa Ceylon White Jasmine Facial Scrub"
-          imgSrc={sc2}
-          altText="sc2"
-        />
-        <ProductsColumn
-          title="Spa Ceylon Virgin Coconut Hand & Body Lotion"
-          imgSrc={sc3}
-          altText="sc3"
-        />
+        title={product?.name}
+        imgSrc={product?.image}
+        altText="sc1"
+      /></>
+        })}
       </div>
-      <h3 className="text-center mb-4">Dreamron</h3>
+  </div>
+})}
+
+
+      {/* <h3 className="text-center mb-4">Dreamron</h3>
       <div className="row d-flex justify-content-center">
         <ProductsColumn
           title="Dreamron Anti-Acne Creams"
@@ -108,7 +112,7 @@ const ProductsHero = () => {
         >
           Make an appointment
         </button>
-      </div>
+      </div> */}
     </div>
   );
 };
