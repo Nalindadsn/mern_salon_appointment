@@ -50,6 +50,7 @@ import Appointments from "./pages/Appointments";
 import UploadImage from './pages/UploadImages.jsx';
 import Product from './pages/admin/Product.jsx';
 import ServiceUpdate from "./pages/service/ServiceUpdate";
+import Message from './pages/admin/Message.jsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -177,12 +178,23 @@ const router = createBrowserRouter(
               }
             />
 
-                  <Route
+<Route
                           path="/user/dashboard"
                            index={true} 
                           element={
                             <ProtectedRoute>
                               <Dashboard />
+                              </ProtectedRoute>
+                          }
+                        />
+      
+
+      <Route
+                          path="/admin/messages"
+                           index={true} 
+                          element={
+                            <ProtectedRoute>
+                              <Message />
                               </ProtectedRoute>
                           }
                         />

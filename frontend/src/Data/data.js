@@ -33,10 +33,15 @@ export const adminMenu = [
     name: "Users",
     path: "/admin/users",
     icon: "fas fa-users",
-  },,
+  },
   {
     name: "Appointments",
     path: "/admin/appointments",
     icon: "fas fa-calendar-alt",
+  },
+  {
+    name: "Messages",
+    path: "/admin/messages",
+    icon: "fas fa-envelope",
   },
 ];
