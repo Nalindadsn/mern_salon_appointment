@@ -9,7 +9,7 @@ import LayoutWithSidebar from "../../components/LayoutwithSidebar";
 const { Search } = Input;
 
 const Message = () => {
-  const [products, setMessage] = useState([]);
+  const [messages, setMessage] = useState([]);
   const [loading, setLoading] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const [selectedMessage, setSelectedMessage] = useState(null);
@@ -18,7 +18,7 @@ const Message = () => {
   const getMessage = async () => {
     setLoading(true);
     try {
-      const res = await axios.get("/api/admin/getAllContact", {
+      const res = await axios.get("/api/admin/getAllMessages", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -26,11 +26,11 @@ const Message = () => {
       if (res.data.success) {
         setMessage(res.data.data);
       } else {
-        message.error(res.data.message || "Failed to fetch products.");
+        message.error(res.data.message || "Failed to fetch messages.");
       }
     } catch (error) {
       console.log(error);
-      message.error("Failed to fetch products.");
+      message.error("Failed to fetch messages.");
     } finally {
       setLoading(false);
     }
@@ -50,29 +50,33 @@ const Message = () => {
     setSearchValue("");
   };
 
-  const filteredMessages = products.filter((product) => {
+  const filteredMessages = messages.filter((product) => {
     const fullName = `${product.name} ${product.lastName}`.toLowerCase();
     return fullName.includes(searchValue);
   });
 
   const columns = [
     {
-      title: "Name",
+      title: "name",
       dataIndex: "name",
       render: (text, record) => (
         <span>
-          {record.name} {record.lastName}
+          {record.firstName} {record.lastName} 
         </span>
       ),
       // responsive: ["xs"]
     },
     {
-      title: "Description",
-      dataIndex: "description",
+      title: "Phone",
+      dataIndex: "phone",
     },
     {
-      title: "Brand",
-      dataIndex: "brand",
+      title: "Email",
+      dataIndex: "email",
+    },
+    {
+      title: "Message",
+      dataIndex: "message",
     },
     {
       title: "Actions",
@@ -82,19 +86,19 @@ const Message = () => {
           <Button
             className="m-1"
             type="primary"
-            onClick={() => handleAccountStatus(record, "published")}
-            disabled={record.status === "published"}
+            // onClick={() => handleAccountStatus(record, "published")}
+            // disabled={record.status === "published"}
           >
-            Publish
+            Chat
           </Button>
-          <Button
+          {/* <Button
             className="m-1"
             type="danger"
             onClick={() => handleAccountStatus(record, "rejected")}
             disabled={record.status === "rejected"}
           >
             Reject
-          </Button>
+          </Button> */}
           <Button
             className="m-1"
             onClick={() => {
@@ -121,7 +125,6 @@ const Message = () => {
     <LayoutWithSidebar>
       <div className="mb-2">
         <h3 className="text-center m-3">All Messages</h3>
-        <Link to="/admin/add-product">Add Message</Link>
         <div className="d-flex align-items-center mb-2">
           <Search
             placeholder="Search by name"

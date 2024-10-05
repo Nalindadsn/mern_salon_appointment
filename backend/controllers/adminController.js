@@ -1,5 +1,6 @@
 const productModel = require("../models/productModel");
 const serviceModel = require("../models/serviceModel");
+const contactModel = require("../models/contactModel");
 const userModel = require("../models/userModel");
 const appointmentModel = require("../models/appointmentModel");
 
@@ -202,6 +203,26 @@ const changeProductStatusController = async (req, res) => {
   }
 };
 
+
+// get all contacts data
+const getAllContactsController = async (req, res) => {
+  try {
+    const contacts = await contactModel.find({});
+    res.status(200).send({
+      success: true,
+      message: "contacts data list",
+      data: contacts,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "error while getting contacts data",
+      error,
+    });
+  }
+};
+
 module.exports = {
   changeProductStatusController,
   getAllServicesController,
@@ -209,5 +230,6 @@ module.exports = {
   getAllProductsController,
   getAllUsersController,
   changeServiceStatusController,
-  addproductController
+  addproductController,
+  getAllContactsController
 };
