@@ -159,8 +159,9 @@ const AdminDashboard = () => {
                      </Badge>
 
                      <br/>
+                     <small className="text-muted text-xs">
                      Date:{moment(appointment?.createdAt).format("DD-MM-YYYY")}
-                      
+                      </small>
 
                       </span>
                       </div>  
