@@ -5,6 +5,7 @@ import Layout from "../../components/Layout";
 import moment from "moment";
 import LayoutWithSidebar from "../../components/LayoutwithSidebar";
 import { Badge } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 const { Search } = Input;
 
@@ -104,14 +105,20 @@ const Users = () => {
       dataIndex: "actions",
       render: (text, record) => (
         <Space>
+        <Tooltip title="Block User">
+          <Button
+            className="m-1"
+            type="danger"
+            onClick={() => handleBlockUser(record.userId)}
+          >
+            Block
+          </Button>
+        </Tooltip>
           <Tooltip title="Block User">
-            <Button
-              className="m-1"
-              type="danger"
-              onClick={() => handleBlockUser(record.userId)}
+            <Link to={`/admin/users/${record._id}`}
             >
-              Block
-            </Button>
+              Edit
+            </Link>
           </Tooltip>
         </Space>
       ),

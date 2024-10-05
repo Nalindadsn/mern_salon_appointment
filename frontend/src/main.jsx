@@ -51,6 +51,7 @@ import UploadImage from './pages/UploadImages.jsx';
 import Product from './pages/admin/Product.jsx';
 import ServiceUpdate from "./pages/service/ServiceUpdate";
 import Message from './pages/admin/Message.jsx';
+import UpdateUser from './pages/admin/UpdateUser.jsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -86,6 +87,14 @@ const router = createBrowserRouter(
                 </ProtectedRoute>
               }
             />
+            <Route
+                          path="/admin/users/:id"
+                          element={
+                            <ProtectedRoute>
+                              <UpdateUser />
+                            </ProtectedRoute>
+                          }
+                        />
             <Route
               path="/admin/services"
               element={

@@ -4,12 +4,12 @@ import moment from "moment/moment";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { hideLoading, showLoading } from "../redux/features/alertSlice";
-import Layout from "../components/Layout";
-import LayoutWithSidebar from "../components/LayoutwithSidebar";
+import { hideLoading, showLoading } from "../../redux/features/alertSlice";
+import Layout from "../../components/Layout";
+import LayoutWithSidebar from "../../components/LayoutwithSidebar";
 
 
-const ProfileScreen = () => {
+const UpdateUser = () => {
   const { user } = useSelector((state) => state.user);
   const [userInfo, setUser] = useState(null);
   const dispatch = useDispatch();
@@ -26,7 +26,7 @@ const ProfileScreen = () => {
         "/api/user/updateUser",
         {
           ...values,
-          userId: user._id,
+          userId: params._id,
           // starttime,
         },
         {
@@ -77,7 +77,8 @@ const ProfileScreen = () => {
   }, []);
   return (
     <LayoutWithSidebar>
-      <h3 align="center">Manage ProfileScreen</h3>
+      <h3 align="center">Manage UpdateUser</h3>
+    -  {JSON.stringify(params)}-
       {userInfo && (
         <Form
           layout="vertical"
@@ -160,4 +161,4 @@ const ProfileScreen = () => {
   );
 };
 
-export default ProfileScreen;
+export default UpdateUser;

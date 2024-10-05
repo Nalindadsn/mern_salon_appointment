@@ -1,1 +1,2 @@
 Salon Appointment System
+$2a$10$VO8n43RoaNqzhNlEatBApuk25d8nOuMTZbuB6LXA4ohIVneHBPiRO
