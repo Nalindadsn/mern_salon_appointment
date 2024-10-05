@@ -222,7 +222,48 @@ const getAllContactsController = async (req, res) => {
     });
   }
 };
+const getUserByIdController = async (req, res) => {
+  console.log(req.body)
+  try {
+    const User = await userModel.findOne({ _id: req.body._id });
+    console.log(User)
+    res.status(200).send({
+      success: true,
+      message: "single user info fetched",
+      data: User,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      error,
+      message: "error in single service info",
+    });
+  }
+};
 
+// update service profile
+const updateUserController = async (req, res) => {
+  console.log(req.body)
+  try {
+    const user = await userModel.findOneAndUpdate(
+      { _id: req.body.userId },
+      req.body
+    );
+    res.status(201).send({
+      success: true,
+      message: "user profile updated",
+      data: user,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "user profile update issue",
+      error,
+    });
+  }
+};
 module.exports = {
   changeProductStatusController,
   getAllServicesController,
@@ -231,5 +272,8 @@ module.exports = {
   getAllUsersController,
   changeServiceStatusController,
   addproductController,
-  getAllContactsController
+  getAllContactsController,
+  getUserByIdController,
+  updateUserController
+
 };

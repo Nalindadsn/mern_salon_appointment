@@ -10,23 +10,22 @@ import LayoutWithSidebar from "../../components/LayoutwithSidebar";
 
 
 const UpdateUser = () => {
-  const { user } = useSelector((state) => state.user);
   const [userInfo, setUser] = useState(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const params = useParams();
   // update doc ==========
   //handle form
-  const handleFinish = async (values) => {
+  const handleFinish = async (values) => {alert(JSON.stringify(values))
     try {
       dispatch(showLoading());
       // const starttime = values.starttime.format("HH:mm");
       // const endtime = values.endtime.format("HH:mm");
       const res = await axios.post(
-        "/api/user/updateUser",
+        "/api/admin/updateUser",
         {
           ...values,
-          userId: params._id,
+          userId: params.id,
           // starttime,
         },
         {
@@ -39,7 +38,7 @@ const UpdateUser = () => {
       if (res.data.success) {
         
         message.success(res.data.message);
-        window.location.reload(); 
+        // window.location.reload(); 
       } else {
         message.error(res.data.message);
       }
@@ -52,12 +51,13 @@ const UpdateUser = () => {
   // update doc ==========
 
   //getDOc Details
-  const getUserInfo = async () => {
+  const getUserInfo = async (id) => {
     // alert(params?.id);
     try {
       const res = await axios.post(
-        "/api/user/getUserInfo",
-        { userId: params?.id },
+        "/api/admin/getUserInfo",
+        { _id: id ,
+        },
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -74,13 +74,15 @@ const UpdateUser = () => {
   };
 
   useEffect(() => {
-    getUserInfo();
+    getUserInfo(params?.id);
+
     //eslint-disable-next-line
-  }, []);
+  }, [params?.id]);
   return (
     <LayoutWithSidebar>
       <h3 align="center">Manage UpdateUser</h3>
-    -  {JSON.stringify(params)}-
+      -  {JSON.stringify(params)}-<br/>
+      -  {JSON.stringify(userInfo)}-
       {userInfo && (
         <Form
           layout="vertical"
@@ -104,7 +106,7 @@ const UpdateUser = () => {
                 <Input type="text" placeholder="First Name" />
               </Form.Item>
             </Col>
-            <Col xs={24} md={24} lg={24}>
+            {/* <Col xs={24} md={24} lg={24}>
               <Form.Item
                 label="Last Name"
                 name="email"
@@ -113,7 +115,7 @@ const UpdateUser = () => {
               >
                 <Input type="text" placeholder="Last Name" />
               </Form.Item>
-            </Col>
+            </Col> */}
             <Col xs={24} md={24} lg={24}>
               <Form.Item
                 label="username"
@@ -138,17 +140,7 @@ const UpdateUser = () => {
                 </Select>
               </Form.Item>
             </Col>
-            <Col xs={24} md={24} lg={24}>
-              <Form.Item
-                label="Email"
-                name="email"
-                required
-                rules={[{ required: true }]}
-              >
-                <Input type="email" placeholder="Email" />
-                
-              </Form.Item>
-            </Col>
+            
             <Col xs={24} md={24} lg={24}>
               <button className="btn btn-primary form-btn" type="submit">
                 Update

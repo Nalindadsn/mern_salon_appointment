@@ -7,7 +7,9 @@ const {
   changeProductStatusController,
   addproductController,
   getSummaryController,
-  getAllContactsController
+  getAllContactsController,
+  getUserByIdController,
+  updateUserController
   
 
 } = require("../controllers/adminController");
@@ -20,6 +22,13 @@ router.get("/getAllUsers", authMiddleware, getAllUsersController);
 
 // Endpoint to fetch all services
 router.get("/getAllServices", authMiddleware, getAllServicesController);
+
+// GET User
+router.post("/getUserInfo", authMiddleware, getUserByIdController);
+
+// GET User
+router.post("/updateUser", authMiddleware, updateUserController);
+
 
 // Endpoint to fetch all services
 router.get("/getAllMessages", authMiddleware, getAllContactsController);
