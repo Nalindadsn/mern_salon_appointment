@@ -11,6 +11,8 @@ const {
   bookAppointmentController,
   bookingAvailabilityController,
   userAppointmentsController,
+  getUserByIdController,
+  updateUserController
 } = require("../controllers/userController");
 const authMiddleware = require("../middlewares/authMiddleware");
 
@@ -52,6 +54,11 @@ router.get("/getAllProducts", getAllProductsController);
 
 // BOOK APPOINTMENT
 router.post("/book-appointment", authMiddleware, bookAppointmentController);
+// GET User
+router.post("/getUserInfo", authMiddleware, getUserByIdController);
+
+// GET User
+router.post("/updateUser", authMiddleware, updateUserController);
 
 // Booking Availability
 router.post(

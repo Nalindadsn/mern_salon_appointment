@@ -1,7 +1,7 @@
 const express = require("express");
 const {
   getproductInfoController,
-  updateProfileController,
+  updateServiceController,
   getproductByIdController,
   productAppointmentsController,
   updateStatusController,
@@ -13,7 +13,7 @@ const router = express.Router();
 router.post("/getproductInfo", authMiddleware, getproductInfoController);
 
 // Endpoint to update product profile
-router.post("/updateProfile", authMiddleware, updateProfileController);
+router.post("/updateService", authMiddleware, updateServiceController);
 
 // Endpoint to post get single product info
 router.post("/getproductById", authMiddleware, getproductByIdController);

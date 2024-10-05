@@ -22,7 +22,7 @@ const getserviceInfoController = async (req, res) => {
 };
 
 // update service profile
-const updateProfileController = async (req, res) => {
+const updateServiceController = async (req, res) => {
   try {
     const service = await serviceModel.findOneAndUpdate(
       { userId: req.body.userId },
@@ -136,7 +136,7 @@ const getAllServicesController = async (req, res) => {
 module.exports = {
   getAllServicesController,
   getserviceInfoController,
-  updateProfileController,
+  updateServiceController,
   getserviceByIdController,
   serviceAppointmentsController,
   updateStatusController,

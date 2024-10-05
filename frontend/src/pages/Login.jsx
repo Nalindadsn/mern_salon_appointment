@@ -81,8 +81,8 @@ const Login = () => {
         </h2>
         <Form layout="vertical" onFinish={submitHandler}>
           <Form.Item
-            name="email"
-            rules={[{ required: true, message: "Please input your email!" }]}
+            name="username"
+            rules={[{ required: true, message: "Please input your username!" }]}
           >
             <Input
               prefix={<UserOutlined style={{ color: "#1890ff" }} />}

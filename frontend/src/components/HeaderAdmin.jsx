@@ -7,7 +7,7 @@ import { setUser } from "../redux/features/userSlice";
 import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import logo from '../_assets/logo.png';
-import { FaBell, FaSignInAlt, FaSignOutAlt } from "react-icons/fa";
+import { FaBell, FaSignInAlt, FaSignOutAlt, FaUser } from "react-icons/fa";
 import { Badge, Button } from "antd";
 
 const HeaderAdmin = ({ notification }) => {
@@ -161,7 +161,7 @@ marginBottom: '2px',
 
                 {isAuthenticated ? <>
                   <>
-                <NavDropdown title={user?.name} id='username'  style={{
+                <NavDropdown title={<><FaUser style={{color:"white", }}/> {user?.username}</>} id='username'  style={{
   backgroundColor: '#C07BA0', 
   color: 'white', 
   borderRadius: '10px', 

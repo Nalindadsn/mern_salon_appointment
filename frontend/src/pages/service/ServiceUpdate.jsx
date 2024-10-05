@@ -8,7 +8,7 @@ import { hideLoading, showLoading } from "../../redux/features/alertSlice";
 import Layout from "../../components/Layout";
 
 
-const Profile = () => {
+const ServiceUpdate = () => {
   const { user } = useSelector((state) => state.user);
   const [service, setService] = useState(null);
   const dispatch = useDispatch();
@@ -22,7 +22,7 @@ const Profile = () => {
       const starttime = values.starttime.format("HH:mm");
       const endtime = values.endtime.format("HH:mm");
       const res = await axios.post(
-        "/api/service/updateProfile",
+        "/api/service/updateService",
         {
           ...values,
           userId: user._id,
@@ -76,7 +76,7 @@ const Profile = () => {
   }, []);
   return (
     <Layout>
-      <h3 align="center">Manage Profile</h3>
+      <h3 align="center">Manage ServiceUpdate</h3>
       {service && (
         <Form
           layout="vertical"
@@ -88,8 +88,8 @@ const Profile = () => {
             endtime: moment(service.endtime, "HH:mm")
           }}
         >
-          <Row gutter={20}>
-            <Col xs={24} md={24} lg={8}>
+          <Row gutter={24}>
+            <Col xs={24} md={24} lg={24}>
               <Form.Item
                 label="First Name"
                 name="firstName"
@@ -99,7 +99,7 @@ const Profile = () => {
                 <Input type="text" placeholder="First Name" />
               </Form.Item>
             </Col>
-            <Col xs={24} md={24} lg={8}>
+            <Col xs={24} md={24} lg={24}>
               <Form.Item
                 label="Last Name"
                 name="lastName"
@@ -109,7 +109,7 @@ const Profile = () => {
                 <Input type="text" placeholder="Last Name" />
               </Form.Item>
             </Col>
-            <Col xs={24} md={24} lg={8}>
+            <Col xs={24} md={24} lg={24}>
               <Form.Item
                 label="Phone No"
                 name="phone"
@@ -119,93 +119,12 @@ const Profile = () => {
                 <Input type="text" placeholder="Phone Number" />
               </Form.Item>
             </Col>
-            <Col xs={24} md={24} lg={8}>
-              <Form.Item
-                label="Email"
-                name="email"
-                required
-                rules={[{ required: true }]}
-              >
-                <Input type="email" placeholder="Email" />
-              </Form.Item>
-            </Col>
-            <Col xs={24} md={24} lg={8}>
-              <Form.Item label="Website" name="website">
-                <Input type="text" placeholder="Website" />
-              </Form.Item>
-            </Col>
-            <Col xs={24} md={24} lg={8}>
-              <Form.Item
-                label="Address"
-                name="address"
-                required
-                rules={[{ required: true }]}
-              >
-                <Input type="text" placeholder="Clinic Address" />
-              </Form.Item>
-            </Col>
           </Row>
-          <h4>Professional Details :</h4>
-          <Row gutter={20}>
-            <Col xs={24} md={24} lg={8}>
-              <Form.Item
-                label="Specialization"
-                name="specialization"
-                required
-                rules={[{ required: true }]}
-              >
-                <Input type="text" placeholder="Specialization" />
-              </Form.Item>
-            </Col>
-            <Col xs={24} md={24} lg={8}>
-              <Form.Item
-                label="Experience"
-                name="experience"
-                required
-                rules={[{ required: true }]}
-              >
-                <Input type="text" placeholder="Experience" />
-              </Form.Item>
-            </Col>
-            <Col xs={24} md={24} lg={8}>
-              <Form.Item
-                label="Fees Per Consultation"
-                name="feesPerConsultation"
-                required
-                rules={[{ required: true }]}
-              >
-                <Input type="text" placeholder="Fee" />
-              </Form.Item>
-            </Col>
-            <Col xs={24} md={24} lg={8}>
-            <Form.Item
-              name="starttime"
-              label="Start Time"
-              rules={[{ required: true }]}
-            >
-              <TimePicker format="HH:mm" />
-            </Form.Item>
-          </Col>
-          <Col xs={24} md={24} lg={8}>
-            <Form.Item
-              name="endtime"
-              label="End Time"
-              rules={[{ required: true }]}
-            >
-              <TimePicker format="HH:mm" />
-            </Form.Item>
-          </Col>
-          <Col xs={24} md={24} lg={8}></Col>
-            <Col xs={24} md={24} lg={8}>
-              <button className="btn btn-primary form-btn" type="submit">
-                Update
-              </button>
-            </Col>
-          </Row>
+         
         </Form>
       )}
     </Layout>
   );
 };
 
-export default Profile;
+export default ServiceUpdate;

@@ -9,8 +9,8 @@ const moment = require("moment");
 // login callback
 const loginController = async (req, res) => {
   try {
-    const { email, password } = req.body;
-    const user = await userModel.findOne({ email });
+    const { username, password } = req.body;
+    const user = await userModel.findOne({ username });
     if (!user) {
       return res.status(404).send("user not found");
     }
@@ -390,6 +390,46 @@ $lookup : {
   }
 };
 
+const getUserByIdController = async (req, res) => {
+  try {
+    const User = await userModel.findOne({ _id: req.body.userId });
+    res.status(200).send({
+      success: true,
+      message: "single user info fetched",
+      data: User,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      error,
+      message: "error in single service info",
+    });
+  }
+};
+
+// update service profile
+const updateUserController = async (req, res) => {
+  console.log(req.body)
+  try {
+    const user = await userModel.findOneAndUpdate(
+      { _id: req.body.userId },
+      req.body
+    );
+    res.status(201).send({
+      success: true,
+      message: "user profile updated",
+      data: user,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "user profile update issue",
+      error,
+    });
+  }
+};
 module.exports = {
   loginController,
   registerController,
@@ -402,4 +442,6 @@ module.exports = {
   bookAppointmentController,
   bookingAvailabilityController,
   userAppointmentsController,
+  getUserByIdController,
+  updateUserController
 };

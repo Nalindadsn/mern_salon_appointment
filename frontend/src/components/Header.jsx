@@ -166,7 +166,7 @@ marginBottom: '2px',
 
                 {isAuthenticated ? <>
                   <>
-                <NavDropdown title={user?.name} id='username'  style={{
+                <NavDropdown title={user?.username} id='username'  style={{
   backgroundColor: '#C07BA0', 
   color: 'white', 
   borderRadius: '10px', 

@@ -49,6 +49,8 @@ import ServiceAppointments from "./pages/service/ServiceAppointments";
 import Appointments from "./pages/Appointments";
 import UploadImage from './pages/UploadImages.jsx';
 import Product from './pages/admin/Product.jsx';
+import ServiceUpdate from "./pages/service/ServiceUpdate";
+
 const router = createBrowserRouter(
   createRoutesFromElements(
     
@@ -142,6 +144,14 @@ const router = createBrowserRouter(
             />
 
 
+<Route
+              path="/profile/:id"
+              element={
+                <ProtectedRoute>
+                  <ServiceUpdate />
+                </ProtectedRoute>
+              }
+            />
 <Route
               path="/service/book-appointment/:serviceId"
               element={

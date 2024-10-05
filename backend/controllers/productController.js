@@ -22,7 +22,7 @@ const getproductInfoController = async (req, res) => {
 };
 
 // update product profile
-const updateProfileController = async (req, res) => {
+const updateServiceController = async (req, res) => {
   try {
     const product = await productModel.findOneAndUpdate(
       { userId: req.body.userId },
@@ -119,7 +119,7 @@ const updateStatusController = async (req, res) => {
 
 module.exports = {
   getproductInfoController,
-  updateProfileController,
+  updateServiceController,
   getproductByIdController,
   productAppointmentsController,
   updateStatusController,

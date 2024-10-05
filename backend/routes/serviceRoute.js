@@ -1,7 +1,7 @@
 const express = require("express");
 const {
   getserviceInfoController,
-  updateProfileController,
+  updateServiceController,
   getserviceByIdController,
   serviceAppointmentsController,
   updateStatusController,
@@ -14,7 +14,7 @@ const router = express.Router();
 router.post("/getserviceInfo", authMiddleware, getserviceInfoController);
 router.get("/getAllServices", getAllServicesController);
 // Endpoint to update service profile
-router.post("/updateProfile", authMiddleware, updateProfileController);
+router.post("/updateService", authMiddleware, updateServiceController);
 
 // Endpoint to post get single service info
 router.post("/getserviceById", authMiddleware, getserviceByIdController);
