@@ -391,6 +391,7 @@ $lookup : {
 };
 
 const getUserByIdController = async (req, res) => {
+  console.log(req.body)
   try {
     const User = await userModel.findOne({ _id: req.body.userId });
     res.status(200).send({

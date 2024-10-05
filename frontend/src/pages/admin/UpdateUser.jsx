@@ -53,10 +53,11 @@ const UpdateUser = () => {
 
   //getDOc Details
   const getUserInfo = async () => {
+    // alert(params?.id);
     try {
       const res = await axios.post(
         "/api/user/getUserInfo",
-        { userId: params.id },
+        { userId: params?.id },
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -64,6 +65,7 @@ const UpdateUser = () => {
         }
       );
       if (res.data.success) {
+        // alert(JSON.stringify(res.data.data));
         setUser(res.data.data);
       }
     } catch (error) {
