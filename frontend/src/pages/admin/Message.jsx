@@ -51,7 +51,7 @@ const Message = () => {
   };
 
   const filteredMessages = messages.filter((product) => {
-    const fullName = `${product.name} ${product.lastName}`.toLowerCase();
+    const fullName = `${product.firstName} ${product.lastName}`.toLowerCase();
     return fullName.includes(searchValue);
   });
 
