@@ -89,7 +89,6 @@ const ProfileScreen = () => {
             // endtime: moment(userInfo.endtime, "HH:mm")
           }}
         >
-          {JSON.stringify(userInfo)}
           <h4 className="">Personal Details : </h4>
           <Row gutter={20}>
             <Col xs={24} md={24} lg={8}>
