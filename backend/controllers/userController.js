@@ -33,7 +33,7 @@ const loginController = async (req, res) => {
 // register callback
 const registerController = async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const { name, email, password,username } = req.body;
 
     // Hash and salt password
     const saltRounds = 10;
@@ -42,6 +42,7 @@ const registerController = async (req, res) => {
     const newUser = new userModel({
       name,
       email,
+      username,
       password: hashedPassword,
     });
     await newUser.save();

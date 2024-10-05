@@ -86,7 +86,7 @@ const Login = () => {
           >
             <Input
               prefix={<UserOutlined style={{ color: "#1890ff" }} />}
-              placeholder="Email"
+              placeholder="Username"
               style={{ marginBottom: "20px" }}
             />
           </Form.Item>

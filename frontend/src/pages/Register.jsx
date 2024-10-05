@@ -72,6 +72,20 @@ const Register = () => {
             />
           </Form.Item>
           <Form.Item
+            name="username"
+            rules={[
+              { required: true, message: "Please input your username!" },
+              { min: 3, message: "Your username must be at least 3 characters" },
+              { max: 50, message: "Your username cannot exceed 50 characters" },
+            ]}
+          >
+            <Input
+              prefix={<UserOutlined />}
+              placeholder="username"
+              style={{ width: "300px", marginBottom: "20px" }}
+            />
+          </Form.Item>
+          <Form.Item
             name="email"
             rules={[
               { required: true, message: "Please input your email!" },

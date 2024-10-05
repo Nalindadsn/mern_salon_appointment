@@ -5,6 +5,7 @@ const zxcvbn = require("zxcvbn");
 // Define a schema for user input validation
 const userSchema = Joi.object({
   name: Joi.string().min(2).max(50).required(),
+  username: Joi.string().min(2).max(50).required(),
   email: Joi.string().email().required(),
   password: Joi.string()
     .pattern(
