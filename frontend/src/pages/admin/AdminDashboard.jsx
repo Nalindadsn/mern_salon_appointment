@@ -9,6 +9,7 @@ import LayoutWithSidebar from "../../components/LayoutwithSidebar";
 import { FaBookmark, FaCalendar, FaCalendarAlt, FaCalendarCheck, FaCalendarTimes, FaCalendarWeek, FaList, FaUser, FaUsers } from "react-icons/fa";
 // import {moment}
 import moment from "moment";
+import Loader from "../../_components/Loader";
 
 const { Search } = Input;
 const { Title, Text } = Typography;
@@ -143,7 +144,8 @@ const AdminDashboard = () => {
         {/* {JSON.stringify(data?.pendingAppointments.length)} */}
         <h3 className="mt-4">Latest Pending Appointments</h3>
         <ul class="list-group">
-          {data?.pendingAppointments &&
+          
+          {!loading?data?.pendingAppointments &&
                   data?.pendingAppointments.length>0? data?.pendingAppointments.map((appointment) => (
                     <li class="list-group-item mb-2" key={appointment?._id}>
                      <div className="d-flex justify-content-between">
@@ -153,7 +155,7 @@ const AdminDashboard = () => {
                       <span>#Appoinment id :{appointment?._id} </span>
                       </div>
                       <span>
-                      <Badge className="bg-primary py-1 px-2 text-white rounded-pill">Status :{appointment?.status}
+                      <Badge className="bg-warning  py-1 px-2 text-dark rounded-pill">Status :{appointment?.status}
                      </Badge>
 
                      <br/>
@@ -171,7 +173,7 @@ const AdminDashboard = () => {
                       {/* {JSON.stringify(appointment)} */}
 
                       </li>
-                  )):"No Pending Appointments"}
+                  )):"No Pending Appointments":<Loader className="mt-5"/>}
 </ul>
 
       </LayoutWithSidebar>
