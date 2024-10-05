@@ -99,23 +99,8 @@ const Message = () => {
           >
             Reject
           </Button> */}
-          <Button
-            className="m-1"
-            onClick={() => {
-              setSelectedMessage(record);
-              setModalVisible(true);
-            }}
-          >
-            View Details
-          </Button>
-          <Button
-            className="m-1"
-            // onClick={() => {
-            //   setSelectedMessage(record);
-            //   setModalVisible(true);
-            // }}
-          >
-            Edit          </Button>
+         
+          
         </div>
       ),
     },
