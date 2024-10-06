@@ -112,6 +112,37 @@ const UpdateProduct = () => {
     }
     // uploadMultipleImages(base64s);
   };
+
+
+  
+  const getProductInfo = async (id) => {
+    // alert(params?.id);
+    try {
+      const res = await axios.post(
+        "/api/admin/getProductInfo",
+        { _id: id ,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      if (res.data.success) {
+        // alert(JSON.stringify(res.data.data));
+        setProduct(res.data.data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getProductInfo(params?.id);
+
+    //eslint-disable-next-line
+  }, [params?.id]);
+
   function UploadInput() {
     return (
       <div className="flex items-center justify-center w-full text-center">

@@ -58,11 +58,11 @@ const UpdateService = () => {
     }
   };
 
-  const getUserInfo = async (id) => {
+  const getServiceInfo = async (id) => {
     // alert(params?.id);
     try {
       const res = await axios.post(
-        "/api/admin/getUserInfo",
+        "/api/admin/getServiceInfo",
         { _id: id ,
         },
         {
@@ -73,7 +73,7 @@ const UpdateService = () => {
       );
       if (res.data.success) {
         // alert(JSON.stringify(res.data.data));
-        setUser(res.data.data);
+        setService(res.data.data);
       }
     } catch (error) {
       console.log(error);
@@ -81,7 +81,7 @@ const UpdateService = () => {
   };
 
   useEffect(() => {
-    getUserInfo(params?.id);
+    getServiceInfo(params?.id);
 
     //eslint-disable-next-line
   }, [params?.id]);

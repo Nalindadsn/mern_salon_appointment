@@ -36,6 +36,8 @@ router.post("/add-service", authMiddleware, addserviceController);
 // Apply service || POST
 router.post("/update-service", authMiddleware, updateserviceController);
 
+
+
 // Notification service || POST
 router.post(
   "/get-all-notification",
