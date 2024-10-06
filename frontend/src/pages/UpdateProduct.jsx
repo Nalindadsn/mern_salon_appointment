@@ -26,7 +26,7 @@ const UpdateProduct = () => {
     try {
       dispatch(showLoading());
       const res = await axios.post(
-        "/api/admin/add-product",
+        "/api/admin/update-product",
         {
           ...values,
           image: url,

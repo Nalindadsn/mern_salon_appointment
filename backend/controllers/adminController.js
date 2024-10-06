@@ -152,6 +152,26 @@ const addproductController = async (req, res) => {
   }
 };
 
+const updateproductController = async (req, res) => {
+  console.log(req.body);
+  try {
+    const newproduct = await productModel({ ...req.body, status: "pending" });
+    await newproduct.save();
+    // await userModel.findByIdAndUpdate(adminUser._id, { notification });
+    res.status(201).send({
+      success: true,
+      message: "product account applied successfully",
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      error,
+      message: "error while applying for product",
+    });
+  }
+};
+
 // service account status
 const changeServiceStatusController = async (req, res) => {
   try {
@@ -274,6 +294,7 @@ module.exports = {
   addproductController,
   getAllContactsController,
   getUserByIdController,
-  updateUserController
+  updateUserController,
+  updateproductController
 
 };

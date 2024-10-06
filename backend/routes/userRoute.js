@@ -12,7 +12,9 @@ const {
   bookingAvailabilityController,
   userAppointmentsController,
   getUserByIdController,
-  updateUserController
+  updateUserController,
+  
+  updateserviceController,
 } = require("../controllers/userController");
 const authMiddleware = require("../middlewares/authMiddleware");
 
@@ -31,6 +33,8 @@ router.post("/getUserData", authMiddleware, authController);
 
 // Apply service || POST
 router.post("/add-service", authMiddleware, addserviceController);
+// Apply service || POST
+router.post("/update-service", authMiddleware, updateserviceController);
 
 // Notification service || POST
 router.post(

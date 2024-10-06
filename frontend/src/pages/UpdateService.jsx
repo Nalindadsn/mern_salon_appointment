@@ -28,7 +28,7 @@ const UpdateService = () => {
       const starttime = values.starttime.format("HH:mm");
       const endtime = values.endtime.format("HH:mm");
       const res = await axios.post(
-        "/api/user/add-service",
+        "/api/user/update-service",
         {
           ...values,
           userId: user._id,

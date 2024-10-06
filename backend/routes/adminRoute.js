@@ -9,7 +9,8 @@ const {
   getSummaryController,
   getAllContactsController,
   getUserByIdController,
-  updateUserController
+  updateUserController,
+  updateproductController
   
 
 } = require("../controllers/adminController");
@@ -37,6 +38,7 @@ router.get("/getSummary", authMiddleware, getSummaryController);
 
 router.get("/getAllProducts", authMiddleware, getAllProductsController);
 router.post("/add-product", authMiddleware,   addproductController);
+router.post("/update-product", authMiddleware,   updateproductController);
 
 // Endpoint to change account status
 router.post(

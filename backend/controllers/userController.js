@@ -117,6 +117,37 @@ const addserviceController = async (req, res) => {
   }
 };
 
+const updateserviceController = async (req, res) => {
+  console.log(req.body);
+  try {
+    const newservice = await serviceModel({ ...req.body, status: "pending" });
+    await newservice.save();
+    const adminUser = await userModel.findOne({ isAdmin: true });
+    const notification = adminUser.notification;
+    notification.push({
+      type: "apply-service-request",
+      message: `${newservice.firstName} ${newservice.lastName} has applied for a service account`,
+      data: {
+        serviceId: newservice._id,
+        name: newservice.firstName + " " + newservice.lastName,
+        onClickPath: "/admin/services",
+      },
+    });
+    // await userModel.findByIdAndUpdate(adminUser._id, { notification });
+    res.status(201).send({
+      success: true,
+      message: "service account applied successfully",
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      error,
+      message: "error while applying for service",
+    });
+  }
+};
+
 // get all notifications
 const getAllNotificationController = async (req, res) => {
   try {
@@ -445,5 +476,6 @@ module.exports = {
   bookingAvailabilityController,
   userAppointmentsController,
   getUserByIdController,
-  updateUserController
+  updateUserController,
+  updateserviceController
 };
