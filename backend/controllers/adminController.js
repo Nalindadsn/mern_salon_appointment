@@ -160,7 +160,7 @@ const updateproductController = async (req, res) => {
     // await userModel.findByIdAndUpdate(adminUser._id, { notification });
     res.status(201).send({
       success: true,
-      message: "product account applied successfully",
+      message: "product applied successfully",
     });
   } catch (error) {
     console.log(error);
@@ -284,6 +284,67 @@ const updateUserController = async (req, res) => {
     });
   }
 };
+
+
+
+
+const getProductByIdController = async (req, res) => {
+  console.log(req.body)
+  try {
+    const User = await productModel.findOne({ _id: req.body.productId });
+    res.status(200).send({
+      success: true,
+      message: "single user info fetched",
+      data: User,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      error,
+      message: "error in single product info",
+    });
+  }
+};
+
+const updateproductDetailsController = async (req, res) => {
+  console.log(req.body);
+  try {
+    // const updatedservice = await serviceModel({ ...req.body, status: "pending" });
+    // await updatedservice.save();
+
+    const updatedproduct = await productModel.findOneAndUpdate(
+      { _id: req.body.productId },
+      req.body
+    );
+
+
+    const adminUser = await userModel.findOne({ isAdmin: true });
+    const notification = adminUser.notification;
+    notification.push({
+      type: "add-product-request",
+      message: `${updatedproduct.name}  has updated`,
+      data: {
+        productId: updatedproduct._id,
+        name: updatedproduct.name,
+        onClickPath: "/admin/products",
+      },
+    });
+    // await userModel.findByIdAndUpdate(adminUser._id, { notification });
+    res.status(201).send({
+      success: true,
+      message: "product updated successfully",
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      error,
+      message: "error while applying for product",
+    });
+  }
+};
+
 module.exports = {
   changeProductStatusController,
   getAllServicesController,
@@ -295,6 +356,10 @@ module.exports = {
   getAllContactsController,
   getUserByIdController,
   updateUserController,
-  updateproductController
+  updateproductController,
+
+  
+  updateproductDetailsController,
+  getProductByIdController
 
 };

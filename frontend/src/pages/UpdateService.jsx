@@ -2,7 +2,7 @@ import { Col, Form, Input, Row, TimePicker, message } from "antd";
 import axios from "axios";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { hideLoading, showLoading } from "../redux/features/alertSlice";
 import TextArea from "antd/es/input/TextArea";
 
@@ -10,8 +10,10 @@ import assets from "../_assets/assets.gif";
 
 import { useState } from "react";
 import LayoutWithSidebar from "../components/LayoutwithSidebar";
+import { useEffect } from "react";
 const UpdateService = () => {
   const [url, setUrl] = useState("");
+  const params = useParams();
   const { user } = useSelector((state) => state.user);
 
   const dispatch = useDispatch();
@@ -31,7 +33,7 @@ const UpdateService = () => {
         "/api/user/update-service",
         {
           ...values,
-          userId: user._id,
+          serviceId: params.id,
           starttime,
           endtime,
           image: url,
@@ -56,7 +58,33 @@ const UpdateService = () => {
     }
   };
 
+  const getUserInfo = async (id) => {
+    // alert(params?.id);
+    try {
+      const res = await axios.post(
+        "/api/admin/getUserInfo",
+        { _id: id ,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      if (res.data.success) {
+        // alert(JSON.stringify(res.data.data));
+        setUser(res.data.data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
+  useEffect(() => {
+    getUserInfo(params?.id);
+
+    //eslint-disable-next-line
+  }, [params?.id]);
 
   // upload images 
   const [loading, setLoading] = useState(false);

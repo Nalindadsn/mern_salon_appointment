@@ -94,7 +94,7 @@ const addserviceController = async (req, res) => {
     const adminUser = await userModel.findOne({ isAdmin: true });
     const notification = adminUser.notification;
     notification.push({
-      type: "apply-service-request",
+      type: "add-service-request",
       message: `${newservice.firstName} ${newservice.lastName} has applied for a service account`,
       data: {
         serviceId: newservice._id,
@@ -117,26 +117,54 @@ const addserviceController = async (req, res) => {
   }
 };
 
+
+
+const getServiceByIdController = async (req, res) => {
+  console.log(req.body)
+  try {
+    const User = await serviceModel.findOne({ _id: req.body.serviceId });
+    res.status(200).send({
+      success: true,
+      message: "single user info fetched",
+      data: User,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      error,
+      message: "error in single service info",
+    });
+  }
+};
+
 const updateserviceController = async (req, res) => {
   console.log(req.body);
   try {
-    const newservice = await serviceModel({ ...req.body, status: "pending" });
-    await newservice.save();
+    // const updatedservice = await serviceModel({ ...req.body, status: "pending" });
+    // await updatedservice.save();
+
+    const updatedservice = await serviceModel.findOneAndUpdate(
+      { _id: req.body.serviceId },
+      req.body
+    );
+
+
     const adminUser = await userModel.findOne({ isAdmin: true });
     const notification = adminUser.notification;
     notification.push({
-      type: "apply-service-request",
-      message: `${newservice.firstName} ${newservice.lastName} has applied for a service account`,
+      type: "add-service-request",
+      message: `${updatedservice.name}  has updated`,
       data: {
-        serviceId: newservice._id,
-        name: newservice.firstName + " " + newservice.lastName,
+        serviceId: updatedservice._id,
+        name: updatedservice.name,
         onClickPath: "/admin/services",
       },
     });
     // await userModel.findByIdAndUpdate(adminUser._id, { notification });
     res.status(201).send({
       success: true,
-      message: "service account applied successfully",
+      message: "service updated successfully",
     });
   } catch (error) {
     console.log(error);
@@ -477,5 +505,6 @@ module.exports = {
   userAppointmentsController,
   getUserByIdController,
   updateUserController,
-  updateserviceController
+  updateserviceController,
+  getServiceByIdController
 };
