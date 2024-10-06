@@ -16,7 +16,7 @@ const UpdateUser = () => {
   const params = useParams();
   // update doc ==========
   //handle form
-  const handleFinish = async (values) => {alert(JSON.stringify(values))
+  const handleFinish = async (values) => {
     try {
       dispatch(showLoading());
       // const starttime = values.starttime.format("HH:mm");
@@ -80,9 +80,8 @@ const UpdateUser = () => {
   }, [params?.id]);
   return (
     <LayoutWithSidebar>
-      <h3 align="center">Manage UpdateUser</h3>
-      -  {JSON.stringify(params)}-<br/>
-      -  {JSON.stringify(userInfo)}-
+      <h3 align="center">Update User</h3>
+    
       {userInfo && (
         <Form
           layout="vertical"
@@ -94,7 +93,9 @@ const UpdateUser = () => {
             // endtime: moment(userInfo.endtime, "HH:mm")
           }}
         >
-          <h4 className="">Personal Details : </h4>
+          <h4 className="">Personal Details : </h4><hr/>
+          <h6>{`Username : ${userInfo?.username}`}</h6>
+          <h6>{`Email    : ${userInfo?.email}`}</h6>
           <Row gutter={20}>
             <Col xs={24} md={24} lg={24}>
               <Form.Item
@@ -116,16 +117,7 @@ const UpdateUser = () => {
                 <Input type="text" placeholder="Last Name" />
               </Form.Item>
             </Col> */}
-            <Col xs={24} md={24} lg={24}>
-              <Form.Item
-                label="username"
-                name="username"
-                required
-                rules={[{ required: true }]}
-              >
-                <Input type="text" placeholder="username" />
-              </Form.Item>
-            </Col>
+
             <Col xs={24} md={24} lg={24}>
               <Form.Item
                 label="isAdmin"

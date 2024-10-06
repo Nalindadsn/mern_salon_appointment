@@ -131,8 +131,10 @@ const Product = () => {
             //   setSelectedProduct(record);
             //   setModalVisible(true);
             // }}
+          >            <Link to={`/admin/products/${record._id}`}
           >
-            Edit          </Button>
+            Edit
+          </Link>         </Button>
         </div>
       ),
     },

@@ -131,8 +131,10 @@ const Service = () => {
             //   setSelectedProduct(record);
             //   setModalVisible(true);
             // }}
+          >            <Link to={`/admin/services/${record._id}`}
           >
-            Edit          </Button>
+            Edit
+          </Link>        </Button>
         </div>
       ),
     },

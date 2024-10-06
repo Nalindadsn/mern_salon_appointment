@@ -52,6 +52,8 @@ import Product from './pages/admin/Product.jsx';
 import ServiceUpdate from "./pages/service/ServiceUpdate";
 import Message from './pages/admin/Message.jsx';
 import UpdateUser from './pages/admin/UpdateUser.jsx';
+import UpdateService from './pages/UpdateService.jsx';
+import UpdateProduct from './pages/UpdateProduct.jsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -95,22 +97,38 @@ const router = createBrowserRouter(
                             </ProtectedRoute>
                           }
                         />
-            <Route
-              path="/admin/services"
-              element={
-                <ProtectedRoute>
-                  <Service />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/admin/products"
-              element={
-                <ProtectedRoute>
-                  <Product />
-                </ProtectedRoute>
-              }
-            />
+                        <Route
+                          path="/admin/services"
+                          element={
+                            <ProtectedRoute>
+                              <Service />
+                            </ProtectedRoute>
+                          }
+                        />
+                        <Route
+                          path="/admin/services/:id"
+                          element={
+                            <ProtectedRoute>
+                              <UpdateService />
+                            </ProtectedRoute>
+                          }
+                        />
+                        <Route
+                          path="/admin/products"
+                          element={
+                            <ProtectedRoute>
+                              <Product />
+                            </ProtectedRoute>
+                          }
+                        />
+                        <Route
+                          path="/admin/products/:id"
+                          element={
+                            <ProtectedRoute>
+                              <UpdateProduct />
+                            </ProtectedRoute>
+                          }
+                        />
             <Route
   path="/admin/add-service"
   element={
