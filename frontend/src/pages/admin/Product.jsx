@@ -125,16 +125,10 @@ const Product = () => {
           >
             View Details
           </Button>
-          <Button
-            className="m-1"
-            // onClick={() => {
-            //   setSelectedProduct(record);
-            //   setModalVisible(true);
-            // }}
-          >            <Link to={`/admin/products/${record._id}`}
+                    <Link to={`/admin/products/${record._id}`}
           >
             Edit
-          </Link>         </Button>
+          </Link>       
         </div>
       ),
     },

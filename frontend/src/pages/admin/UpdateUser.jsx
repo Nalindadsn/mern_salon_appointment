@@ -81,7 +81,7 @@ const UpdateUser = () => {
   return (
     <LayoutWithSidebar>
       <h3 align="center">Update User</h3>
-    
+    {}
       {userInfo && (
         <Form
           layout="vertical"

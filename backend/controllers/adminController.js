@@ -308,7 +308,7 @@ const getProductByIdController = async (req, res) => {
 };
 
 const updateproductDetailsController = async (req, res) => {
-  console.log(req.body);
+  console.log("req.body");
   try {
     // const updatedservice = await serviceModel({ ...req.body, status: "pending" });
     // await updatedservice.save();
