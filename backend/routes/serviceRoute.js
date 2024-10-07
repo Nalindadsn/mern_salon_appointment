@@ -19,6 +19,8 @@ router.post("/updateService", authMiddleware, updateServiceController);
 // Endpoint to post get single service info
 router.post("/getserviceById", authMiddleware, getserviceByIdController);
 
+
+
 // Endpoint to get service appointments
 router.get(
   "/service-appointments",

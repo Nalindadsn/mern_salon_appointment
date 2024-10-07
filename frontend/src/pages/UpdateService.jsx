@@ -11,32 +11,32 @@ import assets from "../_assets/assets.gif";
 import { useState } from "react";
 import LayoutWithSidebar from "../components/LayoutwithSidebar";
 import { useEffect } from "react";
+import moment from "moment";
 const UpdateService = () => {
   const [url, setUrl] = useState("");
-  const params = useParams();
   const { user } = useSelector((state) => state.user);
 
+  const [serviceInfo, setService] = useState(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const params = useParams();
   const handleFinish = async (values) => {
-    // alert(url)
-    if (!url) {
+    alert(JSON.stringify( url!==""?url:serviceInfo?.image));
+    if ((serviceInfo?.image=="" || !serviceInfo?.image) && (url=="" || !url) ) {
       message.error("Please upload image");
       return;
     }
     try {
       dispatch(showLoading());
-      const starttime = values.starttime.format("HH:mm");
-      const endtime = values.endtime.format("HH:mm");
       const res = await axios.post(
-        "/api/user/update-service",
+        "/api/user/updateService",
         {
-          ...values,
+          name: values.name,
+          brand: values.brand,
+          description: values.description,
+          image: url!==""?url:serviceInfo?.image,
           serviceId: params.id,
-          starttime,
-          endtime,
-          image: url,
         },
         {
           headers: {
@@ -47,7 +47,7 @@ const UpdateService = () => {
       dispatch(hideLoading());
       if (res.data.success) {
         message.success(res.data.message);
-        navigate("/");
+        navigate("/user/services");
       } else {
         message.error(res.data.message);
       }
@@ -58,33 +58,7 @@ const UpdateService = () => {
     }
   };
 
-  const getServiceInfo = async (id) => {
-    // alert(params?.id);
-    try {
-      const res = await axios.post(
-        "/api/admin/getServiceInfo",
-        { _id: id ,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      );
-      if (res.data.success) {
-        // alert(JSON.stringify(res.data.data));
-        setService(res.data.data);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
-  useEffect(() => {
-    getServiceInfo(params?.id);
-
-    //eslint-disable-next-line
-  }, [params?.id]);
 
   // upload images 
   const [loading, setLoading] = useState(false);
@@ -145,9 +119,41 @@ const UpdateService = () => {
     }
     // uploadMultipleImages(base64s);
   };
+
+
+  
+  const getServiceInfo = async (id) => {
+    // alert(params?.id);
+    try {
+      const res = await axios.post(
+        "/api/user/getServiceInfo",
+        { serviceId: params?.id ,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      if (res.data.success) {
+        // alert(JSON.stringify(res.data.data));
+        setService(res.data.data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getServiceInfo(params?.id);
+
+    //eslint-disable-next-line
+  }, [params?.id]);
+
   function UploadInput() {
     return (
       <div className="flex items-center justify-center w-full text-center">
+       
         <label
           htmlFor="dropzone-file"
           className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
@@ -193,6 +199,7 @@ const UpdateService = () => {
       <h3 className="text-center">Update Service</h3>
       upload image
       <div className="flex justify-center flex-col m-8 ">
+      -{JSON.stringify(serviceInfo)}-
       <Row gutter={20}>
         
       <Col  xs={24} md={12} lg={12} className="border pb-5">
@@ -210,18 +217,33 @@ const UpdateService = () => {
           <div>
        
         
-        <div style={{backgroundColor:"#ccc"}}>
-            {url && (
+        <div >
+            {url ? (
+              <div className="bg-warning text-dark p-2">
+                Access you file at{" "}
+                <div style={{overflowX:"hidden"}}>
+    
+                <a href={url} target="_blank" rel="noopener noreferrer" className="text-dark">
+                  
+                  {url}<br/>              
+                  <img src={url} alt="upload image" style={{width:"200px"}}  />{" "}
+    
+                </a></div>
+              </div>
+            ):(
+
               <div>
                 Access you file at{" "}
                 <div style={{overflowX:"hidden"}}>
     
-                <a href={url} target="_blank" rel="noopener noreferrer">
+                <a href={serviceInfo?.image} target="_blank" rel="noopener noreferrer">
                   
-                  {url}<br/>              <img src={url} alt="upload image" style={{width:"200px"}}  />{" "}
+                  {serviceInfo?.image}<br/>              
+                  <img src={serviceInfo?.image} alt="upload image" style={{width:"200px"}}  />{" "}
     
                 </a></div>
               </div>
+
             )}
           </div>
       </div>
@@ -229,7 +251,19 @@ const UpdateService = () => {
         </Row>
       
     </div>
-      <Form layout="vertical" onFinish={handleFinish} className="m-3">
+    {serviceInfo?.name}
+    {serviceInfo && <Form
+          layout="vertical"
+          onFinish={handleFinish}
+          className="m-3"
+          initialValues={{
+            name:serviceInfo?.name,
+            brand:serviceInfo?.brand,
+            description:serviceInfo?.description,
+
+            starttime: moment(serviceInfo.starttime, "HH:mm"),
+            endtime: moment(serviceInfo.endtime, "HH:mm")
+          }}>
         <Row gutter={20}>
           <Col xs={24} md={24} lg={24}>
             <Form.Item
@@ -238,33 +272,10 @@ const UpdateService = () => {
               required
               rules={[{ required: true, message: "Service name is required" }]}
             >
-              <Input type="text" placeholder="Service Name" />
-            </Form.Item>
-          </Col>
-        
-          <Col xs={24} md={24} lg={24}>
-            <Form.Item
-              label="Description"
-              name="description"
-            >
-              <TextArea rows={4}  placeholder="Service Description"/>
+              <Input type="text" placeholder="Service Name"  />
             </Form.Item>
           </Col>
          
-        </Row>
-        <br />
-        <Row gutter={20}>
-          
-          <Col xs={24} md={24} lg={8}>
-            <Form.Item
-              label="Fees Per Consultation"
-              name="feesPerConsultation"
-              required
-              rules={[{ required: true, message: "Fee is required" }]}
-            >
-              <Input type="text" placeholder="Fee" />
-            </Form.Item>
-          </Col>
           <Col xs={24} md={24} lg={8}>
             <Form.Item
               name="starttime"
@@ -283,6 +294,19 @@ const UpdateService = () => {
               <TimePicker format="HH:mm" />
             </Form.Item>
           </Col>
+          <Col xs={24} md={24} lg={24}>
+            <Form.Item
+              label="Description"
+              name="description"
+            >
+              <TextArea rows={4}  placeholder="Service Description"/>
+            </Form.Item>
+          </Col>
+         
+        </Row>
+        <br />
+        <Row gutter={20}>
+          
           <Col xs={24} md={24} lg={8}></Col>
           <Col xs={24} md={24} lg={8}>
             <br />
@@ -291,7 +315,8 @@ const UpdateService = () => {
             </button>
           </Col>
         </Row>
-      </Form>
+      </Form>}
+      
     </LayoutWithSidebar>
   );
 };

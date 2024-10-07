@@ -13,6 +13,7 @@ const {
   userAppointmentsController,
   getUserByIdController,
   updateUserController,
+  getServiceByIdController,
   
   updateserviceController,
 } = require("../controllers/userController");
@@ -63,6 +64,9 @@ router.post("/book-appointment", authMiddleware, bookAppointmentController);
 // GET User
 router.post("/getUserInfo", authMiddleware, getUserByIdController);
 
+
+
+router.post("/getServiceInfo", authMiddleware, getServiceByIdController);
 // GET User
 router.post("/updateUser", authMiddleware, updateUserController);
 
