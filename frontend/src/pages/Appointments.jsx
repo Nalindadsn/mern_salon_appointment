@@ -99,7 +99,7 @@ const Appointments = () => {
       ),
     },
   ];
-  const data = messages
+  const data = appointments
 
   const handleGenerate = () =>{
     const doc = new jsPDF()

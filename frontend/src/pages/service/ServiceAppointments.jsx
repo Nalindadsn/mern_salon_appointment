@@ -57,6 +57,34 @@ const ServiceAppointments = () => {
       title: "ID",
       dataIndex: "_id",
     },
+
+
+    {
+      title: "Service Name",
+      dataIndex: "user",
+      render: (text, record) => (
+        <span>
+          
+          {record?.service[0]?.name}<br/>
+          {record?.service[0]?._id}
+          {/* {JSON.stringify(record)} */}
+        </span>
+      ),
+    },
+   
+    {
+      title: "user",
+      dataIndex: "user",
+      render: (text, record) => (
+        <span>
+          
+          {record?.users[0]?.name}<br/>
+          {record?.users[0]?._id}
+          {/* {JSON.stringify(record)} */}
+        </span>
+      ),
+    },
+
     {
       title: "Date & Time",
       dataIndex: "date",
@@ -80,9 +108,9 @@ const ServiceAppointments = () => {
             <div className="d-flex">
               <button
                 className="m-1 btn btn-success "
-                onClick={() => handleStatus(record, "published")}
+                onClick={() => handleStatus(record, "approved")}
               >
-                Publish
+                Approve
               </button>
               <button
                 className="m-1 btn btn-danger ms-2"
