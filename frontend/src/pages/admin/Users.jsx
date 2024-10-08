@@ -6,6 +6,8 @@ import moment from "moment";
 import LayoutWithSidebar from "../../components/LayoutwithSidebar";
 import { Badge } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import jsPDF from 'jspdf'
+import 'jspdf-autotable'
 
 const { Search } = Input;
 
@@ -125,10 +127,45 @@ const Users = () => {
     },
   ];
 
+
+
+  const data = users
+
+  const handleGenerate = () =>{
+    const doc = new jsPDF()
+    const title = "PDF Demo"
+    const padding = 10
+    const titleWidth = doc.getTextWidth(title)
+    const center = (doc.internal.pageSize.width / 2) - (titleWidth / 2)
+    doc.setTextColor('#333')
+    doc.text(title,center,padding)
+
+    doc.autoTable({
+        head:[['Id','Name',"isAdmin","Joined Date"]],
+        body: data.map((val,i)=>[i+1,val.name,val.isAdmin?"Admin":"User",moment(val.createdAt).format("YYYY-MM-DD")]),
+        columnStyles:{
+            0:{cellWidth:10},
+            1:{cellWidth:100},
+            2:{cellWidth:35},
+            3:{cellWidth:35},
+        },
+        headStyles:{
+            fillColor: "#333",
+            textColor: "white"
+        }
+    })
+
+    doc.save('users.pdf')
+  }
+
   return (
     <LayoutWithSidebar>
       <div className="mb-2">
         <h3 className="text-center m-2">Users List</h3>
+
+        {/* {JSON.stringify(users)} */}
+
+
         <Space>
           <Search
             placeholder="Search by name or email"
@@ -138,6 +175,7 @@ const Users = () => {
             enterButton
           />
           <Button onClick={handleClearSearch}>Clear</Button>
+          <button onClick={handleGenerate}>Generate PDF</button> 
         </Space>
       </div>
       <div style={{overflowX: "auto"}}>
