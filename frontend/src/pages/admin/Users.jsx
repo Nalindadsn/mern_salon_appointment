@@ -133,7 +133,7 @@ const Users = () => {
 
   const handleGenerate = () =>{
     const doc = new jsPDF()
-    const title = "PDF Demo"
+    const title = "User List"
     const padding = 10
     const titleWidth = doc.getTextWidth(title)
     const center = (doc.internal.pageSize.width / 2) - (titleWidth / 2)

@@ -6,6 +6,9 @@ import Layout from "../../components/Layout";
 import Spinner from "../../components/Spinner";
 import LayoutWithSidebar from "../../components/LayoutwithSidebar";
 
+import jsPDF from 'jspdf'
+import 'jspdf-autotable'
+import moment from "moment";
 const { Search } = Input;
 
 const Message = () => {
@@ -106,6 +109,37 @@ const Message = () => {
     },
   ];
 
+  const data = messages
+
+  const handleGenerate = () =>{
+    const doc = new jsPDF()
+    const title = "Message List"
+    const padding = 10
+    const titleWidth = doc.getTextWidth(title)
+    const center = (doc.internal.pageSize.width / 2) - (titleWidth / 2)
+    doc.setTextColor('#333')
+    doc.text(title,center,padding)
+
+    doc.autoTable({
+        head:[['Id','first Name',"Last Name","Phone","Email","Message","Joined Date"]],
+        body: data.map((val,i)=>[i+1,val.firstName,val.lastName,val.phone,val.email,val.message,moment(val.createdAt).format("YYYY-MM-DD")]),
+        columnStyles:{
+            0:{cellWidth:10},
+            1:{cellWidth:25},
+            2:{cellWidth:25},
+            3:{cellWidth:23},
+            4:{cellWidth:35},
+            5:{cellWidth:45},
+            6:{cellWidth:25},
+        },
+        headStyles:{
+            fillColor: "#333",
+            textColor: "white"
+        }
+    })
+
+    doc.save('messages.pdf')
+  }
   return (
     <LayoutWithSidebar>
       <div className="mb-2">
@@ -118,6 +152,9 @@ const Message = () => {
             style={{ marginRight: 10 }}
           />
           <Button onClick={handleClearSearch}>Clear</Button>
+          <button onClick={handleGenerate} style={{ width: "150px" }}>
+            Generate PDF
+          </button>
         </div>
       </div>
       {loading ? (
@@ -126,30 +163,7 @@ const Message = () => {
         
         <Table columns={columns} dataSource={filteredMessages} />
       )}
-      <Modal
-        title="Message Details"
-        visible={modalVisible}
-        onCancel={() => setModalVisible(false)}
-        footer={null}
-      >
-        {selectedMessage && (
-          <div>
-            <p>
-              Name: {`${selectedMessage.name} `}
-            </p>
-            <img src={selectedMessage.image} alt="Message" style={{ width: "100%"}}/>
-            <p>Brand: {selectedMessage.brand}</p>
-            <p>Description: {selectedMessage.description}</p>
-
-            <p>Status: {selectedMessage.status}</p>
-            <p>Message ID: {selectedMessage.userId}</p>
-            <p>
-              Created Date:{" "}
-              {new Date(selectedMessage.createdAt).toLocaleDateString()}
-            </p>
-          </div>
-        )}
-      </Modal>
+     
     </LayoutWithSidebar>
   );
 };

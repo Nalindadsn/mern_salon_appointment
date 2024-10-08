@@ -6,6 +6,9 @@ import Layout from "../../components/Layout";
 import Spinner from "../../components/Spinner";
 import LayoutWithSidebar from "../../components/LayoutwithSidebar";
 
+import jsPDF from 'jspdf'
+import 'jspdf-autotable'
+import moment from "moment";
 const { Search } = Input;
 
 const Service = () => {
@@ -92,8 +95,16 @@ const Service = () => {
       dataIndex: "description",
     },
     {
-      title: "Specialization",
-      dataIndex: "specialization",
+      title: "Fee LKR",
+      dataIndex: "feesPerConsultation",
+    },
+    {
+      title: "Start time",
+      dataIndex: "starttime",
+    },
+    {
+      title: "End time",
+      dataIndex: "endtime",
     },
     {
       title: "Actions",
@@ -140,6 +151,48 @@ const Service = () => {
     },
   ];
 
+
+  
+  const data = services
+
+  const handleGenerate = () =>{
+    const doc = new jsPDF()
+    const title = "Service"
+    const padding = 10
+    const titleWidth = doc.getTextWidth(title)
+    const center = (doc.internal.pageSize.width / 2) - (titleWidth / 2)
+    doc.setTextColor('#333')
+    doc.text(title,center,padding)
+
+    doc.autoTable({
+      head: [["Id", "Name", "Description","Fee LKR","Start Time","End Time","Created Date"]],
+      body: data.map((val, i) => [
+        i + 1
+        ,val.name,
+        val.description,
+        val.feesPerConsultation,
+        val.starttime,
+        val.endtime,
+        moment(val.createdAt).format("YYYY-MM-DD")
+      ]),
+      columnStyles: {
+        0: { cellWidth: 10 },
+        1:{cellWidth:35},
+        2:{cellWidth:35},
+        3:{cellWidth:20},
+        4:{cellWidth:20},
+        5:{cellWidth:20},
+        6:{cellWidth:35},
+      },
+      headStyles: {
+        fillColor: "#333",
+        textColor: "white",
+      },
+    });
+
+
+    doc.save('services.pdf')
+  }
   return (
     <LayoutWithSidebar>
       <div className="mb-2">
@@ -153,6 +206,9 @@ const Service = () => {
             style={{ marginRight: 10 }}
           />
           <Button onClick={handleClearSearch}>Clear</Button>
+          <button onClick={handleGenerate} style={{ width: "150px" }}>
+            Generate PDF
+          </button>
         </div>
       </div>
       {loading ? (

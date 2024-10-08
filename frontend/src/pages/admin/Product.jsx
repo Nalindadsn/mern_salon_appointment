@@ -6,6 +6,9 @@ import Layout from "../../components/Layout";
 import Spinner from "../../components/Spinner";
 import LayoutWithSidebar from "../../components/LayoutwithSidebar";
 
+import jsPDF from "jspdf";
+import "jspdf-autotable";
+import moment from "moment";
 const { Search } = Input;
 
 const Product = () => {
@@ -125,22 +128,56 @@ const Product = () => {
           >
             View Details
           </Button>
-                    <Link to={`/admin/products/${record._id}`}
-          >
-            Edit
-          </Link>       
+          <Link to={`/admin/products/${record._id}`}>Edit</Link>
         </div>
       ),
     },
   ];
 
+  const data = products;
+
+  const handleGenerate = () => {
+    const doc = new jsPDF();
+    const title = "Product List";
+    const padding = 10;
+    const titleWidth = doc.getTextWidth(title);
+    const center = doc.internal.pageSize.width / 2 - titleWidth / 2;
+    doc.setTextColor("#333");
+    doc.text(title, center, padding);
+
+    doc.autoTable({
+      head: [["Id", "Name", "Description","Created Date"]],
+      body: data.map((val, i) => [
+        i + 1
+        ,val.name,
+        val.description,
+        // val.image,
+        moment(val.createdAt).format("YYYY-MM-DD")
+      ]),
+      columnStyles: {
+        0: { cellWidth: 10 },
+        1:{cellWidth:70},
+        2:{cellWidth:70},
+        3:{cellWidth:35},
+      },
+      headStyles: {
+        fillColor: "#333",
+        textColor: "white",
+      },
+    });
+
+    doc.save("products.pdf");
+  };
   return (
     <LayoutWithSidebar>
       <div className="mb-2">
         <h3 className="text-center m-3">All Product</h3>
-        <Link to="/admin/add-product">Add Product</Link><br/>
-        <Link to="/admin/products/pdf" className="ml-5">PDF</Link>
-        <div className="d-flex align-items-center mb-2">
+        <Link to="/admin/add-product">Add Product</Link>
+        <br />
+        <Link to="/admin/products/pdf" className="ml-5">
+          PDF
+        </Link>
+        <div className="d-flex align-items-center mb-2 ">
           <Search
             placeholder="Search by name"
             onSearch={handleSearch}
@@ -148,12 +185,14 @@ const Product = () => {
             style={{ marginRight: 10 }}
           />
           <Button onClick={handleClearSearch}>Clear</Button>
+          <button onClick={handleGenerate} style={{ width: "150px" }}>
+            Generate PDF
+          </button>
         </div>
       </div>
       {loading ? (
         <Spinner />
       ) : (
-        
         <Table columns={columns} dataSource={filteredProducts} />
       )}
       <Modal
@@ -164,10 +203,12 @@ const Product = () => {
       >
         {selectedProduct && (
           <div>
-            <p>
-              Name: {`${selectedProduct.name} `}
-            </p>
-            <img src={selectedProduct.image} alt="Product" style={{ width: "100%"}}/>
+            <p>Name: {`${selectedProduct.name} `}</p>
+            <img
+              src={selectedProduct.image}
+              alt="Product"
+              style={{ width: "100%" }}
+            />
             <p>Brand: {selectedProduct.brand}</p>
             <p>Description: {selectedProduct.description}</p>
 
