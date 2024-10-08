@@ -136,16 +136,15 @@ const ServiceAppointments = () => {
     doc.text(title,center,padding)
 
     doc.autoTable({
-        head:[['Id','first Name',"Last Name","Phone","Email","Message","Joined Date"]],
-        body: data.map((val,i)=>[i+1,val.firstName,val.lastName,val.phone,val.email,val.message,moment(val.createdAt).format("YYYY-MM-DD")]),
+        head:[['Id','name',"Service","Appointment date","Time","created Date"]],
+        body: data.map((val,i)=>[i+1 ,val.users[0].name,val.service[0].name,moment(val.date).format("YYYY-MM-DD"),moment(val.time).format("HH:mm"),moment(val.createdAt).format("YYYY-MM-DD")]),
         columnStyles:{
             0:{cellWidth:10},
-            1:{cellWidth:25},
-            2:{cellWidth:25},
-            3:{cellWidth:23},
-            4:{cellWidth:35},
-            5:{cellWidth:45},
-            6:{cellWidth:25},
+            1:{cellWidth:45},
+            2:{cellWidth:55},
+            3:{cellWidth:25},
+            4:{cellWidth:25},
+            5:{cellWidth:25},
         },
         headStyles:{
             fillColor: "#333",
