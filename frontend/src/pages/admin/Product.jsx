@@ -138,7 +138,8 @@ const Product = () => {
     <LayoutWithSidebar>
       <div className="mb-2">
         <h3 className="text-center m-3">All Product</h3>
-        <Link to="/admin/add-product">Add Product</Link>
+        <Link to="/admin/add-product">Add Product</Link><br/>
+        <Link to="/admin/products/pdf" className="ml-5">PDF</Link>
         <div className="d-flex align-items-center mb-2">
           <Search
             placeholder="Search by name"

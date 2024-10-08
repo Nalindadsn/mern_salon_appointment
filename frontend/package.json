@@ -10,9 +10,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@react-pdf/renderer": "^4.0.0",
     "@reduxjs/toolkit": "^1.9.5",
     "bootstrap": "^5.2.3",
     "cdbreact": "^1.5.19",
+    "jspdf-autotable": "^3.8.3",
     "moment": "^2.30.1",
     "react": "^18.2.0",
     "react-bootstrap": "^2.7.4",

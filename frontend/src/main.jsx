@@ -54,6 +54,7 @@ import Message from './pages/admin/Message.jsx';
 import UpdateUser from './pages/admin/UpdateUser.jsx';
 import UpdateService from './pages/UpdateService.jsx';
 import UpdateProduct from './pages/UpdateProduct.jsx';
+import ProductPDF from './pages/admin/ProductPDF.jsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -121,6 +122,16 @@ const router = createBrowserRouter(
                             </ProtectedRoute>
                           }
                         />
+                        <Route
+                          path="/admin/products/pdf"
+                          element={
+                            <ProtectedRoute>
+                              <ProductPDF />
+                            </ProtectedRoute>
+                          }
+                        />
+
+
                         <Route
                           path="/admin/products/:id"
                           element={
