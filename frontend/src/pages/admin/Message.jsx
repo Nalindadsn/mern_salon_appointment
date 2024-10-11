@@ -86,14 +86,15 @@ const Message = () => {
       dataIndex: "actions",
       render: (text, record) => (
         <div className="d-flex">
-          <Button
+          <Link
             className="m-1"
-            type="primary"
             // onClick={() => handleAccountStatus(record, "published")}
             // disabled={record.status === "published"}
+            to={`https://api.whatsapp.com/send?phone=${record?.phone}&text=Hello`}
+            target="_blank"
           >
             Chat
-          </Button>
+          </Link>
           {/* <Button
             className="m-1"
             type="danger"
