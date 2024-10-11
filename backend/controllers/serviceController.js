@@ -66,9 +66,26 @@ const getserviceByIdController = async (req, res) => {
 const serviceAppointmentsController = async (req, res) => {
   try {
     const service = await serviceModel.findOne({ userId: req.body.userId });
-    const appointments = await appointmentModel.find({
-      // serviceId: service._id,
-    });
+    const appointments = await appointmentModel.aggregate([
+      {$set: {userId: {$toObjectId: "$userId"} }},
+      {$set: {serviceId: {$toObjectId: "$serviceId"} }},
+      {
+$lookup : {
+            from : 'users',
+            localField : 'userId',
+            foreignField : '_id',
+            as : 'users'
+        }
+      },
+      {
+$lookup : {
+            from : 'services',
+            localField : 'serviceId',
+            foreignField : '_id',
+            as : 'service'
+        }
+      }
+    ])
     res.status(200).send({
       success: true,
       message: "service appointments fetch successfully",

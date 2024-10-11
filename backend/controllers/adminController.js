@@ -345,6 +345,7 @@ const updateproductDetailsController = async (req, res) => {
   }
 };
 
+
 module.exports = {
   changeProductStatusController,
   getAllServicesController,
