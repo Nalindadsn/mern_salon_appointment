@@ -40,7 +40,7 @@ const HeroSection = () => {
         </h1>
       </div>
 
-      <button
+      {/* <button
         className="btn"
         style={{
           position: "absolute",
@@ -60,7 +60,7 @@ const HeroSection = () => {
         onClick={handleAppointmentClick}
       >
         Make an appointment
-      </button>
+      </button> */}
     </div>
   );
 };

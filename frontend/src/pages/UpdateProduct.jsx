@@ -198,7 +198,7 @@ const UpdateProduct = () => {
       <h3 className="text-center">Update Product</h3>
       upload image
       <div className="flex justify-center flex-col m-8 ">
-      -{JSON.stringify(productInfo)}-
+      {/* -{JSON.stringify(productInfo)}- */}
       <Row gutter={20}>
         
       <Col  xs={24} md={12} lg={12} className="border pb-5">

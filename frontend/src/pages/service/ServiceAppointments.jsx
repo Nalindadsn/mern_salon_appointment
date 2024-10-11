@@ -157,7 +157,7 @@ const ServiceAppointments = () => {
   return (
     <LayoutWithSidebar>
       <h3>Appointments Lists</h3>
-      {JSON.stringify(appointments)}
+      {/* {JSON.stringify(appointments)} */}
       <button onClick={handleGenerate}>Generate PDF</button> 
 
       <Table columns={columns} dataSource={appointments} />

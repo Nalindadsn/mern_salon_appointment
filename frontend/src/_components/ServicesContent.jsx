@@ -106,7 +106,7 @@ const ServicesContent = () => {
       </div>
 
       <div className="d-flex justify-content-center my-5">
-        <button
+        {/* <button
           className="btn btn-primary px-4 py-2"
           style={{
             backgroundColor: "#CB1276",
@@ -119,7 +119,7 @@ const ServicesContent = () => {
           onClick={handleAppointmentClick}
         >
           Make an appointment
-        </button>
+        </button> */}
       </div>
     </div>
   );
