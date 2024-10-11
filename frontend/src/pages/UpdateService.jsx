@@ -199,7 +199,7 @@ const UpdateService = () => {
       <h3 className="text-center">Update Service</h3>
       upload image
       <div className="flex justify-center flex-col m-8 ">
-      -{JSON.stringify(serviceInfo)}-
+      {/* -{JSON.stringify(serviceInfo)}- */}
       <Row gutter={20}>
         
       <Col  xs={24} md={12} lg={12} className="border pb-5">
