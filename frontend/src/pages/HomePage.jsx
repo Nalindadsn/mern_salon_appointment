@@ -59,7 +59,7 @@ const HomePage = () => {
           <Title level={2}>Find a Service</Title>
           <Text type="secondary">
             Book appointments with trusted healthcare professionals
-          </Text>
+          </Text><br/>
           <Space direction="vertical" style={{ marginTop: 16 }}>
             <Search
               placeholder="Search by name or specialization"
