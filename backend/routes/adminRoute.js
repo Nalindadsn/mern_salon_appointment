@@ -12,7 +12,8 @@ const {
   updateUserController,
   updateproductController,
   getProductByIdController,
-  updateproductDetailsController
+  updateproductDetailsController,
+  deleteUserContactController
   
 
 } = require("../controllers/adminController");
@@ -53,6 +54,7 @@ router.post(
   authMiddleware,
   changeServiceStatusController
 );
+router.delete("/deleteMessage", authMiddleware, deleteUserContactController);
 
 router.post(
   "/changeProductStatus",

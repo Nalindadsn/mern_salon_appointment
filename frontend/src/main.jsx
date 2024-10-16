@@ -260,6 +260,17 @@ const router = createBrowserRouter(
                                           />
       
 
+      <Route
+                                            path="/admin/messages/:id"
+                                             index={true} 
+                                            element={
+                                              <ProtectedRoute>
+                                                <UpdateMessage />
+                                                </ProtectedRoute>
+                                            }
+                                          />
+      
+
 
 
 
