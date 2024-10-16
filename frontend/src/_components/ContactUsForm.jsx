@@ -17,7 +17,7 @@ const Login = ({userInfo}) => {
   const submitHandler = async (values) => {
     try {
       if (userInfo!==null) {
-        values.userInfo=userInfo._id
+        values.userId=userInfo._id
       }
       setLoading(true);
       dispatch(showLoading());

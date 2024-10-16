@@ -47,11 +47,13 @@ const contactMongooseSchema = new mongoose.Schema({
     unique: true,
     lowercase: true,
   },
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
-});
+  // createdAt: {
+  //   type: Date,
+  //   default: Date.now,
+  // },
+}
+, { timestamps: true }
+);
 
 // Add the Joi validation to the Mongoose schema
 contactMongooseSchema.validateContact = async function (contact) {

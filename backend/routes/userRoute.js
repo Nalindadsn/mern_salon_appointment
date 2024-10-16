@@ -14,8 +14,11 @@ const {
   getUserByIdController,
   updateUserController,
   getServiceByIdController,
-  
+  getAllUserContactsController,
+  deleteUserContactController,
   updateserviceController,
+  updateMessageController,
+  getMessageByIdController
 } = require("../controllers/userController");
 const authMiddleware = require("../middlewares/authMiddleware");
 
@@ -31,11 +34,13 @@ router.post("/register", registerController);
 
 // Auth || POST
 router.post("/getUserData", authMiddleware, authController);
+router.get("/getUserMessages", authMiddleware, getAllUserContactsController);
 
 // Apply service || POST
 router.post("/add-service", authMiddleware, addserviceController);
 // Apply service || POST
 router.post("/update-service", authMiddleware, updateserviceController);
+router.delete("/deleteMessage", authMiddleware, deleteUserContactController);
 
 
 
@@ -67,8 +72,14 @@ router.post("/getUserInfo", authMiddleware, getUserByIdController);
 
 
 router.post("/getServiceInfo", authMiddleware, getServiceByIdController);
+
+router.post("/getMessageInfo", authMiddleware, getMessageByIdController);
 // GET User
 router.post("/updateUser", authMiddleware, updateUserController);
+
+
+// GET User
+router.post("/updateMessage", authMiddleware, updateMessageController);
 
 // Booking Availability
 router.post(

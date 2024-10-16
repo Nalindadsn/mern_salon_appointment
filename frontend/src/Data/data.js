@@ -11,7 +11,7 @@ export const userMenu = [
     icon: "fas fa-calendar-alt",
   },
   {
-    name: "Messages",
+    name: "Message History",
     path: "/user/messages",
     icon: "fas fa-envelope",
   },

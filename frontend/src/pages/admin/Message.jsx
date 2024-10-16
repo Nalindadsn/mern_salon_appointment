@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Table, message, Button, Input, Modal } from "antd";
-import { Link } from "react-router-dom";
+import { Table, message, Input, Modal } from "antd";
+import { Link, useParams } from "react-router-dom";
 import Layout from "../../components/Layout";
 import Spinner from "../../components/Spinner";
 import LayoutWithSidebar from "../../components/LayoutwithSidebar";
@@ -9,25 +9,57 @@ import LayoutWithSidebar from "../../components/LayoutwithSidebar";
 import jsPDF from 'jspdf'
 import 'jspdf-autotable'
 import moment from "moment";
+import { Button } from "react-bootstrap";
 const { Search } = Input;
 
-const Message = () => {
-  const [messages, setMessage] = useState([]);
+const UserMessage = () => {
+
+
+  const [userInfo, setUser] = useState(null);
+
+  const params = useParams();
+  //getDOc Details
+  const getUserInfo = async () => {
+    try {
+      const res = await axios.post(
+        "/api/admin/getUserInfo",
+        { userId: params.id },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      if (res.data.success) {
+        setUser(res.data.data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getUserInfo();
+    //eslint-disable-next-line
+  }, []);
+
+  const [messages, setUserMessage] = useState([]);
   const [loading, setLoading] = useState(false);
   const [searchValue, setSearchValue] = useState("");
-  const [selectedMessage, setSelectedMessage] = useState(null);
+  const [selectedUserMessage, setSelectedUserMessage] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
 
-  const getMessage = async () => {
+  const getUserMessage = async () => {
     setLoading(true);
     try {
       const res = await axios.get("/api/admin/getAllMessages", {
+        userId:params?.id,
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
       if (res.data.success) {
-        setMessage(res.data.data);
+        setUserMessage(res.data.data);
       } else {
         message.error(res.data.message || "Failed to fetch messages.");
       }
@@ -40,7 +72,7 @@ const Message = () => {
   };
 
   useEffect(() => {
-    getMessage();
+    getUserMessage();
   }, []);
 
   
@@ -53,11 +85,37 @@ const Message = () => {
     setSearchValue("");
   };
 
-  const filteredMessages = messages.filter((product) => {
+  const filteredUserMessages = messages?.filter((product) => {
     const fullName = `${product.firstName} ${product.lastName}`.toLowerCase();
     return fullName.includes(searchValue);
   });
-
+const handleDelete = async (record, status) => {
+  if (confirm('Are you sure you want to DELETE?')) {
+    // alert('Deleted')
+  try {
+    const res = await axios.delete(
+      "/api/admin/deleteMessage",
+      {
+        data: {
+          userId: params?.id,
+          messageId: record._id,
+          
+        },
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
+    // if (res.data.success) {
+      window.location.reload();
+      getUserMessage();
+    // } else {
+    //   message.error(res.data.message || "Failed to delete message.");
+    // }
+  } catch (error) {
+    console.log(error);}
+  } 
+}
   const columns = [
     {
       title: "name",
@@ -78,31 +136,38 @@ const Message = () => {
       dataIndex: "email",
     },
     {
-      title: "Message",
+      title: "UserMessage",
       dataIndex: "message",
+    },
+    {
+      title: "Created At",
+      dataIndex: "createdAt",
+      render: (text, record) => (
+        <div className="">
+         
+        Created : {moment(record?.createdAt).format("YYYY/MM/DD HH:mm:ss")} 
+         <br/>
+
+         {record?.createdAt==record?.updatedAt?"": <span>Edited : {moment(record?.updatedAt).format("YYYY/MM/DD HH:mm:ss")}</span>}
+        
+        </div>
+      ),
     },
     {
       title: "Actions",
       dataIndex: "actions",
       render: (text, record) => (
-        <div className="d-flex">
-          <Link
-            className="m-1"
-            // onClick={() => handleAccountStatus(record, "published")}
-            // disabled={record.status === "published"}
-            to={`https://api.whatsapp.com/send?phone=${record?.phone}&text=Hello`}
-            target="_blank"
+        <div className="d-flex ">
+         
+         
+          <Link to={`/admin/messages/${record._id}`} className="btn btn-primary">Edit</Link>
+          <Button
+            className="ml-2"
+             variant="danger"
+            onClick={() => handleDelete(record, "deleted")}
           >
-            Chat
-          </Link>
-          {/* <Button
-            className="m-1"
-            type="danger"
-            onClick={() => handleAccountStatus(record, "rejected")}
-            disabled={record.status === "rejected"}
-          >
-            Reject
-          </Button> */}
+            Delete
+          </Button>
          
           
         </div>
@@ -114,7 +179,7 @@ const Message = () => {
 
   const handleGenerate = () =>{
     const doc = new jsPDF()
-    const title = "Message List"
+    const title = "UserMessage List"
     const padding = 10
     const titleWidth = doc.getTextWidth(title)
     const center = (doc.internal.pageSize.width / 2) - (titleWidth / 2)
@@ -122,7 +187,7 @@ const Message = () => {
     doc.text(title,center,padding)
 
     doc.autoTable({
-        head:[['Id','first Name',"Last Name","Phone","Email","Message","Joined Date"]],
+        head:[['Id','first Name',"Last Name","Phone","Email","UserMessage","Joined Date"]],
         body: data.map((val,i)=>[i+1,val.firstName,val.lastName,val.phone,val.email,val.message,moment(val.createdAt).format("YYYY-MM-DD")]),
         columnStyles:{
             0:{cellWidth:10},
@@ -141,10 +206,16 @@ const Message = () => {
 
     doc.save('messages.pdf')
   }
+
+
+
+
+
+
   return (
     <LayoutWithSidebar>
       <div className="mb-2">
-        <h3 className="text-center m-3">All Messages</h3>
+        <h3 className="text-center m-3">Message History</h3>
         <div className="d-flex align-items-center mb-2">
           <Search
             placeholder="Search by name"
@@ -162,11 +233,11 @@ const Message = () => {
         <Spinner />
       ) : (
         
-        <Table columns={columns} dataSource={filteredMessages} />
+        <Table columns={columns} dataSource={filteredUserMessages} />
       )}
      
     </LayoutWithSidebar>
   );
 };
 
-export default Message;
+export default UserMessage;

@@ -5,6 +5,7 @@ const productModel = require("../models/productModel");
 const appointmentModel = require("../models/appointmentModel");
 const jwt = require("jsonwebtoken");
 const moment = require("moment");
+const contactModel = require("../models/contactModel");
 
 // login callback
 const loginController = async (req, res) => {
@@ -123,6 +124,24 @@ const getServiceByIdController = async (req, res) => {
   console.log(req.body)
   try {
     const User = await serviceModel.findOne({ _id: req.body.serviceId });
+    res.status(200).send({
+      success: true,
+      message: "single user info fetched",
+      data: User,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      error,
+      message: "error in single service info",
+    });
+  }
+};
+const getMessageByIdController = async (req, res) => {
+  console.log(req.body)
+  try {
+    const User = await contactModel.findOne({ _id: req.body.messageId });
     res.status(200).send({
       success: true,
       message: "single user info fetched",
@@ -495,7 +514,7 @@ const updateUserController = async (req, res) => {
 // get all contacts data
 const getAllUserContactsController = async (req, res) => {
   try {
-    const contacts = await contactModel.find({});
+    const contacts = await contactModel.find({userId: req.body.userId});
     res.status(200).send({
       success: true,
       message: "contacts data list",
@@ -510,6 +529,57 @@ const getAllUserContactsController = async (req, res) => {
     });
   }
 };
+
+// get all contacts data
+const deleteUserContactController = async (req, res) => {
+  console.log(req.body)
+  try {
+    const contacts = await contactModel.deleteOne({_id: req.body.messageId});
+    res.status(200).send({
+      success: true,
+      message: "contacts data list",
+      data: contacts,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "error while getting contacts data",
+      error,
+    });
+  }
+};
+
+
+const updateMessageController = async (req, res) => {
+  console.log(req.body);
+  try {
+    // const updatedservice = await serviceModel({ ...req.body, status: "pending" });
+    // await updatedservice.save();
+
+    const updatedmessage = await contactModel.findOneAndUpdate(
+      { _id: req.body.messageId },
+      req.body
+    );
+
+
+    // await userModel.findByIdAndUpdate(adminUser._id, { notification });
+    res.status(201).send({
+      success: true,
+      message: "message updated successfully",
+      data:updatedmessage
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      error,
+      message: "error while applying for message",
+    });
+  }
+};
+
+
 module.exports = {
   loginController,
   registerController,
@@ -526,5 +596,8 @@ module.exports = {
   updateUserController,
   updateserviceController,
   getServiceByIdController,
-  getAllUserContactsController
+  getAllUserContactsController,
+  deleteUserContactController,
+  updateMessageController,
+  getMessageByIdController
 };

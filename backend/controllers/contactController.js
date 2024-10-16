@@ -26,7 +26,7 @@ const createContactController = async (req, res) => {
 
     //
     const newContact = new contactModel({
-      firstName, lastName, email, phone,message
+      firstName, lastName, email, phone,message,userId:req.body.userId?req.body.userId:""
     });
     await newContact.save();
 
