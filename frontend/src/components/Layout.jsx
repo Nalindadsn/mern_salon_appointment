@@ -32,7 +32,7 @@ const Layout = ({ children }) => {
     : userMenu.filter((menu) => menu.name !== "Profile");
 
   return (
-    <div className="main">
+    <div className="main" style={{overflow:"hidden"}}>
       <Header notification={user?.notification ? user.notification.length : 0}/>
       <div>
 

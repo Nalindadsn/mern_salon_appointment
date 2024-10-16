@@ -8,7 +8,7 @@ import { hideLoading, showLoading } from "../redux/features/alertSlice";
 import TextArea from "antd/es/input/TextArea";
 // import backgroundImage from "./background.jpg"; // Import your background image
 
-const Login = ({user}) => {
+const Login = ({userInfo}) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
@@ -16,8 +16,8 @@ const Login = ({user}) => {
   // Submit for Login
   const submitHandler = async (values) => {
     try {
-      if (user) {
-        values.userId=user._id
+      if (userInfo!==null) {
+        values.userInfo=userInfo._id
       }
       setLoading(true);
       dispatch(showLoading());
@@ -69,6 +69,7 @@ const Login = ({user}) => {
         style={{
           backgroundColor: "rgba(255, 255, 255, 0.8)",
           padding: "40px",
+          paddingTop: "60px",
           borderRadius: "8px",
           width: "100%",
           boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
@@ -83,13 +84,18 @@ const Login = ({user}) => {
         >
           Get in touch
         </h2>
-        <Form layout="vertical" onFinish={submitHandler}>
+        {userInfo && <Form layout="vertical" onFinish={submitHandler}
+        initialValues={{
+          firstName: userInfo?.name.split(" ")[0],
+          lastName: userInfo?.name.split(" ").pop(),
+          email: userInfo?.email,
+        }}
+        >
 
-
-          
         <Form.Item
             name="firstName"
             rules={[{ required: true, message: "Please input your firstName!" }]}
+            
           >
             <Input
               prefix={<UserOutlined style={{ color: "#1890ff" }} />}
@@ -163,6 +169,9 @@ const Login = ({user}) => {
             </Button>
           </Form.Item>
         </Form>
+        }
+        {userInfo===null &&<>Please Login</>}
+        
         
       </div>
     </div>

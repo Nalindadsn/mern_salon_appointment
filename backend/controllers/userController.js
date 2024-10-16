@@ -491,6 +491,25 @@ const updateUserController = async (req, res) => {
     });
   }
 };
+
+// get all contacts data
+const getAllUserContactsController = async (req, res) => {
+  try {
+    const contacts = await contactModel.find({});
+    res.status(200).send({
+      success: true,
+      message: "contacts data list",
+      data: contacts,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "error while getting contacts data",
+      error,
+    });
+  }
+};
 module.exports = {
   loginController,
   registerController,
@@ -506,5 +525,6 @@ module.exports = {
   getUserByIdController,
   updateUserController,
   updateserviceController,
-  getServiceByIdController
+  getServiceByIdController,
+  getAllUserContactsController
 };

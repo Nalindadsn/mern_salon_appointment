@@ -145,33 +145,6 @@ const UserMessage = () => {
 
 
 
-  const [userInfo, setUser] = useState(null);
-
-  const params = useParams();
-  const getUserInfo = async () => {
-    try {
-      const res = await axios.post(
-        "/api/user/getUserInfo",
-        { userId: params.id },
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      );
-      if (res.data.success) {
-        setUser(res.data.data);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    getUserInfo();
-    //eslint-disable-next-line
-  }, []);
-
 
 
   return (

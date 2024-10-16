@@ -3,6 +3,7 @@ const Joi = require("joi");
 
 // Define a schema for contact input validation
 const contactSchema = Joi.object({
+  userId: Joi.string().min(2).max(50),
   firstName: Joi.string().min(2).max(50).required(),
   lastName: Joi.string().min(2).max(50).required(),
   phone: Joi.string().min(2).max(50).required(),
@@ -12,6 +13,10 @@ const contactSchema = Joi.object({
 
 // Create a Mongoose schema
 const contactMongooseSchema = new mongoose.Schema({
+  userId: {
+    type: String,
+    required:false,
+  },
   firstName: {
     type: String,
     required: [true, "Please provide your firstName"],
