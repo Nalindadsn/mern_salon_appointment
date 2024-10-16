@@ -10,6 +10,11 @@ export const userMenu = [
     path: "/user/appointments",
     icon: "fas fa-calendar-alt",
   },
+  {
+    name: "Messages",
+    path: "/user/messages",
+    icon: "fas fa-envelope",
+  },
 ];
 
 // Admin menu

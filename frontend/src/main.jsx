@@ -55,6 +55,7 @@ import UpdateUser from './pages/admin/UpdateUser.jsx';
 import UpdateService from './pages/UpdateService.jsx';
 import UpdateProduct from './pages/UpdateProduct.jsx';
 import ProductPDF from './pages/admin/ProductPDF.jsx';
+import UserMessage from './pages/user/Message.jsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -233,6 +234,17 @@ const router = createBrowserRouter(
                           element={
                             <ProtectedRoute>
                               <Message />
+                              </ProtectedRoute>
+                          }
+                        />
+      
+
+      <Route
+                          path="/user/messages"
+                           index={true} 
+                          element={
+                            <ProtectedRoute>
+                              <UserMessage />
                               </ProtectedRoute>
                           }
                         />

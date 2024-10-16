@@ -8,7 +8,7 @@ import { hideLoading, showLoading } from "../redux/features/alertSlice";
 import TextArea from "antd/es/input/TextArea";
 // import backgroundImage from "./background.jpg"; // Import your background image
 
-const Login = () => {
+const Login = ({user}) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
@@ -16,6 +16,9 @@ const Login = () => {
   // Submit for Login
   const submitHandler = async (values) => {
     try {
+      if (user) {
+        values.userId=user._id
+      }
       setLoading(true);
       dispatch(showLoading());
 

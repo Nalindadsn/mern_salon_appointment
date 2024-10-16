@@ -85,7 +85,7 @@ const Contact = () => {
             <div className="col-md-6 contact-form">
 
               <div>
-                <ContactUsForm/>
+                <ContactUsForm user={user}/>
               </div>
             </div>
 

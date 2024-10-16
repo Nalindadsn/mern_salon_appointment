@@ -10,7 +10,7 @@ const AboutUs = () => {
     <Layout>
     <Background />
     <AboutUsContext />
-    <Footer /></Layout>
+  </Layout>
     </>
   )
 }
