@@ -180,8 +180,8 @@ const changeServiceStatusController = async (req, res) => {
     const user = await userModel.findOne({ _id: service.userId });
     const notification = user.notification;
     notification.push({
-      type: "service-account-request-updated",
-      message: `your service account request has ${status}`,
+      type: "service-updated",
+      message: `your service  has ${status}`,
       onClickPath: "/notification",
     });
     user.isservice = status === "published" ? true : false;

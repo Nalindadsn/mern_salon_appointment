@@ -130,11 +130,15 @@ const ProfileScreen = () => {
               >
                 {/* <Input type="text" placeholder="isAdmin" /> */}
                 <Select>
-                  <Select.Option value={true}>Admin</Select.Option>
+                  
+                  {userInfo.isAdmin && (
+              <Select.Option value={true}>Admin</Select.Option>
+            )}
                   <Select.Option value={false}>User</Select.Option>
                 </Select>
               </Form.Item>
             </Col>
+            
             <Col xs={24} md={24} lg={24}>
               <Form.Item
                 label="Email"
