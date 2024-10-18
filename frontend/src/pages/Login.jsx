@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { hideLoading, showLoading } from "../redux/features/alertSlice";
 // import backgroundImage from "./background.jpg"; // Import your background image
-
+import logo from "../_assets/logo.png";
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -70,6 +70,16 @@ const Login = () => {
           boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
         }}
       >
+        <div style={{ textAlign: "center" }}>
+          <Link to="/" style={{ textDecoration: "none" }}>
+            <img
+              src={logo}
+              alt="Logo"
+              style={{ width: "100px", height: "100px", marginBottom: "20px" }}
+            />
+          </Link>
+        </div>
+
         <h2
           style={{
             marginBottom: "30px",

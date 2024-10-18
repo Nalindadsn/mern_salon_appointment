@@ -25,16 +25,15 @@ const TestimonialForm = ({ userInfo }) => {
       const { data } = await axios({
         method: "post",
         baseURL: "http://localhost:4000",
-        url: `/api/contact/create`,
+        url: `/api/user/createTestimonial`,
         data: values,
       });
 
-      // alert(JSON.stringify(data));
       dispatch(hideLoading());
       if (data.success) {
         // localStorage.setItem("token", data.token);
         message.success("Message sent Successful");
-        navigate("/contact/sent");
+        navigate("/user/testimonial");
       } else {
         message.error(data.message);
       }
@@ -119,24 +118,12 @@ const TestimonialForm = ({ userInfo }) => {
             </Form.Item>
 
             <Form.Item
-              name="phone"
-              rules={[{ required: true, message: "Please input your phone!" }]}
+              name="rate"
+              rules={[{ required: true, message: "Please input your rate!" }]}
             >
               <Input
                 prefix={<UserOutlined style={{ color: "#1890ff" }} />}
-                placeholder="Mobile Number"
-                style={{ marginBottom: "20px" }}
-              />
-            </Form.Item>
-
-            <Form.Item
-              name="email"
-              rules={[{ required: true, message: "Please input your email!" }]}
-            >
-              <Input
-                prefix={<MailOutlined style={{ color: "#1890ff" }} />}
-                // prefix={<UserOutlined style={{ color: "#1890ff" }} />}
-                placeholder="Email"
+                placeholder="rate"
                 style={{ marginBottom: "20px" }}
               />
             </Form.Item>
@@ -170,7 +157,7 @@ const TestimonialForm = ({ userInfo }) => {
             </Form.Item>
           </Form>
         )}
-        {userInfo === null && <>Please login</>}
+        {userInfo === null && <>Please TestimonialForm</>}
       </div>
     </div>
   );

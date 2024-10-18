@@ -20,6 +20,7 @@ const {
   updateMessageController,
   getMessageByIdController,
   getAllTestimonialController,
+  createTestimonialController,
 } = require("../controllers/userController");
 const authMiddleware = require("../middlewares/authMiddleware");
 
@@ -61,7 +62,7 @@ router.post(
 router.get("/getAllServices", getAllServicesController);
 
 // GET ALL serviceS
-router.get("/getAllTestimonial", getAllTestimonialController);
+router.get("/getAllTestimonial", authMiddleware, getAllTestimonialController);
 
 // GET ALL serviceS
 router.get("/getAllProducts", getAllProductsController);
@@ -89,5 +90,7 @@ router.post(
 
 // Appointments List
 router.get("/user-appointments", authMiddleware, userAppointmentsController);
+
+router.post("/createTestimonial", createTestimonialController);
 
 module.exports = router;

@@ -12,8 +12,9 @@ import TextArea from "antd/es/input/TextArea";
 import { useEffect, useState } from "react";
 import Layout from "../components/Layout";
 import Background from "../_components/Background";
-import { Carousel } from "react-bootstrap";
-import { FaUser, FaUserAlt } from "react-icons/fa";
+import { Card, Carousel } from "react-bootstrap";
+import { FaStar, FaUser, FaUserAlt } from "react-icons/fa";
+import TestimonialForm from "../_components/TestimonialForm";
 const Contact = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -92,18 +93,47 @@ const Contact = () => {
 
           <div className="contact-section-2 container py-5">
             <div className="row ">
-              <div className="col-md-6 contact-form">
+              <div className="col-md-6 contact-form bg-white">
                 <div>
                   {userInfo ? (
-                    <ContactUsForm userInfo={userInfo} />
+                    <TestimonialForm userInfo={userInfo} />
                   ) : (
-                    <ContactUsForm />
+                    <Card className="p-3 mt-5">
+                      <h3>Review Form</h3>
+                      Please Login <Link to={"/login"}>Login</Link>
+                    </Card>
                   )}
                 </div>
               </div>
 
-              <div className="col-md-6 contact-image text-center">
+              <div className="col-md-6 contact-image text-center bg-dark">
                 <Carousel data-bs-theme="dark">
+                  <Carousel.Item style={{ minHeight: "250px" }}>
+                    <FaUserAlt
+                      style={{ fontSize: "3rem", marginTop: "30px" }}
+                    />
+                    <h5>Nalinda Dissanayaka</h5>
+                    <ul>
+                      <li>
+                        <FaStar />
+                      </li>
+                    </ul>
+                    <p style={{ margin: "0 10% 50px 10%" }}>
+                      Nulla vitae elit libero, a pharetra augue molliulla vitae
+                      elit libero, a pharetra augue molliulla vitae elit libero,
+                      a pharetra augue molliulla vitae elit libero, a pharetra
+                      augue molliulla vitae elit libero, a pharetra augue
+                      molliulla vitae elit libero, a pharetra augue molliulla
+                      vitae elit libero, a pharetra augue molliulla vitae elit
+                      libero, a pharetra augue molliulla vitae elit libero, a
+                      pharetra augue mitae elit libero, a pharetra augue
+                      molliulla vitae elit libero, a pharetra augue molliulla
+                      vitae elit libero, a pharetra augue molliulla vitae elit
+                      libero, a pharetra augue molliulla vitae elit libero, a
+                      pharetra augue molliulla vitae elit libero, a pharetra
+                      augue mollis interdum.
+                    </p>
+                  </Carousel.Item>
                   <Carousel.Item style={{ minHeight: "250px" }}>
                     <FaUserAlt
                       style={{ fontSize: "3rem", marginTop: "30px" }}

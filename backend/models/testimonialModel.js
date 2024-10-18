@@ -6,9 +6,8 @@ const testimonialSchema = Joi.object({
   userId: Joi.string().min(2).max(50),
   firstName: Joi.string().min(2).max(50).required(),
   lastName: Joi.string().min(2).max(50).required(),
-  phone: Joi.string().min(2).max(50).required(),
+  rate: Joi.string().required(),
   message: Joi.string().min(2).max(50).required(),
-  email: Joi.string().email().required(),
 });
 
 // Create a Mongoose schema
@@ -29,6 +28,10 @@ const testimonialMongooseSchema = new mongoose.Schema(
       required: [true, "Please provide your lastName"],
       minlength: [2, "Your lastName must be at least 2 characters"],
       maxlength: [50, "Your lastName cannot exceed 50 characters"],
+    },
+    rate: {
+      type: String,
+      required: [true, "Rate is Required "],
     },
 
     message: {

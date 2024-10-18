@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { hideLoading, showLoading } from "../redux/features/alertSlice";
 // import backgroundImage from "./background.jpg"; // Import your background image
+import logo from "../_assets/logo.png";
 
 const Register = () => {
   const dispatch = useDispatch();
@@ -37,7 +38,7 @@ const Register = () => {
         textAlign: "center",
         // backgroundImage: `url(${backgroundImage})`,
         // backgroundSize: "cover",
-        height: "100vh",
+
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
@@ -53,6 +54,15 @@ const Register = () => {
           boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
         }}
       >
+        <div style={{ textAlign: "center" }}>
+          <Link to="/" style={{ textDecoration: "none" }}>
+            <img
+              src={logo}
+              alt="Logo"
+              style={{ width: "100px", height: "100px", marginBottom: "20px" }}
+            />
+          </Link>
+        </div>
         <h1 style={{ marginBottom: "30px", color: "#1877f2" }}>
           Create an Account
         </h1>
@@ -75,7 +85,10 @@ const Register = () => {
             name="username"
             rules={[
               { required: true, message: "Please input your username!" },
-              { min: 3, message: "Your username must be at least 3 characters" },
+              {
+                min: 3,
+                message: "Your username must be at least 3 characters",
+              },
               { max: 50, message: "Your username cannot exceed 50 characters" },
             ]}
           >

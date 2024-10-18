@@ -154,7 +154,10 @@ const UserTestimonial = () => {
       dataIndex: "actions",
       render: (text, record) => (
         <div className="d-flex ">
-          <Link to={`/user/messages/${record._id}`} className="btn btn-primary">
+          <Link
+            to={`/user/testimonial/${record._id}`}
+            className="btn btn-primary"
+          >
             Edit
           </Link>
           <Button

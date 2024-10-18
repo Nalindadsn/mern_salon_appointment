@@ -57,6 +57,7 @@ import UserMessage from "./pages/user/Message.jsx";
 import UpdateMessage from "./pages/UpdateMessage.jsx";
 import UserTestimonial from "./pages/user/Testimonial.jsx";
 import Testimonial from "./pages/admin/Testimonial.jsx";
+import UpdateTestimonial from "./pages/UpdateTestimonial.jsx";
 // import Testimonial from "./pages/admin/Testimonial.jsx";
 
 const router = createBrowserRouter(
@@ -287,6 +288,16 @@ const router = createBrowserRouter(
         element={
           <ProtectedRoute>
             <UpdateMessage />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/user/testimonial/:id"
+        index={true}
+        element={
+          <ProtectedRoute>
+            <UpdateTestimonial />
           </ProtectedRoute>
         }
       />

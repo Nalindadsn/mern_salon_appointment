@@ -570,6 +570,7 @@ const updateMessageController = async (req, res) => {
 
 // get testimonial info
 const getAllTestimonialController = async (req, res) => {
+  console.log(req.body);
   try {
     const testimonial = await testimonialModel.find({
       userId: req.body.userId,
@@ -585,6 +586,33 @@ const getAllTestimonialController = async (req, res) => {
       success: false,
       error,
       message: "error in fetching testimonial details",
+    });
+  }
+};
+
+const createTestimonialController = async (req, res) => {
+  console.log(req.body);
+  try {
+    const { firstName, lastName, rate, message } = req.body;
+
+    //
+    const newTestimonial = new testimonialModel({
+      firstName,
+      lastName,
+      rate,
+      message,
+      userId: req.body.userId ? req.body.userId : "",
+    });
+    await newTestimonial.save();
+
+    res.status(201).json({
+      success: true,
+      newTestimonial,
+    });
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      error,
     });
   }
 };
@@ -610,4 +638,5 @@ module.exports = {
   updateMessageController,
   getMessageByIdController,
   getAllTestimonialController,
+  createTestimonialController,
 };
