@@ -22,21 +22,24 @@ const UpdateService = () => {
 
   const params = useParams();
   const handleFinish = async (values) => {
-    alert(JSON.stringify( url!==""?url:serviceInfo?.image));
+   
     if ((serviceInfo?.image=="" || !serviceInfo?.image) && (url=="" || !url) ) {
       message.error("Please upload image");
       return;
     }
+    
+    const starttime = values.starttime.format("HH:mm");
+    const endtime = values.endtime.format("HH:mm");
     try {
       dispatch(showLoading());
       const res = await axios.post(
-        "/api/user/updateService",
+        "/api/admin/update-service",
         {
-          name: values.name,
-          brand: values.brand,
-          description: values.description,
-          image: url!==""?url:serviceInfo?.image,
-          serviceId: params.id,
+          ...values,
+          starttime:starttime,
+          endtime:endtime,
+          serviceId:params?.id
+
         },
         {
           headers: {
@@ -47,7 +50,7 @@ const UpdateService = () => {
       dispatch(hideLoading());
       if (res.data.success) {
         message.success(res.data.message);
-        navigate("/user/services");
+        navigate("/admin/services");
       } else {
         message.error(res.data.message);
       }
@@ -260,6 +263,7 @@ const UpdateService = () => {
             name:serviceInfo?.name,
             brand:serviceInfo?.brand,
             description:serviceInfo?.description,
+            feesPerConsultation:serviceInfo?.feesPerConsultation,
 
             starttime: moment(serviceInfo.starttime, "HH:mm"),
             endtime: moment(serviceInfo.endtime, "HH:mm")
@@ -283,6 +287,16 @@ const UpdateService = () => {
               rules={[{ required: true }]}
             >
               <TimePicker format="HH:mm" />
+            </Form.Item>
+          </Col>
+          <Col xs={24} md={24} lg={8}>
+          <Form.Item
+              label="feesPerConsultation"
+              name="feesPerConsultation"
+              required
+              rules={[{ required: true, message: " fee is required" }]}
+            >
+              <Input type="text" placeholder=" fee"  />
             </Form.Item>
           </Col>
           <Col xs={24} md={24} lg={8}>

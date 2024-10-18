@@ -3,13 +3,17 @@ import Layout from "../../components/Layout";
 
 import axios from "axios";
 
-import { message, Table } from "antd";
+import { Input, message, Table } from "antd";
 import moment from "moment";
 import LayoutWithSidebar from "../../components/LayoutwithSidebar";
 
 import jsPDF from 'jspdf'
 import 'jspdf-autotable'
+const { Search } = Input;
+
 const ServiceAppointments = () => {
+  
+  const [searchValue, setSearchValue] = useState("");
   const [appointments, setAppointments] = useState([]);
 
   const getAppointments = async () => {
@@ -154,13 +158,38 @@ const ServiceAppointments = () => {
 
     doc.save('appointments.pdf')
   }
+
+
+  const handleSearch = (value) => {
+    setSearchValue(value.trim().toLowerCase());
+  };
+
+  const handleClearSearch = () => {
+    setSearchValue("");
+  };
+
+  const filtereAppointment = appointments.filter((service) => {
+    const _id = `${service._id}`.toLowerCase();
+    return _id.includes(searchValue);
+  });
+
+
   return (
     <LayoutWithSidebar>
       <h3>Appointments Lists</h3>
       {/* {JSON.stringify(appointments)} */}
-      <button onClick={handleGenerate}>Generate PDF</button> 
+      <div className="d-flex">
 
-      <Table columns={columns} dataSource={appointments} />
+      <Search
+            placeholder="Search by name"
+            onSearch={handleSearch}
+            enterButton
+            style={{ marginRight: 10 }}
+          />
+      <button onClick={handleGenerate} style={{width:"200px"}}>Generate PDF</button> 
+      </div>
+
+      <Table columns={columns} dataSource={filtereAppointment} />
     </LayoutWithSidebar>
   );
 };

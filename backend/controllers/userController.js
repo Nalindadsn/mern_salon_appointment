@@ -2,6 +2,8 @@ const bcrypt = require("bcryptjs");
 const userModel = require("../models/userModel");
 const serviceModel = require("../models/serviceModel");
 const productModel = require("../models/productModel");
+const testimonialModel = require("../models/testimonialModel");
+
 const appointmentModel = require("../models/appointmentModel");
 const jwt = require("jsonwebtoken");
 const moment = require("moment");
@@ -34,7 +36,7 @@ const loginController = async (req, res) => {
 // register callback
 const registerController = async (req, res) => {
   try {
-    const { name, email, password,username } = req.body;
+    const { name, email, password, username } = req.body;
 
     // Hash and salt password
     const saltRounds = 10;
@@ -96,17 +98,17 @@ const addserviceController = async (req, res) => {
     const notification = adminUser.notification;
     notification.push({
       type: "add-service-request",
-      message: `${newservice.firstName} ${newservice.lastName} has applied for a service account`,
+      message: `${newservice.name} has applied for a service `,
       data: {
         serviceId: newservice._id,
-        name: newservice.firstName + " " + newservice.lastName,
+        name: newservice.name,
         onClickPath: "/admin/services",
       },
     });
     // await userModel.findByIdAndUpdate(adminUser._id, { notification });
     res.status(201).send({
       success: true,
-      message: "service account applied successfully",
+      message: "service added successfully",
     });
   } catch (error) {
     console.log(error);
@@ -118,10 +120,8 @@ const addserviceController = async (req, res) => {
   }
 };
 
-
-
 const getServiceByIdController = async (req, res) => {
-  console.log(req.body)
+  console.log(req.body);
   try {
     const User = await serviceModel.findOne({ _id: req.body.serviceId });
     res.status(200).send({
@@ -139,7 +139,7 @@ const getServiceByIdController = async (req, res) => {
   }
 };
 const getMessageByIdController = async (req, res) => {
-  console.log(req.body)
+  console.log(req.body);
   try {
     const User = await contactModel.findOne({ _id: req.body.messageId });
     res.status(200).send({
@@ -158,7 +158,7 @@ const getMessageByIdController = async (req, res) => {
 };
 
 const updateserviceController = async (req, res) => {
-  console.log(req.body);
+  console.log("hello");
   try {
     // const updatedservice = await serviceModel({ ...req.body, status: "pending" });
     // await updatedservice.save();
@@ -167,7 +167,6 @@ const updateserviceController = async (req, res) => {
       { _id: req.body.serviceId },
       req.body
     );
-
 
     const adminUser = await userModel.findOne({ isAdmin: true });
     const notification = adminUser.notification;
@@ -264,11 +263,11 @@ const getAllServicesController = async (req, res) => {
 
 // get all services
 const getAllProductsController = async (req, res) => {
-  console.log("req.body")
+  console.log("req.body");
   try {
-    const products = await productModel.find({ 
-      status: "published"
-     });
+    const products = await productModel.find({
+      status: "published",
+    });
     res.status(200).send({
       success: true,
       message: "products lists fetched successfully",
@@ -333,31 +332,30 @@ const bookingAvailabilityController = async (req, res) => {
 // book appointment
 const bookAppointmentController = async (req, res) => {
   try {
-    
     const date = moment(req.body.date, "DD-MM-YYYY").toISOString();
     const startTime = moment(req.body.time, "HH:mm").toISOString();
     const serviceId = req.body.serviceId;
     const service = await serviceModel.findById(serviceId);
-    
+
     if (!service) {
       return res.status(404).send({
         message: "service not found",
         success: false,
       });
     }
-    
+
     const start = moment(service.starttime, "HH:mm").toISOString();
     const end = moment(service.endtime, "HH:mm").toISOString();
-console.log(service.starttime, service.endtime);
-    console.log(!moment(startTime).isBetween(start, end, undefined, "[]"))
+    console.log(service.starttime, service.endtime);
+    console.log(!moment(startTime).isBetween(start, end, undefined, "[]"));
 
     if (!moment(startTime).isBetween(start, end, undefined, "[]")) {
       return res.status(400).send({
         message: "selected time is not within service's available range",
         success: false,
       });
-    }console.log(start, end);
-   
+    }
+    console.log(start, end);
 
     const appointments = await appointmentModel.find({
       serviceId,
@@ -369,15 +367,13 @@ console.log(service.starttime, service.endtime);
         success: false,
       });
     }
-    
-   
+
     const existingAppointment = await appointmentModel.findOne({
       serviceId,
       date,
       time: startTime,
     });
 
-    
     if (existingAppointment) {
       return res.status(400).send({
         message: "appointment already booked for this time slot",
@@ -393,7 +389,6 @@ console.log(service.starttime, service.endtime);
       userInfo: req.body.userInfo,
     });
     await newAppointment.save();
-
 
     return res.status(200).send({
       success: true,
@@ -414,46 +409,42 @@ const userAppointmentsController = async (req, res) => {
   try {
     const pipeline = [
       {
-        '$lookup' : {
-            'from' : 'users',
-            'localField' : 'user_id',
-            'foreignField' : '_id',
-            'as' : 'users'
-        }
-      }
-    ]
-console.log(req.body.userId+"--")
+        $lookup: {
+          from: "users",
+          localField: "user_id",
+          foreignField: "_id",
+          as: "users",
+        },
+      },
+    ];
+    console.log(req.body.userId + "--");
     const appointments = await appointmentModel.aggregate([
-      { $match : { userId : req.body.userId } },
-      {$set: {userId: {$toObjectId: "$userId"} }},
-      {$set: {serviceId: {$toObjectId: "$serviceId"} }},
+      { $match: { userId: req.body.userId } },
+      { $set: { userId: { $toObjectId: "$userId" } } },
+      { $set: { serviceId: { $toObjectId: "$serviceId" } } },
       {
-$lookup : {
-            from : 'users',
-            localField : 'userId',
-            foreignField : '_id',
-            as : 'users'
-        }
+        $lookup: {
+          from: "users",
+          localField: "userId",
+          foreignField: "_id",
+          as: "users",
+        },
       },
       {
-$lookup : {
-            from : 'services',
-            localField : 'serviceId',
-            foreignField : '_id',
-            as : 'service'
-        }
-      }
-    ])
-    console.log(appointments[appointments.length-1])
-
-
+        $lookup: {
+          from: "services",
+          localField: "serviceId",
+          foreignField: "_id",
+          as: "service",
+        },
+      },
+    ]);
+    console.log(appointments[appointments.length - 1]);
 
     // const appointments = await appointmentModel.find({
     //   userId: req.body.userId,
     // });
-    
-    
-    
+
     res.status(200).send({
       success: true,
       message: "users appointments fetch successfully",
@@ -470,7 +461,7 @@ $lookup : {
 };
 
 const getUserByIdController = async (req, res) => {
-  console.log(req.body)
+  console.log(req.body);
   try {
     const User = await userModel.findOne({ _id: req.body.userId });
     res.status(200).send({
@@ -490,7 +481,7 @@ const getUserByIdController = async (req, res) => {
 
 // update service profile
 const updateUserController = async (req, res) => {
-  console.log(req.body)
+  console.log(req.body);
   try {
     const user = await userModel.findOneAndUpdate(
       { _id: req.body.userId },
@@ -514,7 +505,7 @@ const updateUserController = async (req, res) => {
 // get all contacts data
 const getAllUserContactsController = async (req, res) => {
   try {
-    const contacts = await contactModel.find({userId: req.body.userId});
+    const contacts = await contactModel.find({ userId: req.body.userId });
     res.status(200).send({
       success: true,
       message: "contacts data list",
@@ -532,9 +523,9 @@ const getAllUserContactsController = async (req, res) => {
 
 // get all contacts data
 const deleteUserContactController = async (req, res) => {
-  console.log(req.body)
+  console.log(req.body);
   try {
-    const contacts = await contactModel.deleteOne({_id: req.body.messageId});
+    const contacts = await contactModel.deleteOne({ _id: req.body.messageId });
     res.status(200).send({
       success: true,
       message: "contacts data list",
@@ -550,7 +541,6 @@ const deleteUserContactController = async (req, res) => {
   }
 };
 
-
 const updateMessageController = async (req, res) => {
   console.log(req.body);
   try {
@@ -562,12 +552,11 @@ const updateMessageController = async (req, res) => {
       req.body
     );
 
-
     // await userModel.findByIdAndUpdate(adminUser._id, { notification });
     res.status(201).send({
       success: true,
       message: "message updated successfully",
-      data:updatedmessage
+      data: updatedmessage,
     });
   } catch (error) {
     console.log(error);
@@ -579,6 +568,26 @@ const updateMessageController = async (req, res) => {
   }
 };
 
+// get testimonial info
+const getAllTestimonialController = async (req, res) => {
+  try {
+    const testimonial = await testimonialModel.find({
+      userId: req.body.userId,
+    });
+    res.status(200).send({
+      success: true,
+      message: "testimonial data fetch success",
+      data: testimonial,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      error,
+      message: "error in fetching testimonial details",
+    });
+  }
+};
 
 module.exports = {
   loginController,
@@ -599,5 +608,6 @@ module.exports = {
   getAllUserContactsController,
   deleteUserContactController,
   updateMessageController,
-  getMessageByIdController
+  getMessageByIdController,
+  getAllTestimonialController,
 };

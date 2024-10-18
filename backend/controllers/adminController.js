@@ -3,6 +3,7 @@ const serviceModel = require("../models/serviceModel");
 const contactModel = require("../models/contactModel");
 const userModel = require("../models/userModel");
 const appointmentModel = require("../models/appointmentModel");
+const testimonialModel = require("../models/testimonialModel");
 
 const getAllUsersController = async (req, res) => {
   try {
@@ -48,58 +49,69 @@ const getSummaryController = async (req, res) => {
     const products = await productModel.find({});
     const totalUsers = await userModel.find({});
 
-    const admin=totalUsers.filter((user)=>user.isAdmin)
-    const users=totalUsers.filter((user)=>user.isAdmin==false)
+    const admin = totalUsers.filter((user) => user.isAdmin);
+    const users = totalUsers.filter((user) => user.isAdmin == false);
 
     // // const totalServices = services.length;
     // const totalProducts = products.length;
-    const appointments=await appointmentModel.aggregate([
-      { $match : { userId : req.body.userId } },
-      {$set: {userId: {$toObjectId: "$userId"} }},
-      {$set: {serviceId: {$toObjectId: "$serviceId"} }},
+    const appointments = await appointmentModel.aggregate([
+      { $match: { userId: req.body.userId } },
+      { $set: { userId: { $toObjectId: "$userId" } } },
+      { $set: { serviceId: { $toObjectId: "$serviceId" } } },
       {
-$lookup : {
-            from : 'users',
-            localField : 'userId',
-            foreignField : '_id',
-            as : 'users'
-        }
+        $lookup: {
+          from: "users",
+          localField: "userId",
+          foreignField: "_id",
+          as: "users",
+        },
       },
       {
-$lookup : {
-            from : 'services',
-            localField : 'serviceId',
-            foreignField : '_id',
-            as : 'service'
-        }
+        $lookup: {
+          from: "services",
+          localField: "serviceId",
+          foreignField: "_id",
+          as: "service",
+        },
       },
-      { $sort : { createdAt : -1 } }
-    ])
-    const pendingAppointments=appointments.filter((appointment)=>appointment.status=="pending")
-    const approvedAppointments=appointments.filter((appointment)=>appointment.status=="approved")
+      { $sort: { createdAt: -1 } },
+    ]);
+    const pendingAppointments = appointments.filter(
+      (appointment) => appointment.status == "pending"
+    );
+    const approvedAppointments = appointments.filter(
+      (appointment) => appointment.status == "approved"
+    );
 
-    const pendingServices=services.filter((service)=>service.status=="pending")
-    const approvedServices=services.filter((service)=>service.status=="published")
+    const pendingServices = services.filter(
+      (service) => service.status == "pending"
+    );
+    const approvedServices = services.filter(
+      (service) => service.status == "published"
+    );
 
-    const pendingProducts=products.filter((product)=>product.status=="pending")
-    const approvedProducts=products.filter((product)=>product.status=="published")
+    const pendingProducts = products.filter(
+      (product) => product.status == "pending"
+    );
+    const approvedProducts = products.filter(
+      (product) => product.status == "published"
+    );
 
     res.status(200).send({
       success: true,
       message: "services data list",
-      data: {products:products,
-        services:services,
-        totalUsers:totalUsers,
-        admin:admin,
-        users:users,
-        pendingAppointments:pendingAppointments,
-        approvedAppointments:approvedAppointments,
-        pendingServices:pendingServices,
-        approvedServices:approvedServices,
-        pendingProducts:pendingProducts,
-        approvedProducts:approvedProducts
-
-
+      data: {
+        products: products,
+        services: services,
+        totalUsers: totalUsers,
+        admin: admin,
+        users: users,
+        pendingAppointments: pendingAppointments,
+        approvedAppointments: approvedAppointments,
+        pendingServices: pendingServices,
+        approvedServices: approvedServices,
+        pendingProducts: pendingProducts,
+        approvedProducts: approvedProducts,
       },
       // data: {pendingAppointments,completedAppointments,totalUsers,admin,users,totalServices,totalProducts},
     });
@@ -200,19 +212,18 @@ const changeServiceStatusController = async (req, res) => {
     });
   }
 };
-// service account status
+// service  status
 const changeProductStatusController = async (req, res) => {
   try {
-    console.log(req.body)
+    console.log(req.body);
     const { productId, status } = req.body;
     const product = await productModel.findByIdAndUpdate(productId, { status });
-    
+
     res.status(201).send({
       success: true,
       message: "product status updated",
       data: product,
     });
-
   } catch (error) {
     console.log(error);
     res.status(500).send({
@@ -222,7 +233,6 @@ const changeProductStatusController = async (req, res) => {
     });
   }
 };
-
 
 // get all contacts data
 const getAllContactsController = async (req, res) => {
@@ -243,10 +253,10 @@ const getAllContactsController = async (req, res) => {
   }
 };
 const getUserByIdController = async (req, res) => {
-  console.log(req.body)
+  console.log(req.body);
   try {
     const User = await userModel.findOne({ _id: req.body._id });
-    console.log(User)
+    console.log(User);
     res.status(200).send({
       success: true,
       message: "single user info fetched",
@@ -264,7 +274,7 @@ const getUserByIdController = async (req, res) => {
 
 // update service profile
 const updateUserController = async (req, res) => {
-  console.log(req.body)
+  console.log(req.body);
   try {
     const user = await userModel.findOneAndUpdate(
       { _id: req.body.userId },
@@ -285,11 +295,8 @@ const updateUserController = async (req, res) => {
   }
 };
 
-
-
-
 const getProductByIdController = async (req, res) => {
-  console.log(req.body)
+  console.log(req.body);
   try {
     const User = await productModel.findOne({ _id: req.body.productId });
     res.status(200).send({
@@ -318,7 +325,6 @@ const updateproductDetailsController = async (req, res) => {
       req.body
     );
 
-
     const adminUser = await userModel.findOne({ isAdmin: true });
     const notification = adminUser.notification;
     notification.push({
@@ -346,9 +352,9 @@ const updateproductDetailsController = async (req, res) => {
 };
 // get all contacts data
 const deleteUserContactController = async (req, res) => {
-  console.log(req.body)
+  console.log(req.body);
   try {
-    const contacts = await contactModel.deleteOne({_id: req.body.messageId});
+    const contacts = await contactModel.deleteOne({ _id: req.body.messageId });
     res.status(200).send({
       success: true,
       message: "contacts data list",
@@ -364,6 +370,50 @@ const deleteUserContactController = async (req, res) => {
   }
 };
 
+// get all contacts data
+const updateserviceController = async (req, res) => {
+  console.log(req.body);
+
+  const updatedservice = await serviceModel.findOneAndUpdate(
+    { _id: req.body.serviceId },
+    req.body
+  );
+
+  try {
+    // const contacts = await contactModel.deleteOne({_id: req.body.messageId});
+    res.status(200).send({
+      success: true,
+      message: "contacts data list",
+      data: "contacts",
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "error while getting contacts data",
+      error,
+    });
+  }
+};
+
+// get testimonial info
+const getAllTestimonialController = async (req, res) => {
+  try {
+    const testimonial = await testimonialModel.find({});
+    res.status(200).send({
+      success: true,
+      message: "testimonial data fetch success",
+      data: testimonial,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      error,
+      message: "error in fetching testimonial details",
+    });
+  }
+};
 
 module.exports = {
   changeProductStatusController,
@@ -378,9 +428,9 @@ module.exports = {
   updateUserController,
   updateproductController,
 
-  
   updateproductDetailsController,
   getProductByIdController,
-  deleteUserContactController
-
+  deleteUserContactController,
+  updateserviceController,
+  getAllTestimonialController,
 };

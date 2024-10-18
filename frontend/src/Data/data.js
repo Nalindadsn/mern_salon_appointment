@@ -15,6 +15,11 @@ export const userMenu = [
     path: "/user/messages",
     icon: "fas fa-envelope",
   },
+  {
+    name: "Testimonial",
+    path: "/user/testimonial",
+    icon: "fas fa-users",
+  },
 ];
 
 // Admin menu
@@ -48,5 +53,10 @@ export const adminMenu = [
     name: "Messages",
     path: "/admin/messages",
     icon: "fas fa-envelope",
+  },
+  {
+    name: "Testimonial",
+    path: "/admin/testimonial",
+    icon: "fas fa-users",
   },
 ];

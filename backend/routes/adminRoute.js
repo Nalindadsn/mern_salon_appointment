@@ -13,9 +13,9 @@ const {
   updateproductController,
   getProductByIdController,
   updateproductDetailsController,
-  deleteUserContactController
-  
-
+  deleteUserContactController,
+  updateserviceController,
+  getAllTestimonialController,
 } = require("../controllers/adminController");
 const authMiddleware = require("../middlewares/authMiddleware");
 
@@ -23,6 +23,9 @@ const router = express.Router();
 
 // Endpoint to fetch all users
 router.get("/getAllUsers", authMiddleware, getAllUsersController);
+
+// Endpoint to fetch all services
+router.get("/getAllTestimonial", authMiddleware, getAllTestimonialController);
 
 // Endpoint to fetch all services
 router.get("/getAllServices", authMiddleware, getAllServicesController);
@@ -38,15 +41,15 @@ router.post("/getProductInfo", authMiddleware, getProductByIdController);
 // GET Product
 router.post("/updateProduct", authMiddleware, updateproductDetailsController);
 
-
 // Endpoint to fetch all services
 router.get("/getAllMessages", authMiddleware, getAllContactsController);
 
 router.get("/getSummary", authMiddleware, getSummaryController);
 
 router.get("/getAllProducts", authMiddleware, getAllProductsController);
-router.post("/add-product", authMiddleware,   addproductController);
-router.post("/update-product", authMiddleware,   updateproductController);
+router.post("/add-product", authMiddleware, addproductController);
+router.post("/update-product", authMiddleware, updateproductController);
+router.post("/update-service", authMiddleware, updateserviceController);
 
 // Endpoint to change account status
 router.post(

@@ -21,7 +21,7 @@ const ServiceList = ({ service }) => {
   };
 
   const formatFees = (fees) => {
-    return `$${fees}`;
+    return `LKR ${fees}`;
   };
 
   return (
