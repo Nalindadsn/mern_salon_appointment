@@ -57,7 +57,8 @@ import UserMessage from "./pages/user/Message.jsx";
 import UpdateMessage from "./pages/UpdateMessage.jsx";
 import UserTestimonial from "./pages/user/Testimonial.jsx";
 import Testimonial from "./pages/admin/Testimonial.jsx";
-import UpdateTestimonial from "./pages/UpdateTestimonial.jsx";
+import UpdateTestimonial from "./pages/user/UpdateTestimonial.jsx";
+import UpdateAdminTestimonial from "./pages/admin/UpdateTestimonial.jsx";
 // import Testimonial from "./pages/admin/Testimonial.jsx";
 
 const router = createBrowserRouter(
@@ -306,7 +307,7 @@ const router = createBrowserRouter(
         index={true}
         element={
           <ProtectedRoute>
-            <UpdateTestimonial />
+            <UpdateAdminTestimonial />
           </ProtectedRoute>
         }
       />

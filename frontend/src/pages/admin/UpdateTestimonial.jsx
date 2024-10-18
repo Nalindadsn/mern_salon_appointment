@@ -1,19 +1,17 @@
-import { Col, Form, Input, Row, TimePicker, message } from "antd";
+import { Col, Form, Input, Row, Select, TimePicker, message } from "antd";
 import axios from "axios";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { hideLoading, showLoading } from "../redux/features/alertSlice";
+import { hideLoading, showLoading } from "../../redux/features/alertSlice";
 import TextArea from "antd/es/input/TextArea";
 
-import assets from "../_assets/assets.gif";
-
 import { useState } from "react";
-import LayoutWithSidebar from "../components/LayoutwithSidebar";
+import LayoutWithSidebar from "../../components/LayoutwithSidebar";
 import { useEffect } from "react";
 import moment from "moment";
 import { Button } from "react-bootstrap";
-const UpdateTestimonial = () => {
+const UpdateAdminTestimonial = () => {
   const [url, setUrl] = useState("");
   const { user } = useSelector((state) => state.user);
 
@@ -29,7 +27,7 @@ const UpdateTestimonial = () => {
         "/api/user/updateTestimonial",
         {
           ...values,
-          messageId: params?.id,
+          testimonialId: params?.id,
         },
         {
           headers: {
@@ -39,8 +37,8 @@ const UpdateTestimonial = () => {
       );
       dispatch(hideLoading());
       if (res.data.success) {
-        message.success(res.data.message);
-        navigate("/user/testimonial");
+        message.success("record updated successfully");
+        navigate("/admin/testimonial");
       } else {
         message.error(res.data.message);
       }
@@ -124,7 +122,6 @@ const UpdateTestimonial = () => {
   return (
     <LayoutWithSidebar>
       <h3 className="text-center">Update Testimonial</h3>
-      upload image
       <div className="flex justify-center flex-col m-8 ">
         <Row gutter={20}>
           <Col xs={24} md={12} lg={12}>
@@ -206,7 +203,10 @@ const UpdateTestimonial = () => {
                   },
                 ]}
               >
-                <Input type="text" placeholder="status Name" />
+                <Select>
+                  <Select.Option value={`pending`}>Pending</Select.Option>
+                  <Select.Option value={`published`}>Published</Select.Option>
+                </Select>
               </Form.Item>
             </Col>
 
@@ -231,4 +231,4 @@ const UpdateTestimonial = () => {
   );
 };
 
-export default UpdateTestimonial;
+export default UpdateAdminTestimonial;

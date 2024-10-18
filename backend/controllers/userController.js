@@ -644,7 +644,7 @@ const updateTestimonialController = async (req, res) => {
     // const updatedservice = await serviceModel({ ...req.body, status: "pending" });
     // await updatedservice.save();
 
-    const updatedtestimonial = await contactModel.findOneAndUpdate(
+    const updatedtestimonial = await testimonialModel.findOneAndUpdate(
       { _id: req.body.testimonialId },
       req.body
     );

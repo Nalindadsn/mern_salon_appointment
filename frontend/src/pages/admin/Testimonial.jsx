@@ -131,6 +131,17 @@ const UserTestimonial = () => {
     {
       title: "Status",
       dataIndex: "status",
+      render: (text, record) => (
+        <span
+          className={`${
+            record.status === "published"
+              ? "bg-success text-white rounded-pill px-2 pb-1"
+              : "bg-warning text-white rounded-pill px-2 pb-1"
+          }`}
+        >
+          {record.status}
+        </span>
+      ),
     },
     {
       title: "Created At",
