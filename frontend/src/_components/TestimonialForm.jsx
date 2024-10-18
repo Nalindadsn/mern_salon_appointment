@@ -93,7 +93,7 @@ const TestimonialForm = ({ userInfo }) => {
             color: "#1890ff",
           }}
         >
-          Get in touch
+          Review
         </h2>
         {userInfo && (
           <Form

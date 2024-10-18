@@ -52,6 +52,26 @@ const Contact = () => {
   const [userInfo, setUser] = useState(null);
 
   const params = useParams();
+
+  const [testimonials, setTestimonials] = useState([]);
+
+  const getTestimonials = async () => {
+    try {
+      const res = await axios.get("/api/user/getPublishedTestimonial", {});
+
+      if (res.data.success) {
+        setTestimonials(res.data.data);
+      } else {
+        message.error(res.data.message || "Failed to fetch testimonials.");
+      }
+    } catch (error) {
+      console.log(error);
+      message.error("Failed to fetch testimonials.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const getUserInfo = async () => {
     try {
       const res = await axios.post(
@@ -73,6 +93,7 @@ const Contact = () => {
 
   useEffect(() => {
     getUserInfo();
+    getTestimonials();
     //eslint-disable-next-line
   }, []);
 
@@ -106,55 +127,62 @@ const Contact = () => {
                 </div>
               </div>
 
-              <div className="col-md-6 contact-image text-center bg-dark">
-                <Carousel data-bs-theme="dark">
-                  <Carousel.Item style={{ minHeight: "250px" }}>
-                    <FaUserAlt
-                      style={{ fontSize: "3rem", marginTop: "30px" }}
-                    />
-                    <h5>Nalinda Dissanayaka</h5>
-                    <ul>
-                      <li>
-                        <FaStar />
-                      </li>
-                    </ul>
-                    <p style={{ margin: "0 10% 50px 10%" }}>
-                      Nulla vitae elit libero, a pharetra augue molliulla vitae
-                      elit libero, a pharetra augue molliulla vitae elit libero,
-                      a pharetra augue molliulla vitae elit libero, a pharetra
-                      augue molliulla vitae elit libero, a pharetra augue
-                      molliulla vitae elit libero, a pharetra augue molliulla
-                      vitae elit libero, a pharetra augue molliulla vitae elit
-                      libero, a pharetra augue molliulla vitae elit libero, a
-                      pharetra augue mitae elit libero, a pharetra augue
-                      molliulla vitae elit libero, a pharetra augue molliulla
-                      vitae elit libero, a pharetra augue molliulla vitae elit
-                      libero, a pharetra augue molliulla vitae elit libero, a
-                      pharetra augue molliulla vitae elit libero, a pharetra
-                      augue mollis interdum.
-                    </p>
-                  </Carousel.Item>
-                  <Carousel.Item style={{ minHeight: "250px" }}>
-                    <FaUserAlt
-                      style={{ fontSize: "3rem", marginTop: "30px" }}
-                    />
-                    <h5>Nalinda Dissanayaka</h5>
-                    <p style={{ margin: "0 10% 50px 10%" }}>
-                      Nulla vitae elit libero, a pharetra augue molliulla vitae
-                      elit libero, a pharetra augue molliulla vitae elit libero,
-                      a pharetra augue molliulla vitae elit libero, a pharetra
-                      augue molliulla vitae elit libero, a pharetra augue
-                      molliulla vitae elit libero, a pharetra augue molliulla
-                      vitae elit libero, a pharetra augue molliulla vitae elit
-                      libero, a pharetra augue molliulla vitae elit libero, a
-                      pharetra augue mitae elit libero, a pharetra augue
-                      molliulla vitae elit libero, a pharetra augue molliulla
-                      vitae elit libero, a pharetra augue molliulla vitae elit
-                      libero, a pharetra augue molliulla vitae elit libero, a
-                      pharetra augue molliulla vitae elit libero, a pharetra
-                      augue mollis interdum.
-                    </p>
-                  </Carousel.Item>
+              <div
+                className="col-md-6 contact-image text-center bg-dark"
+                style={{
+                  flex: "1",
+                  minHeight: "500px",
+                  display: "flex",
+                  width: "100%",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Carousel data-bs-theme="dark" style={{ width: "100%" }}>
+                  {testimonials.map((testimonial, i) => (
+                    <Carousel.Item
+                      style={{ minHeight: "250px", width: "100%" }}
+                    >
+                      <FaUserAlt
+                        style={{ fontSize: "3rem", marginTop: "30px" }}
+                      />
+                      <h5>
+                        {testimonial?.firstName} {testimonial?.lastName}
+                      </h5>
+                      <div style={{ width: "100%" }}>
+                        {(() => {
+                          const arr = [];
+                          for (let i = 0; i < testimonial?.rate; i++) {
+                            arr.push(
+                              <>
+                                <FaStar className="text-warning" />
+                              </>
+                            );
+                          }
+                          return arr;
+                        })()}
+                        {(() => {
+                          const arr = [];
+                          for (let i = 0; i < 5 - testimonial?.rate; i++) {
+                            arr.push(
+                              <>
+                                <FaStar />
+                              </>
+                            );
+                          }
+                          return arr;
+                        })()}
+                      </div>
+
+                      <div
+                        style={{
+                          width: "100%",
+                        }}
+                      >
+                        {testimonial?.message}
+                      </div>
+                    </Carousel.Item>
+                  ))}
                 </Carousel>
               </div>
             </div>

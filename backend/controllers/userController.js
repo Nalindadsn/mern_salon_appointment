@@ -590,6 +590,28 @@ const getAllTestimonialController = async (req, res) => {
   }
 };
 
+// get testimonial info
+const getPublishedTestimonialController = async (req, res) => {
+  console.log(req.body);
+  try {
+    const testimonial = await testimonialModel.find({
+      status: "published",
+    });
+    res.status(200).send({
+      success: true,
+      message: "testimonial data fetch success",
+      data: testimonial,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      error,
+      message: "error in fetching testimonial details",
+    });
+  }
+};
+
 const createTestimonialController = async (req, res) => {
   console.log(req.body);
   try {
@@ -707,4 +729,5 @@ module.exports = {
   getTestimonialByIdController,
   updateTestimonialController,
   deleteTestimonialController,
+  getPublishedTestimonialController,
 };

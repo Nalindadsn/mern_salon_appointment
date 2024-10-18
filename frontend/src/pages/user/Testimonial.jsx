@@ -10,9 +10,23 @@ import jsPDF from "jspdf";
 import "jspdf-autotable";
 import moment from "moment";
 import { Button } from "react-bootstrap";
+import { Rating } from "react-simple-star-rating";
+
 const { Search } = Input;
 
 const UserTestimonial = () => {
+  const [rating, setRating] = useState(0);
+
+  // Catch Rating value
+  const handleRating = (rate) => {
+    setRating(rate);
+  };
+
+  const handleReset = () => {
+    // Set the initial value
+    setRating(0);
+  };
+
   const [userInfo, setUser] = useState(null);
 
   const params = useParams();
@@ -121,8 +135,9 @@ const UserTestimonial = () => {
       // responsive: ["xs"]
     },
     {
-      title: "Phone",
+      title: "Rate",
       dataIndex: "rate",
+      render: (text, record) => <Rating initialValue={record?.rate} readonly />,
     },
     {
       title: "Message",

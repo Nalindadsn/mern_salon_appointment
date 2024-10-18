@@ -24,6 +24,7 @@ const {
   getTestimonialByIdController,
   updateTestimonialController,
   deleteTestimonialController,
+  getPublishedTestimonialController,
 } = require("../controllers/userController");
 const authMiddleware = require("../middlewares/authMiddleware");
 
@@ -39,7 +40,9 @@ router.post("/register", registerController);
 
 // Auth || POST
 router.post("/getUserData", authMiddleware, authController);
+
 router.get("/getUserMessages", authMiddleware, getAllUserContactsController);
+router.get("/getPublishedTestimonial", getPublishedTestimonialController);
 
 // Apply service || POST
 router.post("/add-service", authMiddleware, addserviceController);
