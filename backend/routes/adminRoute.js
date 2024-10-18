@@ -16,6 +16,7 @@ const {
   deleteUserContactController,
   updateserviceController,
   getAllTestimonialController,
+  deleteTestimonialController,
 } = require("../controllers/adminController");
 const authMiddleware = require("../middlewares/authMiddleware");
 
@@ -50,6 +51,12 @@ router.get("/getAllProducts", authMiddleware, getAllProductsController);
 router.post("/add-product", authMiddleware, addproductController);
 router.post("/update-product", authMiddleware, updateproductController);
 router.post("/update-service", authMiddleware, updateserviceController);
+
+router.delete(
+  "/deleteTestimonial",
+  authMiddleware,
+  deleteTestimonialController
+);
 
 // Endpoint to change account status
 router.post(

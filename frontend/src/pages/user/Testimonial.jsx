@@ -89,10 +89,10 @@ const UserTestimonial = () => {
     if (confirm("Are you sure you want to DELETE?")) {
       // alert('Deleted')
       try {
-        const res = await axios.delete("/api/user/deleteMessage", {
+        const res = await axios.delete("/api/user/deleteTestimonial", {
           data: {
             userId: params?.id,
-            messageId: record._id,
+            testimonialId: record._id,
           },
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -225,7 +225,7 @@ const UserTestimonial = () => {
   return (
     <LayoutWithSidebar>
       <div className="mb-2">
-        <h3 className="text-center m-3">Message History</h3>
+        <h3 className="text-center m-3">Testimonial History</h3>
         <div className="d-flex align-items-center mb-2">
           <Search
             placeholder="Search by name"

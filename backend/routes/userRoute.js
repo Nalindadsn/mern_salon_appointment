@@ -21,6 +21,9 @@ const {
   getMessageByIdController,
   getAllTestimonialController,
   createTestimonialController,
+  getTestimonialByIdController,
+  updateTestimonialController,
+  deleteTestimonialController,
 } = require("../controllers/userController");
 const authMiddleware = require("../middlewares/authMiddleware");
 
@@ -43,6 +46,11 @@ router.post("/add-service", authMiddleware, addserviceController);
 // Apply service || POST
 router.post("/updateService", authMiddleware, updateserviceController);
 router.delete("/deleteMessage", authMiddleware, deleteUserContactController);
+router.delete(
+  "/deleteTestimonial",
+  authMiddleware,
+  deleteTestimonialController
+);
 
 // Notification service || POST
 router.post(
@@ -75,11 +83,19 @@ router.post("/getUserInfo", authMiddleware, getUserByIdController);
 router.post("/getServiceInfo", authMiddleware, getServiceByIdController);
 
 router.post("/getMessageInfo", authMiddleware, getMessageByIdController);
+
+router.post(
+  "/getTestimonialInfo",
+  authMiddleware,
+  getTestimonialByIdController
+);
+
 // GET User
 router.post("/updateUser", authMiddleware, updateUserController);
 
 // GET User
 router.post("/updateMessage", authMiddleware, updateMessageController);
+router.post("/updateTestimonial", authMiddleware, updateTestimonialController);
 
 // Booking Availability
 router.post(

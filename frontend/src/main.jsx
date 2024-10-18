@@ -301,6 +301,15 @@ const router = createBrowserRouter(
           </ProtectedRoute>
         }
       />
+      <Route
+        path="/admin/testimonial/:id"
+        index={true}
+        element={
+          <ProtectedRoute>
+            <UpdateTestimonial />
+          </ProtectedRoute>
+        }
+      />
 
       <Route
         path="/admin/messages/:id"

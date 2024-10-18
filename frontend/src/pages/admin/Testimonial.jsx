@@ -12,7 +12,7 @@ import moment from "moment";
 import { Button } from "react-bootstrap";
 const { Search } = Input;
 
-const Testimonial = () => {
+const UserTestimonial = () => {
   const [userInfo, setUser] = useState(null);
 
   const params = useParams();
@@ -41,13 +41,13 @@ const Testimonial = () => {
     //eslint-disable-next-line
   }, []);
 
-  const [messages, setTestimonial] = useState([]);
+  const [messages, setUserTestimonial] = useState([]);
   const [loading, setLoading] = useState(false);
   const [searchValue, setSearchValue] = useState("");
-  const [selectedTestimonial, setSelectedTestimonial] = useState(null);
+  const [selectedUserTestimonial, setSelectedUserTestimonial] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
 
-  const getTestimonial = async () => {
+  const getUserTestimonial = async () => {
     setLoading(true);
     try {
       const res = await axios.get("/api/admin/getAllTestimonial", {
@@ -57,7 +57,7 @@ const Testimonial = () => {
         },
       });
       if (res.data.success) {
-        setTestimonial(res.data.data);
+        setUserTestimonial(res.data.data);
       } else {
         message.error(res.data.message || "Failed to fetch messages.");
       }
@@ -70,7 +70,7 @@ const Testimonial = () => {
   };
 
   useEffect(() => {
-    getTestimonial();
+    getUserTestimonial();
   }, []);
 
   const handleSearch = (value) => {
@@ -81,7 +81,7 @@ const Testimonial = () => {
     setSearchValue("");
   };
 
-  const filteredTestimonials = messages?.filter((product) => {
+  const filteredUserTestimonials = messages?.filter((product) => {
     const fullName = `${product.firstName} ${product.lastName}`.toLowerCase();
     return fullName.includes(searchValue);
   });
@@ -89,10 +89,10 @@ const Testimonial = () => {
     if (confirm("Are you sure you want to DELETE?")) {
       // alert('Deleted')
       try {
-        const res = await axios.delete("/api/user/deleteTestimonial", {
+        const res = await axios.delete("/api/admin/deleteTestimonial", {
           data: {
             userId: params?.id,
-            messageId: record._id,
+            testimonialId: record._id,
           },
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -100,7 +100,7 @@ const Testimonial = () => {
         });
         // if (res.data.success) {
         window.location.reload();
-        getTestimonial();
+        getUserTestimonial();
         // } else {
         //   message.error(res.data.message || "Failed to delete message.");
         // }
@@ -129,7 +129,7 @@ const Testimonial = () => {
       dataIndex: "email",
     },
     {
-      title: "Testimonial",
+      title: "UserTestimonial",
       dataIndex: "message",
     },
     {
@@ -154,7 +154,10 @@ const Testimonial = () => {
       dataIndex: "actions",
       render: (text, record) => (
         <div className="d-flex ">
-          <Link to={`/user/messages/${record._id}`} className="btn btn-primary">
+          <Link
+            to={`/admin/testimonial/${record._id}`}
+            className="btn btn-primary"
+          >
             Edit
           </Link>
           <Button
@@ -173,7 +176,7 @@ const Testimonial = () => {
 
   const handleGenerate = () => {
     const doc = new jsPDF();
-    const title = "Testimonial List";
+    const title = "UserTestimonial List";
     const padding = 10;
     const titleWidth = doc.getTextWidth(title);
     const center = doc.internal.pageSize.width / 2 - titleWidth / 2;
@@ -188,7 +191,7 @@ const Testimonial = () => {
           "Last Name",
           "Phone",
           "Email",
-          "Testimonial",
+          "UserTestimonial",
           "Joined Date",
         ],
       ],
@@ -239,10 +242,10 @@ const Testimonial = () => {
       {loading ? (
         <Spinner />
       ) : (
-        <Table columns={columns} dataSource={filteredTestimonials} />
+        <Table columns={columns} dataSource={filteredUserTestimonials} />
       )}
     </LayoutWithSidebar>
   );
 };
 
-export default Testimonial;
+export default UserTestimonial;

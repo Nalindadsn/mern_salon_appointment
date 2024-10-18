@@ -617,6 +617,75 @@ const createTestimonialController = async (req, res) => {
   }
 };
 
+const getTestimonialByIdController = async (req, res) => {
+  console.log(req.body);
+  try {
+    const User = await testimonialModel.findOne({
+      _id: req.body.testimonialId,
+    });
+    res.status(200).send({
+      success: true,
+      message: "single user info fetched",
+      data: User,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      error,
+      message: "error in single service info",
+    });
+  }
+};
+
+const updateTestimonialController = async (req, res) => {
+  console.log(req.body);
+  try {
+    // const updatedservice = await serviceModel({ ...req.body, status: "pending" });
+    // await updatedservice.save();
+
+    const updatedtestimonial = await contactModel.findOneAndUpdate(
+      { _id: req.body.testimonialId },
+      req.body
+    );
+
+    // await userModel.findByIdAndUpdate(adminUser._id, { notification });
+    res.status(201).send({
+      success: true,
+      testimonial: "testimonial updated successfully",
+      data: updatedtestimonial,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      error,
+      testimonial: "error while applying for testimonial",
+    });
+  }
+};
+// get all contacts data
+const deleteTestimonialController = async (req, res) => {
+  console.log(req.body);
+  try {
+    const contacts = await testimonialModel.deleteOne({
+      _id: req.body.testimonialId,
+    });
+    res.status(200).send({
+      success: true,
+      message: "contacts data list",
+      data: contacts,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "error while getting contacts data",
+      error,
+    });
+  }
+};
+
 module.exports = {
   loginController,
   registerController,
@@ -639,4 +708,7 @@ module.exports = {
   getMessageByIdController,
   getAllTestimonialController,
   createTestimonialController,
+  getTestimonialByIdController,
+  updateTestimonialController,
+  deleteTestimonialController,
 };

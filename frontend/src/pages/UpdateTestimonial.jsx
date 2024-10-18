@@ -40,7 +40,7 @@ const UpdateTestimonial = () => {
       dispatch(hideLoading());
       if (res.data.success) {
         message.success(res.data.message);
-        navigate("/user/messages");
+        navigate("/user/testimonial");
       } else {
         message.error(res.data.message);
       }
@@ -56,7 +56,7 @@ const UpdateTestimonial = () => {
     try {
       const res = await axios.post(
         "/api/user/getTestimonialInfo",
-        { messageId: params?.id },
+        { testimonialId: params?.id },
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -141,8 +141,7 @@ const UpdateTestimonial = () => {
           initialValues={{
             firstName: testimonialInfo?.firstName,
             lastName: testimonialInfo?.lastName,
-            phone: testimonialInfo?.phone,
-            email: testimonialInfo?.email,
+            rate: testimonialInfo?.rate,
 
             message: testimonialInfo?.message,
           }}
@@ -181,26 +180,13 @@ const UpdateTestimonial = () => {
 
             <Col xs={24} md={24} lg={24}>
               <Form.Item
-                label="Email"
-                name="email"
-                required
-                rules={[
-                  { required: true, message: "Testimonial email is required" },
-                ]}
-              >
-                <Input type="text" placeholder="Testimonial Name" />
-              </Form.Item>
-            </Col>
-
-            <Col xs={24} md={24} lg={24}>
-              <Form.Item
-                label="Contact Number"
-                name="phone"
+                label="Rate"
+                name="rate"
                 required
                 rules={[
                   {
                     required: true,
-                    message: "Testimonial phone number is required",
+                    message: "rate is required",
                   },
                 ]}
               >

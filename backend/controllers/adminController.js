@@ -414,7 +414,26 @@ const getAllTestimonialController = async (req, res) => {
     });
   }
 };
-
+const deleteTestimonialController = async (req, res) => {
+  console.log(req.body);
+  try {
+    const contacts = await testimonialModel.deleteOne({
+      _id: req.body.testimonialId,
+    });
+    res.status(200).send({
+      success: true,
+      message: "contacts data list",
+      data: contacts,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "error while getting contacts data",
+      error,
+    });
+  }
+};
 module.exports = {
   changeProductStatusController,
   getAllServicesController,
@@ -433,4 +452,5 @@ module.exports = {
   deleteUserContactController,
   updateserviceController,
   getAllTestimonialController,
+  deleteTestimonialController,
 };
