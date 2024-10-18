@@ -142,6 +142,7 @@ const UpdateTestimonial = () => {
             firstName: testimonialInfo?.firstName,
             lastName: testimonialInfo?.lastName,
             rate: testimonialInfo?.rate,
+            status: testimonialInfo?.status,
 
             message: testimonialInfo?.message,
           }}
@@ -191,6 +192,21 @@ const UpdateTestimonial = () => {
                 ]}
               >
                 <Input type="text" placeholder="Testimonial Name" />
+              </Form.Item>
+            </Col>
+            <Col xs={24} md={24} lg={24}>
+              <Form.Item
+                label="Status"
+                name="status"
+                required
+                rules={[
+                  {
+                    required: true,
+                    message: "status is required",
+                  },
+                ]}
+              >
+                <Input type="text" placeholder="status Name" />
               </Form.Item>
             </Col>
 

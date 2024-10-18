@@ -129,6 +129,10 @@ const UserTestimonial = () => {
       dataIndex: "message",
     },
     {
+      title: "Status",
+      dataIndex: "status",
+    },
+    {
       title: "Created At",
       dataIndex: "createdAt",
       render: (text, record) => (
@@ -188,6 +192,7 @@ const UserTestimonial = () => {
           "Rate",
           "Email",
           "UserTestimonial",
+          "Status",
           "Joined Date",
         ],
       ],
@@ -197,6 +202,7 @@ const UserTestimonial = () => {
         val.lastName,
         val.rate,
         val.message,
+        val.status,
         moment(val.createdAt).format("YYYY-MM-DD"),
       ]),
       columnStyles: {
@@ -205,7 +211,8 @@ const UserTestimonial = () => {
         2: { cellWidth: 25 },
         3: { cellWidth: 35 },
         4: { cellWidth: 45 },
-        5: { cellWidth: 25 },
+        5: { cellWidth: 45 },
+        6: { cellWidth: 25 },
       },
       headStyles: {
         fillColor: "#333",
