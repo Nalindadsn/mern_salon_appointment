@@ -1,4 +1,4 @@
-import { Col, Form, Input, Row, TimePicker, message } from "antd";
+import { Col, Form, Input, Row, Select, TimePicker, message } from "antd";
 import axios from "axios";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -204,7 +204,10 @@ const UpdateTestimonial = () => {
                   },
                 ]}
               >
-                <Input type="text" placeholder="status Name" />
+                <Select>
+                  <Select.Option value={`pending`}>Pending</Select.Option>
+                  <Select.Option value={`published`}>Published</Select.Option>
+                </Select>
               </Form.Item>
             </Col>
 

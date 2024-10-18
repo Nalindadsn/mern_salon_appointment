@@ -618,7 +618,6 @@ const createTestimonialController = async (req, res) => {
 };
 
 const getTestimonialByIdController = async (req, res) => {
-  console.log(req.body);
   try {
     const User = await testimonialModel.findOne({
       _id: req.body.testimonialId,
@@ -641,9 +640,6 @@ const getTestimonialByIdController = async (req, res) => {
 const updateTestimonialController = async (req, res) => {
   console.log(req.body);
   try {
-    // const updatedservice = await serviceModel({ ...req.body, status: "pending" });
-    // await updatedservice.save();
-
     const updatedtestimonial = await testimonialModel.findOneAndUpdate(
       { _id: req.body.testimonialId },
       req.body

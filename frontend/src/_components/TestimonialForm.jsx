@@ -7,12 +7,14 @@ import { Link, useNavigate } from "react-router-dom";
 import { hideLoading, showLoading } from "../redux/features/alertSlice";
 import TextArea from "antd/es/input/TextArea";
 // import backgroundImage from "./background.jpg"; // Import your background image
+import { Rating } from "react-simple-star-rating";
 
 const TestimonialForm = ({ userInfo }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
+  const [rating, setRating] = useState(0);
   // Submit for TestimonialForm
   const submitHandler = async (values) => {
     try {
@@ -21,6 +23,7 @@ const TestimonialForm = ({ userInfo }) => {
       }
       setLoading(true);
       dispatch(showLoading());
+      values.rate = rating.toString();
 
       const { data } = await axios({
         method: "post",
@@ -60,6 +63,17 @@ const TestimonialForm = ({ userInfo }) => {
     setLoading(false);
   };
 
+  // Catch Rating value
+  const handleRating = (rate) => {
+    setRating(rate);
+
+    // other logic
+  };
+  // Optinal callback functions
+  const onPointerEnter = () => console.log("Enter");
+  const onPointerLeave = () => console.log("Leave");
+  const onPointerMove = (value, index) => console.log(value, index);
+
   return (
     <div>
       <div
@@ -88,7 +102,6 @@ const TestimonialForm = ({ userInfo }) => {
             initialValues={{
               firstName: userInfo?.name.split(" ")[0],
               lastName: userInfo?.name.split(" ").pop(),
-              email: userInfo?.email,
             }}
           >
             <Form.Item
@@ -117,17 +130,13 @@ const TestimonialForm = ({ userInfo }) => {
               />
             </Form.Item>
 
-            <Form.Item
-              name="rate"
-              rules={[{ required: true, message: "Please input your rate!" }]}
-            >
-              <Input
-                prefix={<UserOutlined style={{ color: "#1890ff" }} />}
-                placeholder="rate"
-                style={{ marginBottom: "20px" }}
-              />
-            </Form.Item>
-
+            <Rating
+              onClick={handleRating}
+              onPointerEnter={onPointerEnter}
+              onPointerLeave={onPointerLeave}
+              onPointerMove={onPointerMove}
+              /* Available Props */
+            />
             <Form.Item
               name="message"
               rules={[
