@@ -8,6 +8,10 @@ const couponSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    serviceId: {
+      type: String,
+      required: true,
+    },
     isPercent: {
       type: Boolean,
       required: true,
@@ -31,6 +35,7 @@ const couponSchema = new mongoose.Schema(
 
 // Define a Joi schema for coupon validation
 const couponJoiSchema = Joi.object({
+  serviceId: Joi.string().required(),
   code: Joi.string().required(),
   isPercent: Joi.boolean().required(),
   amount: Joi.number().required(),

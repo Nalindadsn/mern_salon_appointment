@@ -6,8 +6,8 @@ import Layout from "../../components/Layout";
 import Spinner from "../../components/Spinner";
 import LayoutWithSidebar from "../../components/LayoutwithSidebar";
 
-import jsPDF from 'jspdf'
-import 'jspdf-autotable'
+import jsPDF from "jspdf";
+import "jspdf-autotable";
 import moment from "moment";
 const { Search } = Input;
 
@@ -142,47 +142,55 @@ const Service = () => {
             //   setSelectedProduct(record);
             //   setModalVisible(true);
             // }}
-          >            <Link to={`/admin/services/${record._id}`}
           >
-            Edit
-          </Link>        </Button>
+            {" "}
+            <Link to={`/admin/services/${record._id}`}>Edit</Link>{" "}
+          </Button>
         </div>
       ),
     },
   ];
 
+  const data = services;
 
-  
-  const data = services
-
-  const handleGenerate = () =>{
-    const doc = new jsPDF()
-    const title = "Service"
-    const padding = 10
-    const titleWidth = doc.getTextWidth(title)
-    const center = (doc.internal.pageSize.width / 2) - (titleWidth / 2)
-    doc.setTextColor('#333')
-    doc.text(title,center,padding)
+  const handleGenerate = () => {
+    const doc = new jsPDF();
+    const title = "Service";
+    const padding = 10;
+    const titleWidth = doc.getTextWidth(title);
+    const center = doc.internal.pageSize.width / 2 - titleWidth / 2;
+    doc.setTextColor("#333");
+    doc.text(title, center, padding);
 
     doc.autoTable({
-      head: [["Id", "Name", "Description","Fee LKR","Start Time","End Time","Created Date"]],
+      head: [
+        [
+          "Id",
+          "Name",
+          "Description",
+          "Fee LKR",
+          "Start Time",
+          "End Time",
+          "Created Date",
+        ],
+      ],
       body: data.map((val, i) => [
-        i + 1
-        ,val.name,
+        i + 1,
+        val.name,
         val.description,
         val.feesPerConsultation,
         val.starttime,
         val.endtime,
-        moment(val.createdAt).format("YYYY-MM-DD")
+        moment(val.createdAt).format("YYYY-MM-DD"),
       ]),
       columnStyles: {
         0: { cellWidth: 10 },
-        1:{cellWidth:35},
-        2:{cellWidth:35},
-        3:{cellWidth:20},
-        4:{cellWidth:20},
-        5:{cellWidth:20},
-        6:{cellWidth:35},
+        1: { cellWidth: 35 },
+        2: { cellWidth: 35 },
+        3: { cellWidth: 20 },
+        4: { cellWidth: 20 },
+        5: { cellWidth: 20 },
+        6: { cellWidth: 35 },
       },
       headStyles: {
         fillColor: "#333",
@@ -190,9 +198,8 @@ const Service = () => {
       },
     });
 
-
-    doc.save('services.pdf')
-  }
+    doc.save("services.pdf");
+  };
   return (
     <LayoutWithSidebar>
       <div className="mb-2">
@@ -214,7 +221,6 @@ const Service = () => {
       {loading ? (
         <Spinner />
       ) : (
-        
         <Table columns={columns} dataSource={filteredServices} />
       )}
       <Modal
@@ -225,10 +231,12 @@ const Service = () => {
       >
         {selectedService && (
           <div>
-            <p>
-              Name: {`${selectedService.name} `}
-            </p>
-            <img src={selectedService.image} alt={selectedService.name}  style={{width: "100%"}}/>
+            <p>Name: {`${selectedService.name} `}</p>
+            <img
+              src={selectedService.image}
+              alt={selectedService.name}
+              style={{ width: "100%" }}
+            />
             <p>Description: {selectedService.description}</p>
 
             <p>Status: {selectedService.status}</p>

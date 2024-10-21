@@ -1,6 +1,6 @@
 import { Col, Form, Input, Row, TimePicker, message } from "antd";
 import axios from "axios";
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { hideLoading, showLoading } from "../redux/features/alertSlice";
@@ -61,9 +61,37 @@ const AddCoupon = () => {
     }
     return coupon;
   };
+
+  const [services, setService] = useState([]);
+
+  const getService = async () => {
+    setLoading(true);
+    try {
+      const res = await axios.get("/api/admin/getAllServices", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      if (res.data.success) {
+        setService(res.data.data);
+      } else {
+        message.error(res.data.message || "Failed to fetch services.");
+      }
+    } catch (error) {
+      console.log(error);
+      message.error("Failed to fetch services.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    getService();
+  }, []);
   return (
     <LayoutWithSidebar>
       <h3 className="text-center">Add Coupon</h3>
+      {JSON.stringify(services)}
       <Form
         layout="vertical"
         onFinish={handleFinish}
@@ -72,6 +100,39 @@ const AddCoupon = () => {
           code: coupongenerator(),
         }}
       >
+        <Row gutter={20}>
+          <Col xs={24} md={24} lg={24}>
+            <Form.Item
+              label="ServiceId"
+              name="serviceId"
+              required
+              rules={[{ required: true, message: "Service is required" }]}
+            >
+              <Input type="text" placeholder="" />
+            </Form.Item>
+          </Col>
+          <Col xs={24} md={24} lg={24}>
+            <Form.Item
+              label="code"
+              name="code"
+              required
+              rules={[{ required: true, message: "Coupon code is required" }]}
+            >
+              <Input type="text" placeholder="code Name" />
+            </Form.Item>
+          </Col>
+
+          <Col xs={24} md={24} lg={24}>
+            <Form.Item
+              label="expireDate"
+              name="expireDate"
+              required
+              rules={[{ required: true, message: "Expire Date is required" }]}
+            >
+              <Input type="datetime-local" />
+            </Form.Item>
+          </Col>
+        </Row>
         <Row gutter={20}>
           <Col xs={24} md={24} lg={24}>
             <Form.Item
