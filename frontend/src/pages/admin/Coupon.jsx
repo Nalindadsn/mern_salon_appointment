@@ -89,7 +89,7 @@ const Coupon = () => {
     if (confirm("Are you sure you want to DELETE?")) {
       // alert('Deleted')
       try {
-        const res = await axios.delete("/api/admin/deleteMessage", {
+        const res = await axios.delete("/api/admin/deleteCoupon", {
           data: {
             userId: params?.id,
             messageId: record._id,
@@ -145,7 +145,8 @@ const Coupon = () => {
       dataIndex: "createdAt",
       render: (text, record) => (
         <div className="">
-          Created : {moment(record?.createdAt).format("YYYY/MM/DD HH:mm:ss")}
+          {record?.createdAt == record?.updatedAt ? "" : "Created :"}{" "}
+          {moment(record?.createdAt).format("YYYY/MM/DD HH:mm:ss")}
           <br />
           {record?.createdAt == record?.updatedAt ? (
             ""

@@ -19,6 +19,7 @@ const {
   deleteTestimonialController,
   getAllCouponsController,
   addCouponController,
+  deleteCouponController,
 } = require("../controllers/adminController");
 const authMiddleware = require("../middlewares/authMiddleware");
 
@@ -69,6 +70,8 @@ router.post(
   changeServiceStatusController
 );
 router.delete("/deleteMessage", authMiddleware, deleteUserContactController);
+
+router.delete("/deleteCoupon", authMiddleware, deleteCouponController);
 
 router.post(
   "/changeProductStatus",

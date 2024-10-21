@@ -478,6 +478,26 @@ const addCouponController = async (req, res) => {
     });
   }
 };
+
+// get all Coupons data
+const deleteCouponController = async (req, res) => {
+  console.log(req.body);
+  try {
+    const contacts = await couponModel.deleteOne({ _id: req.body.messageId });
+    res.status(200).send({
+      success: true,
+      message: "coupon Deleted successfully",
+      data: contacts,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "error while getting contacts data",
+      error,
+    });
+  }
+};
 module.exports = {
   changeProductStatusController,
   getAllServicesController,
@@ -499,4 +519,5 @@ module.exports = {
   deleteTestimonialController,
   getAllCouponsController,
   addCouponController,
+  deleteCouponController,
 };
