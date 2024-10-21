@@ -18,7 +18,10 @@ const AddCoupon = () => {
   const navigate = useNavigate();
 
   const handleFinish = async (values) => {
-    // alert(url)
+    if (values.amount > 100) {
+      message.error("Amount should be less than 100");
+      return;
+    }
 
     try {
       dispatch(showLoading());
@@ -50,12 +53,25 @@ const AddCoupon = () => {
 
   // upload images
   const [loading, setLoading] = useState(false);
-
+  const coupongenerator = () => {
+    var coupon = "";
+    var possible = "abcdefghijklmnopqrstuvwxyz0123456789";
+    for (var i = 0; i < 8; i++) {
+      coupon += possible.charAt(Math.floor(Math.random() * possible.length));
+    }
+    return coupon;
+  };
   return (
     <LayoutWithSidebar>
       <h3 className="text-center">Add Coupon</h3>
-
-      <Form layout="vertical" onFinish={handleFinish} className="m-3">
+      <Form
+        layout="vertical"
+        onFinish={handleFinish}
+        className="m-3"
+        initialValues={{
+          code: coupongenerator(),
+        }}
+      >
         <Row gutter={20}>
           <Col xs={24} md={24} lg={24}>
             <Form.Item
@@ -64,7 +80,7 @@ const AddCoupon = () => {
               required
               rules={[{ required: true, message: "Coupon amount is required" }]}
             >
-              <Input type="text" placeholder="Amount" />
+              <Input type="text" placeholder="10%" />
             </Form.Item>
           </Col>
           <Col xs={24} md={24} lg={24}>

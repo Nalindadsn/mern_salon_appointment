@@ -455,6 +455,29 @@ const getAllCouponsController = async (req, res) => {
   }
 };
 
+const addCouponController = async (req, res) => {
+  console.log(req.body);
+  try {
+    const newproduct = await couponModel({
+      ...req.body,
+      status: "active",
+      isPercent: true,
+    });
+    await newproduct.save();
+    // await userModel.findByIdAndUpdate(adminUser._id, { notification });
+    res.status(201).send({
+      success: true,
+      message: "Coupon added successfully",
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      error,
+      message: "error while applying for product",
+    });
+  }
+};
 module.exports = {
   changeProductStatusController,
   getAllServicesController,
@@ -475,4 +498,5 @@ module.exports = {
   getAllTestimonialController,
   deleteTestimonialController,
   getAllCouponsController,
+  addCouponController,
 };

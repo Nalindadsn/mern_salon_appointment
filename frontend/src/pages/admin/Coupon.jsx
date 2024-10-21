@@ -82,7 +82,7 @@ const Coupon = () => {
   };
 
   const filteredCoupons = messages?.filter((product) => {
-    const fullName = `${product.firstName} ${product.lastName}`.toLowerCase();
+    const fullName = `${product.code} ${product.amount}`.toLowerCase();
     return fullName.includes(searchValue);
   });
   const handleDelete = async (record, status) => {
@@ -111,26 +111,34 @@ const Coupon = () => {
   };
   const columns = [
     {
-      title: "name",
-      dataIndex: "name",
+      title: "code",
+      dataIndex: "code",
       render: (text, record) => (
         <span>
-          {record.firstName} {record.lastName}
+          {record.code} {record.amount}
         </span>
       ),
       // responsive: ["xs"]
     },
     {
-      title: "Phone",
-      dataIndex: "phone",
+      title: "amount",
+      dataIndex: "amount",
     },
     {
-      title: "Email",
-      dataIndex: "email",
+      title: "expireDate",
+      dataIndex: "expireDate",
+      render: (text, record) => (
+        <span>{moment(record.expireDate).format("YYYY/MM/DD HH:mm:ss")}</span>
+      ),
     },
     {
-      title: "Coupon",
-      dataIndex: "message",
+      title: "isActive",
+      dataIndex: "isActive",
+      render: (text, record) => (
+        <span style={{ color: record.isActive == "active" ? "green" : "red" }}>
+          {record.isActive}
+        </span>
+      ),
     },
     {
       title: "Created At",
@@ -185,23 +193,14 @@ const Coupon = () => {
 
     doc.autoTable({
       head: [
-        [
-          "Id",
-          "first Name",
-          "Last Name",
-          "Phone",
-          "Email",
-          "Coupon",
-          "Joined Date",
-        ],
+        ["Id", "Code", "Amount", "isActive", "Expire Date", "Joined Date"],
       ],
       body: data.map((val, i) => [
         i + 1,
-        val.firstName,
-        val.lastName,
-        val.phone,
-        val.email,
-        val.message,
+        val.code,
+        val.amount,
+        val.isActice,
+        moment(val.expireDate).format("YYYY-MM-DD HH:mm:ss"),
         moment(val.createdAt).format("YYYY-MM-DD"),
       ]),
       columnStyles: {

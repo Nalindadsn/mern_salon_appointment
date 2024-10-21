@@ -18,6 +18,7 @@ const {
   getAllTestimonialController,
   deleteTestimonialController,
   getAllCouponsController,
+  addCouponController,
 } = require("../controllers/adminController");
 const authMiddleware = require("../middlewares/authMiddleware");
 
@@ -74,5 +75,7 @@ router.post(
   authMiddleware,
   changeProductStatusController
 );
+
+router.post("/add-coupon", authMiddleware, addCouponController);
 
 module.exports = router;
