@@ -66,6 +66,15 @@
   "mongoose": "^7.1.0",
   
     
+  "qrcode": "^1.5.4",
+  
+    
+  "react-qr-code": "^2.0.15",
+  
+    
+  "react-qr-scanner": "^1.0.0-alpha.11",
+  
+    
   "react-simple-star-rating": "^5.1.7",
   
     

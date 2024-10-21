@@ -6,7 +6,7 @@ const serviceSchema = new mongoose.Schema({
   userId: {
     type: String,
   },
-  
+
   name: {
     type: String,
     required: [true, " name is required"],
@@ -21,8 +21,12 @@ const serviceSchema = new mongoose.Schema({
     type: String,
     minlength: [2, "Your description must be at least 2 characters"],
   },
- 
+
   feesPerConsultation: {
+    type: Number,
+    required: [true, "Fee is required"],
+  },
+  discount: {
     type: Number,
     required: [true, "Fee is required"],
   },

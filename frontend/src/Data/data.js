@@ -59,4 +59,9 @@ export const adminMenu = [
     path: "/admin/testimonial",
     icon: "fas fa-users",
   },
+  {
+    name: "Coupon",
+    path: "/admin/coupons",
+    icon: "fas fa-credit-card",
+  },
 ];

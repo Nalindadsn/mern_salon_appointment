@@ -59,6 +59,8 @@ import UserTestimonial from "./pages/user/Testimonial.jsx";
 import Testimonial from "./pages/admin/Testimonial.jsx";
 import UpdateTestimonial from "./pages/user/UpdateTestimonial.jsx";
 import UpdateAdminTestimonial from "./pages/admin/UpdateTestimonial.jsx";
+import Coupon from "./pages/admin/Coupon.jsx";
+import AddCoupon from "./pages/AddCoupon.jsx";
 // import Testimonial from "./pages/admin/Testimonial.jsx";
 
 const router = createBrowserRouter(
@@ -318,6 +320,25 @@ const router = createBrowserRouter(
         element={
           <ProtectedRoute>
             <UpdateMessage />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/admin/coupons"
+        index={true}
+        element={
+          <ProtectedRoute>
+            <Coupon />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/admin/coupons/new"
+        index={true}
+        element={
+          <ProtectedRoute>
+            <AddCoupon />
           </ProtectedRoute>
         }
       />

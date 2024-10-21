@@ -17,6 +17,7 @@ const {
   updateserviceController,
   getAllTestimonialController,
   deleteTestimonialController,
+  getAllCouponsController,
 } = require("../controllers/adminController");
 const authMiddleware = require("../middlewares/authMiddleware");
 
@@ -44,6 +45,8 @@ router.post("/updateProduct", authMiddleware, updateproductDetailsController);
 
 // Endpoint to fetch all services
 router.get("/getAllMessages", authMiddleware, getAllContactsController);
+// Endpoint to fetch all services
+router.get("/getAllCoupons", authMiddleware, getAllCouponsController);
 
 router.get("/getSummary", authMiddleware, getSummaryController);
 
