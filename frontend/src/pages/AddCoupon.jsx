@@ -19,10 +19,7 @@ const AddCoupon = () => {
 
   const handleFinish = async (values) => {
     // alert(url)
-    if (!url) {
-      message.error("Please upload image");
-      return;
-    }
+
     try {
       dispatch(showLoading());
       const res = await axios.post(
@@ -54,63 +51,6 @@ const AddCoupon = () => {
   // upload images
   const [loading, setLoading] = useState(false);
 
-  const convertBase64 = (file) => {
-    return new Promise((resolve, reject) => {
-      const fileReader = new FileReader();
-      fileReader.readAsDataURL(file);
-
-      fileReader.onload = () => {
-        resolve(fileReader.result);
-      };
-
-      fileReader.onerror = (error) => {
-        reject(error);
-      };
-    });
-  };
-
-  async function uploadSingleImage(base64) {
-    setLoading(true);
-    await axios
-      .post("/api/uploadImage", { image: base64 })
-      .then((res) => {
-        setUrl(res.data);
-        alert("Image uploaded Succesfully");
-      })
-      .then(() => setLoading(false))
-      .catch(console.log);
-  }
-
-  // async function uploadMultipleImages(images) {
-  //   setLoading(true);
-  //   await axios
-  //     .post("/api/uploadMultipleImages", { images })
-  //     .then((res) => {
-  //       setUrl(res.data);
-  //       alert("Image uploaded Succesfully");
-  //     })
-  //     .then(() => setLoading(false))
-  //     .catch(console.log);
-  // }
-
-  const uploadImage = async (event) => {
-    const files = event.target.files;
-    console.log(files.length);
-
-    if (files.length === 1) {
-      const base64 = await convertBase64(files[0]);
-      uploadSingleImage(base64);
-      return;
-    }
-
-    const base64s = [];
-    for (var i = 0; i < files.length; i++) {
-      var base = await convertBase64(files[i]);
-      base64s.push(base);
-    }
-    // uploadMultipleImages(base64s);
-  };
-
   return (
     <LayoutWithSidebar>
       <h3 className="text-center">Add Coupon</h3>
@@ -139,8 +79,13 @@ const AddCoupon = () => {
           </Col>
 
           <Col xs={24} md={24} lg={24}>
-            <Form.Item label="expireDate" name="expireDate">
-              <TimePicker format="DDDD-MM-dd HH:mm" />
+            <Form.Item
+              label="expireDate"
+              name="expireDate"
+              required
+              rules={[{ required: true, message: "Expire Date is required" }]}
+            >
+              <Input type="datetime-local" />
             </Form.Item>
           </Col>
         </Row>
