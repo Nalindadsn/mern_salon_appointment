@@ -25,6 +25,7 @@ const {
   updateTestimonialController,
   deleteTestimonialController,
   getPublishedTestimonialController,
+  getCouponByIdController,
 } = require("../controllers/userController");
 const authMiddleware = require("../middlewares/authMiddleware");
 
@@ -111,5 +112,8 @@ router.post(
 router.get("/user-appointments", authMiddleware, userAppointmentsController);
 
 router.post("/createTestimonial", createTestimonialController);
+
+// GET User
+router.post("/getCouponInfo", getCouponByIdController);
 
 module.exports = router;

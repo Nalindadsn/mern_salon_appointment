@@ -498,6 +498,27 @@ const deleteCouponController = async (req, res) => {
     });
   }
 };
+
+const getCouponByIdController = async (req, res) => {
+  console.log(req.body);
+  try {
+    const coupon = await couponModel.findOne({ _id: req.body._id });
+    console.log(coupon);
+    res.status(200).send({
+      success: true,
+      message: "single coupon info fetched",
+      data: coupon,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      error,
+      message: "error in single coupon info",
+    });
+  }
+};
+
 module.exports = {
   changeProductStatusController,
   getAllServicesController,
@@ -520,4 +541,5 @@ module.exports = {
   getAllCouponsController,
   addCouponController,
   deleteCouponController,
+  getCouponByIdController,
 };

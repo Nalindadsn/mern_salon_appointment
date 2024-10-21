@@ -20,6 +20,10 @@ const appointmentSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    fee: {
+      type: String,
+      required: true,
+    },
     date: {
       type: Date, // changed type to Date
       required: true,
@@ -44,6 +48,7 @@ const appointmentJoiSchema = Joi.object({
   serviceInfo: Joi.string().required(),
   userInfo: Joi.string().required(),
   date: Joi.date().required(),
+  fee: Joi.string().required(),
   status: Joi.string().required().default("pending"),
   time: Joi.string().required(),
 }).options({ stripUnknown: true });

@@ -111,13 +111,15 @@ const Coupon = () => {
   };
   const columns = [
     {
+      title: "serviceId",
+      dataIndex: "serviceId",
+      render: (text, record) => <span>{record.serviceId}</span>,
+      // responsive: ["xs"]
+    },
+    {
       title: "code",
       dataIndex: "code",
-      render: (text, record) => (
-        <span>
-          {record.code} {record.amount}
-        </span>
-      ),
+      render: (text, record) => <span>{record.code}</span>,
       // responsive: ["xs"]
     },
     {
@@ -128,7 +130,16 @@ const Coupon = () => {
       title: "expireDate",
       dataIndex: "expireDate",
       render: (text, record) => (
-        <span>{moment(record.expireDate).format("YYYY/MM/DD HH:mm:ss")}</span>
+        <span
+          className={
+            moment(Date.now()).format("DD-MM-YYYY HH:mm:ss") >
+            moment(record?.expireDate).format("DD-MM-YYYY HH:mm:ss")
+              ? "text-danger"
+              : "text-success"
+          }
+        >
+          {moment(record.expireDate).format("YYYY/MM/DD HH:mm:ss")}
+        </span>
       ),
     },
     {
@@ -163,12 +174,6 @@ const Coupon = () => {
       dataIndex: "actions",
       render: (text, record) => (
         <div className="d-flex ">
-          <Link
-            to={`/admin/messages/${record._id}`}
-            className="btn btn-primary"
-          >
-            Edit
-          </Link>
           <Button
             className="ml-2"
             variant="danger"
@@ -194,15 +199,15 @@ const Coupon = () => {
 
     doc.autoTable({
       head: [
-        ["Id", "Code", "Amount", "isActive", "Expire Date", "Joined Date"],
+        ["Id", "ServiceId", "Code", "Discount", "isActive", "Expire Date"],
       ],
       body: data.map((val, i) => [
         i + 1,
+        val.serviceId,
         val.code,
         val.amount,
-        val.isActice,
+        val.isActive,
         moment(val.expireDate).format("YYYY-MM-DD HH:mm:ss"),
-        moment(val.createdAt).format("YYYY-MM-DD"),
       ]),
       columnStyles: {
         0: { cellWidth: 10 },
@@ -227,7 +232,7 @@ const Coupon = () => {
       <div className="mb-2">
         <h3 className="text-center m-3">All Coupons</h3>
         <Link to="/admin/coupons/new" className="btn btn-primary">
-          Add Coupon
+          Create Coupon
         </Link>
         <div className="d-flex align-items-center mb-2">
           <Search

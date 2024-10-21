@@ -1,11 +1,11 @@
-import { DatePicker, TimePicker, message } from "antd";
+import { Badge, Button, DatePicker, Input, TimePicker, message } from "antd";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import Layout from "../components/Layout";
 import { hideLoading, showLoading } from "../redux/features/alertSlice";
-import { Col, Row } from "react-bootstrap";
+import { Col, Row, Spinner } from "react-bootstrap";
 // import "./../_styles/LayoutStyles.css";
 import QrReader from "react-qr-scanner";
 const BookingPage = () => {
@@ -21,7 +21,7 @@ const BookingPage = () => {
     height: 240,
     width: 320,
   };
-
+  const [coupon, setCoupon] = useState("");
   const navigate = useNavigate();
   const { user } = useSelector((state) => state.user);
   const params = useParams();
@@ -47,6 +47,45 @@ const BookingPage = () => {
       }
     } catch (error) {
       console.log(error);
+    }
+  };
+  const [couponInfo, setCouponInfo] = useState({});
+  const [loading, setLoading] = useState(false);
+  const [couponExpired, setCouponExpired] = useState(false);
+
+  const getCouponData = async () => {
+    try {
+      setLoading(true);
+      const res = await axios.post(
+        "/api/user/getCouponInfo",
+        { serviceId: params.serviceId, coupon },
+        {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        }
+      );
+
+      if (res?.data.expired) {
+        // setCouponInfo(null);
+        setCouponExpired(true);
+        setCouponInfo(res.data.data);
+        setLoading(false);
+        return message.error(res.data.message);
+      }
+      if (res.data.success) {
+        setCouponExpired(false);
+        message.success(res.data.message);
+        setCouponInfo(res.data.data);
+        setLoading(false);
+      } else {
+        setCouponExpired(true);
+        setLoading(false);
+        return message.error(res.data.message);
+      }
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
     }
   };
 
@@ -89,6 +128,14 @@ const BookingPage = () => {
         return alert("Date & Time Required");
       }
       dispatch(showLoading());
+      const feeVal = couponInfo
+        ? services.feesPerConsultation -
+          (couponExpired
+            ? 0
+            : services.feesPerConsultation * couponInfo.amount) /
+            100
+        : services.feesPerConsultation;
+
       const res = await axios.post(
         "/api/user/book-appointment",
         {
@@ -98,6 +145,7 @@ const BookingPage = () => {
           userInfo: user,
           date: date,
           time: time,
+          fee: feeVal,
         },
         {
           headers: {
@@ -105,8 +153,10 @@ const BookingPage = () => {
           },
         }
       );
+      // alert(JSON.stringify(res));
       dispatch(hideLoading());
       if (res.data.success) {
+        console.log(res.data);
         message.success(res.data.message);
         navigate("/user/appointments");
       } else {
@@ -122,12 +172,13 @@ const BookingPage = () => {
     getUserData();
     //eslint-disable-next-line
   }, []);
-
+  function handleChange(e) {
+    setCoupon(e.target.value);
+  }
   return (
     <Layout>
       <div className="container pb-5">
         <h3 className="text-center my-4">Book an Appointment</h3>
-
         {services && (
           <Row style={{ width: "100%" }}>
             <Col md={6}>
@@ -135,7 +186,37 @@ const BookingPage = () => {
                 <div className="">
                   <h5 className=" text-center">{services.name}</h5>
                   <h6 className=" mb-2 text-muted text-center">
-                    Fees: LKR {services.feesPerConsultation}
+                    Fees: LKR {loading && <Spinner />}
+                    {couponInfo !== null && couponInfo?.code == coupon ? (
+                      <>
+                        {services.feesPerConsultation -
+                          (couponExpired
+                            ? 0
+                            : services.feesPerConsultation *
+                              couponInfo.amount) /
+                            100}
+                        <br />
+                        <code
+                          className={`border ${
+                            couponExpired ? "text-danger" : "text-success"
+                          } px-1`}
+                        >
+                          {" "}
+                          {coupon} Coupon Applied
+                        </code>
+                        <br />
+                        {couponExpired ? (
+                          <span className="text-danger">Coupon Expired</span>
+                        ) : (
+                          <strike className="text-danger">
+                            LKR
+                            {services.feesPerConsultation}
+                          </strike>
+                        )}
+                      </>
+                    ) : (
+                      services.feesPerConsultation
+                    )}
                   </h6>
                   <h6 className=" mb-2 text-muted text-center">
                     Timings: {services.starttime} - {services.endtime}
@@ -143,7 +224,7 @@ const BookingPage = () => {
                   <div className="">
                     <div className="d-flex flex-column w-50 mx-auto">
                       <DatePicker
-                        className="m-2 date-picker"
+                        className="mb-2 date-picker"
                         format="DD-MM-YYYY"
                         onChange={(value) => {
                           const selectedDate = value
@@ -154,19 +235,29 @@ const BookingPage = () => {
                       />
                       <TimePicker
                         format="HH:mm"
-                        className="m-2 time-picker"
+                        className="mb-2 time-picker"
                         onChange={(time) =>
                           setTime(time && time.format("HH:mm"))
                         }
                       />
-                      <div className="d-flex justify-content-center">
+                      <hr />
+                      <div className="d-flex justify-content-between gap-2 ">
+                        <Input
+                          placeholder="Coupon"
+                          type="text"
+                          value={coupon}
+                          onChange={handleChange}
+                        />
+                        <Button onClick={getCouponData}>Apply</Button>
+                      </div>
+                      {/* <div className="d-flex justify-content-center">
                         <button
                           className="btn btn-primary mt-2 w-100"
                           onClick={handleAvailability}
                         >
                           Check Availability
                         </button>
-                      </div>
+                      </div> */}
                       <div className="d-flex justify-content-center">
                         <button
                           className="btn btn-dark mt-2 w-100"
@@ -177,15 +268,6 @@ const BookingPage = () => {
                       </div>
                     </div>
                   </div>
-                </div>
-                <div>
-                  <QrReader
-                    delay={delay}
-                    style={previewStyle}
-                    onError={handleError}
-                    onScan={handleScan}
-                  />
-                  <p>{result}</p>
                 </div>
               </div>
             </Col>

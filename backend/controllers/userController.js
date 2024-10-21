@@ -3,6 +3,7 @@ const userModel = require("../models/userModel");
 const serviceModel = require("../models/serviceModel");
 const productModel = require("../models/productModel");
 const testimonialModel = require("../models/testimonialModel");
+const couponModel = require("../models/couponModel");
 
 const appointmentModel = require("../models/appointmentModel");
 const jwt = require("jsonwebtoken");
@@ -331,26 +332,30 @@ const bookingAvailabilityController = async (req, res) => {
 
 // book appointment
 const bookAppointmentController = async (req, res) => {
+  console.log(req.body);
   try {
     const date = moment(req.body.date, "DD-MM-YYYY").toISOString();
     const startTime = moment(req.body.time, "HH:mm").toISOString();
     const serviceId = req.body.serviceId;
     const service = await serviceModel.findById(serviceId);
-
+    // console.log(service);
     if (!service) {
       return res.status(404).send({
         message: "service not found",
         success: false,
       });
     }
-
+    // return res.status(404).send({
+    //   message: "service not found",
+    //   success: false,
+    // });
     const start = moment(service.starttime, "HH:mm").toISOString();
     const end = moment(service.endtime, "HH:mm").toISOString();
     console.log(service.starttime, service.endtime);
     console.log(!moment(startTime).isBetween(start, end, undefined, "[]"));
 
     if (!moment(startTime).isBetween(start, end, undefined, "[]")) {
-      return res.status(400).send({
+      return res.send({
         message: "selected time is not within service's available range",
         success: false,
       });
@@ -362,7 +367,7 @@ const bookAppointmentController = async (req, res) => {
       date,
     });
     if (appointments.length >= service.maxPatientsPerDay) {
-      return res.status(400).send({
+      return res.send({
         message: "maximum number of appointments reached for this day",
         success: false,
       });
@@ -375,7 +380,7 @@ const bookAppointmentController = async (req, res) => {
     });
 
     if (existingAppointment) {
-      return res.status(400).send({
+      return res.send({
         message: "appointment already booked for this time slot",
         success: false,
       });
@@ -384,6 +389,7 @@ const bookAppointmentController = async (req, res) => {
       serviceId,
       userId: req.body.userId,
       date,
+      fee: req.body.fee,
       time: startTime,
       serviceInfo: req.body.serviceInfo,
       userInfo: req.body.userInfo,
@@ -667,7 +673,6 @@ const updateTestimonialController = async (req, res) => {
       req.body
     );
 
-    // await userModel.findByIdAndUpdate(adminUser._id, { notification });
     res.status(201).send({
       success: true,
       testimonial: "testimonial updated successfully",
@@ -703,7 +708,51 @@ const deleteTestimonialController = async (req, res) => {
     });
   }
 };
+const getCouponByIdController = async (req, res) => {
+  console.log(req.body);
+  try {
+    const coupon = await couponModel.findOne({
+      code: req.body.coupon.trim(),
+      isActive: "active",
+      serviceId: req.body.serviceId,
+    });
 
+    if (!coupon) {
+      res.send({
+        success: false,
+        message: "Invalid coupon",
+        expired: false,
+      });
+      return;
+    }
+
+    const nowDate = moment(Date.now()).format("DD-MM-YYYY HH:mm:ss");
+    const expireDate = moment(coupon?.expireDate).format("DD-MM-YYYY HH:mm:ss");
+    console.log(nowDate > expireDate ? "expired" : "not expired");
+    if (nowDate > expireDate == true) {
+      res.send({
+        success: true,
+        message: "Expired coupon",
+        data: coupon,
+        expired: true,
+      });
+      return;
+    }
+
+    res.status(200).send({
+      success: true,
+      message: "Coupon applied successfully",
+      data: coupon,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      error,
+      message: "error in single coupon info",
+    });
+  }
+};
 module.exports = {
   loginController,
   registerController,
@@ -730,4 +779,5 @@ module.exports = {
   updateTestimonialController,
   deleteTestimonialController,
   getPublishedTestimonialController,
+  getCouponByIdController,
 };

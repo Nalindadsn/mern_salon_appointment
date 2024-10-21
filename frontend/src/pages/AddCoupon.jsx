@@ -1,4 +1,4 @@
-import { Col, Form, Input, Row, TimePicker, message } from "antd";
+import { Col, Form, Input, Row, Select, TimePicker, message } from "antd";
 import axios from "axios";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -90,14 +90,14 @@ const AddCoupon = () => {
   }, []);
   return (
     <LayoutWithSidebar>
-      <h3 className="text-center">Add Coupon</h3>
-      {JSON.stringify(services)}
+      <h3 className="text-center">Create Coupon</h3>
       <Form
         layout="vertical"
         onFinish={handleFinish}
         className="m-3"
         initialValues={{
           code: coupongenerator(),
+          serviceId: "",
         }}
       >
         <Row gutter={20}>
@@ -108,20 +108,16 @@ const AddCoupon = () => {
               required
               rules={[{ required: true, message: "Service is required" }]}
             >
-              <Input type="text" placeholder="" />
+              <Select>
+                <Select.Option value="">Select Service</Select.Option>
+                {services.map((service) => (
+                  <Select.Option key={service._id} value={service._id}>
+                    {service.name}
+                  </Select.Option>
+                ))}
+              </Select>
             </Form.Item>
           </Col>
-          <Col xs={24} md={24} lg={24}>
-            <Form.Item
-              label="code"
-              name="code"
-              required
-              rules={[{ required: true, message: "Coupon code is required" }]}
-            >
-              <Input type="text" placeholder="code Name" />
-            </Form.Item>
-          </Col>
-
           <Col xs={24} md={24} lg={24}>
             <Form.Item
               label="expireDate"
@@ -154,23 +150,10 @@ const AddCoupon = () => {
               <Input type="text" placeholder="code Name" />
             </Form.Item>
           </Col>
-
-          <Col xs={24} md={24} lg={24}>
-            <Form.Item
-              label="expireDate"
-              name="expireDate"
-              required
-              rules={[{ required: true, message: "Expire Date is required" }]}
-            >
-              <Input type="datetime-local" />
-            </Form.Item>
-          </Col>
         </Row>
         <br />
         <Row gutter={20}>
-          <Col xs={24} md={24} lg={8}></Col>
           <Col xs={24} md={24} lg={8}>
-            <br />
             <button className="btn btn-primary form-btn" type="submit">
               Submit
             </button>
