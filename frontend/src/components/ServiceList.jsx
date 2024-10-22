@@ -54,12 +54,12 @@ const ServiceList = ({ service }) => {
             width: "100%",
           }}
         >
-          <QRCode
+          {/* <QRCode
             size={256}
             style={{ height: "auto", maxWidth: "100%", width: "100%" }}
             value={`https://npmjs.com/package/react-qr-code`}
             viewBox={`0 0 256 256`}
-          />
+          /> */}
         </div>
       </Card>
       {/*     

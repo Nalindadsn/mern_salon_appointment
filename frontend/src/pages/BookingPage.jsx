@@ -6,8 +6,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import Layout from "../components/Layout";
 import { hideLoading, showLoading } from "../redux/features/alertSlice";
 import { Col, Row, Spinner } from "react-bootstrap";
+import QrReader from "../components/QrReader";
 // import "./../_styles/LayoutStyles.css";
-import QrReader from "react-qr-scanner";
+// import QrReader from "react-qr-scanner";
 const BookingPage = () => {
   const [delay, setDelay] = useState(100);
   const [result, setResult] = useState("No result");
@@ -249,6 +250,8 @@ const BookingPage = () => {
                           onChange={handleChange}
                         />
                         <Button onClick={getCouponData}>Apply</Button>
+
+                        <QrReader />
                       </div>
                       {/* <div className="d-flex justify-content-center">
                         <button
