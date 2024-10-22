@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { hideLoading, showLoading } from "../redux/features/alertSlice";
 // import backgroundImage from "./background.jpg"; // Import your background image
-import logo from "../_assets/logo.png";
+import logo from "../assets/logo.png";
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();

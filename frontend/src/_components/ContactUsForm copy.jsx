@@ -1,5 +1,5 @@
 import React from "react";
-import contactImage from "../_assets/contact-img.png";
+import contactImage from "../assets/contact-img.png";
 
 const ContactUsForm = () => {
   return (
@@ -30,11 +30,13 @@ const ContactUsForm = () => {
         </div>
       </div>
 
-      <hr style={{ 
-        border: "1px solid black", 
-        width: "80%", 
-        margin: "40px auto" 
-      }} />
+      <hr
+        style={{
+          border: "1px solid black",
+          width: "80%",
+          margin: "40px auto",
+        }}
+      />
 
       <div className="contact-section-2 container py-5">
         <div className="row align-items-center">
@@ -43,34 +45,71 @@ const ContactUsForm = () => {
             <form>
               <div className="row">
                 <div className="col-md-6 mb-3">
-                  <label htmlFor="firstname" className="form-label">First Name</label>
-                  <input type="text" className="form-control" id="firstname" placeholder="Enter your first name" />
+                  <label htmlFor="firstname" className="form-label">
+                    First Name
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="firstname"
+                    placeholder="Enter your first name"
+                  />
                 </div>
 
                 <div className="col-md-6 mb-3">
-                  <label htmlFor="lastname" className="form-label">Last Name</label>
-                  <input type="text" className="form-control" id="lastname" placeholder="Enter your last name" />
+                  <label htmlFor="lastname" className="form-label">
+                    Last Name
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="lastname"
+                    placeholder="Enter your last name"
+                  />
                 </div>
               </div>
 
               <div className="row">
                 <div className="col-md-6 mb-3">
-                  <label htmlFor="email" className="form-label">Email</label>
-                  <input type="email" className="form-control" id="email" placeholder="Enter your email" />
+                  <label htmlFor="email" className="form-label">
+                    Email
+                  </label>
+                  <input
+                    type="email"
+                    className="form-control"
+                    id="email"
+                    placeholder="Enter your email"
+                  />
                 </div>
 
                 <div className="col-md-6 mb-3">
-                  <label htmlFor="phone" className="form-label">Phone</label>
-                  <input type="tel" className="form-control" id="phone" placeholder="Enter your phone number" />
+                  <label htmlFor="phone" className="form-label">
+                    Phone
+                  </label>
+                  <input
+                    type="tel"
+                    className="form-control"
+                    id="phone"
+                    placeholder="Enter your phone number"
+                  />
                 </div>
               </div>
 
               <div className="mb-3">
-                <label htmlFor="message" className="form-label">Message</label>
-                <textarea className="form-control" id="message" rows="4" placeholder="Your message"></textarea>
+                <label htmlFor="message" className="form-label">
+                  Message
+                </label>
+                <textarea
+                  className="form-control"
+                  id="message"
+                  rows="4"
+                  placeholder="Your message"
+                ></textarea>
               </div>
 
-              <button type="submit" className="btn btn-primary">Send</button>
+              <button type="submit" className="btn btn-primary">
+                Send
+              </button>
             </form>
           </div>
 

@@ -1,10 +1,10 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-import facebookLogo from "../_assets/icons/facebook.svg";
-import instagramLogo from "../_assets/icons/instagram.svg";
-import xLogo from "../_assets/icons/twitter.svg";
-import youtubeLogo from "../_assets/icons/youtube.svg";
+import facebookLogo from "../assets/icons/facebook.svg";
+import instagramLogo from "../assets/icons/instagram.svg";
+import xLogo from "../assets/icons/twitter.svg";
+import youtubeLogo from "../assets/icons/youtube.svg";
 
 const FollowUs = () => {
   return (

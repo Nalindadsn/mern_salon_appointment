@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import assets from "../_assets/assets.gif";
+import assets from "../assets/assets.gif";
 import axios from "axios";
 
 export default function UploadImage() {
@@ -73,7 +73,7 @@ export default function UploadImage() {
         >
           <div className="flex flex-col items-center justify-center pt-5 pb-6">
             <svg
-            style={{ height: "100px", width: "100px" }}
+              style={{ height: "100px", width: "100px" }}
               aria-hidden="true"
               className="w-10 h-10 mb-3 text-gray-400"
               fill="none"
@@ -119,13 +119,17 @@ export default function UploadImage() {
         {url && (
           <div>
             Access you file at{" "}
-            <div style={{overflowX:"hidden"}}>
-
-            <a href={url} target="_blank" rel="noopener noreferrer">
-              
-              {url}<br/>              <img src={url} alt="upload image" style={{width:"200px"}}  />{" "}
-
-            </a></div>
+            <div style={{ overflowX: "hidden" }}>
+              <a href={url} target="_blank" rel="noopener noreferrer">
+                {url}
+                <br />{" "}
+                <img
+                  src={url}
+                  alt="upload image"
+                  style={{ width: "200px" }}
+                />{" "}
+              </a>
+            </div>
           </div>
         )}
       </div>

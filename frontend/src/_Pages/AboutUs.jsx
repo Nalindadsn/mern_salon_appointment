@@ -7,7 +7,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { hideLoading, showLoading } from "../redux/features/alertSlice";
 // import backgroundImage from "./background.jpg"; // Import your background image
 import ContactUsForm from "../_components/ContactUsForm";
-import contactImage from "../_assets/contact-img.png";
+import contactImage from "../assets/contact-img.png";
 import TextArea from "antd/es/input/TextArea";
 import { useEffect, useState } from "react";
 import Layout from "../components/Layout";

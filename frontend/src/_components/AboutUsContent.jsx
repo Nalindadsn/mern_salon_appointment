@@ -3,12 +3,12 @@ import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 // Importing images
-import mission from "../_assets/mission.png";
-import values from "../_assets/values.png";
-import services from "../_assets/services.png";
-import team from "../_assets/team.png";
-import why from "../_assets/why.png";
-import visit from "../_assets/visit.png";
+import mission from "../assets/mission.png";
+import values from "../assets/values.png";
+import services from "../assets/services.png";
+import team from "../assets/team.png";
+import why from "../assets/why.png";
+import visit from "../assets/visit.png";
 
 const sectionsData = [
   {

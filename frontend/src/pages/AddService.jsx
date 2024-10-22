@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { hideLoading, showLoading } from "../redux/features/alertSlice";
 import TextArea from "antd/es/input/TextArea";
 
-import assets from "../_assets/assets.gif";
+import assets from "../assets/assets.gif";
 
 import { useState } from "react";
 import LayoutWithSidebar from "../components/LayoutwithSidebar";
@@ -56,9 +56,7 @@ const ApplyService = () => {
     }
   };
 
-
-
-  // upload images 
+  // upload images
   const [loading, setLoading] = useState(false);
 
   const convertBase64 = (file) => {
@@ -126,7 +124,7 @@ const ApplyService = () => {
         >
           <div className="flex flex-col items-center justify-center pt-5 pb-6">
             <svg
-            style={{ height: "100px", width: "100px" }}
+              style={{ height: "100px", width: "100px" }}
               aria-hidden="true"
               className="w-10 h-10 mb-3 text-gray-400"
               fill="none"
@@ -165,42 +163,42 @@ const ApplyService = () => {
       <h3 className="text-center">Add Service</h3>
       upload image
       <div className="flex justify-center flex-col m-8 ">
-      <Row gutter={20}>
-        
-      <Col  xs={24} md={12} lg={12} className="border pb-5">
-          
-          <div>
-            {loading ? (
-              <div className="flex items-center justify-center">
-                <img src={assets} />{" "}
-              </div>
-            ) : (
-              <UploadInput />
-            )}
-          </div></Col>
+        <Row gutter={20}>
+          <Col xs={24} md={12} lg={12} className="border pb-5">
+            <div>
+              {loading ? (
+                <div className="flex items-center justify-center">
+                  <img src={assets} />{" "}
+                </div>
+              ) : (
+                <UploadInput />
+              )}
+            </div>
+          </Col>
           <Col xs={24} md={12} lg={12}>
-          <div>
-       
-        
-        <div style={{backgroundColor:"#ccc"}}>
-            {url && (
-              <div>
-                Access you file at{" "}
-                <div style={{overflowX:"hidden"}}>
-    
-                <a href={url} target="_blank" rel="noopener noreferrer">
-                  
-                  {url}<br/>              <img src={url} alt="upload image" style={{width:"200px"}}  />{" "}
-    
-                </a></div>
+            <div>
+              <div style={{ backgroundColor: "#ccc" }}>
+                {url && (
+                  <div>
+                    Access you file at{" "}
+                    <div style={{ overflowX: "hidden" }}>
+                      <a href={url} target="_blank" rel="noopener noreferrer">
+                        {url}
+                        <br />{" "}
+                        <img
+                          src={url}
+                          alt="upload image"
+                          style={{ width: "200px" }}
+                        />{" "}
+                      </a>
+                    </div>
+                  </div>
+                )}
               </div>
-            )}
-          </div>
-      </div>
+            </div>
           </Col>
         </Row>
-      
-    </div>
+      </div>
       <Form layout="vertical" onFinish={handleFinish} className="m-3">
         <Row gutter={20}>
           <Col xs={24} md={24} lg={24}>
@@ -213,20 +211,15 @@ const ApplyService = () => {
               <Input type="text" placeholder="Service Name" />
             </Form.Item>
           </Col>
-        
+
           <Col xs={24} md={24} lg={24}>
-            <Form.Item
-              label="Description"
-              name="description"
-            >
-              <TextArea rows={4}  placeholder="Service Description"/>
+            <Form.Item label="Description" name="description">
+              <TextArea rows={4} placeholder="Service Description" />
             </Form.Item>
           </Col>
-         
         </Row>
         <br />
         <Row gutter={20}>
-          
           <Col xs={24} md={24} lg={8}>
             <Form.Item
               label="Fees Per Consultation"

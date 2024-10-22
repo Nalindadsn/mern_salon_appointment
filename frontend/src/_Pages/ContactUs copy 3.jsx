@@ -5,8 +5,8 @@ import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { hideLoading, showLoading } from "../redux/features/alertSlice";
 // import backgroundImage from "./background.jpg"; // Import your background image
-import  ContactUsForm  from "../_components/ContactUsForm";
-import contactImage from "../_assets/contact-img.png";
+import ContactUsForm from "../_components/ContactUsForm";
+import contactImage from "../assets/contact-img.png";
 import TextArea from "antd/es/input/TextArea";
 import { useState } from "react";
 const Contact = () => {
@@ -19,17 +19,20 @@ const Contact = () => {
     try {
       dispatch(showLoading());
 
-      const { data } = await axios.post("/api/contact/create", values).then((res) => {
-        console.log(res);
-      }).catch((err) => {
-        console.log(err);
-      })
+      const { data } = await axios
+        .post("/api/contact/create", values)
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
       dispatch(hideLoading());
       if (data.success) {
         // setMessageStatus("sent");
         message.success("message created Successful");
         navigate("/contact/sent");
-        
+
         // <Rediect to="/"  />;
       } else {
         message.error(data.message);
@@ -42,7 +45,7 @@ const Contact = () => {
 
   return (
     <>
-    {/* <ContactUsForm /> */}
+      {/* <ContactUsForm /> */}
       <div style={{ backgroundColor: "#e6e2df", width: "100vw" }}>
         <div className="contact-section-1 container py-5">
           <div className="row text-center">

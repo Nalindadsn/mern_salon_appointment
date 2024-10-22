@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-import backgroundImage from "../_assets/bg.png";
+import backgroundImage from "../assets/bg.png";
 
 const HeroSection = () => {
   const navigate = useNavigate();

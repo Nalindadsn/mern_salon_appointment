@@ -2,18 +2,18 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 
 //importing images
-import facials from "../_assets/11.png";
-import peels from "../_assets/12.png";
-import addons from "../_assets/13.png";
-import Haircuts from "../_assets/14.png";
-import Coloring from "../_assets/15.png";
-import Treatments from "../_assets/16.png";
-import Manicures from "../_assets/17.png";
-import Pedicures from "../_assets/18.png";
-import Nail_Enhancements from "../_assets/19.png";
-import Massages from "../_assets/20.png";
-import Waxing from "../_assets/21.png";
-import Body_Scrubs from "../_assets/22.png";
+import facials from "../assets/11.png";
+import peels from "../assets/12.png";
+import addons from "../assets/13.png";
+import Haircuts from "../assets/14.png";
+import Coloring from "../assets/15.png";
+import Treatments from "../assets/16.png";
+import Manicures from "../assets/17.png";
+import Pedicures from "../assets/18.png";
+import Nail_Enhancements from "../assets/19.png";
+import Massages from "../assets/20.png";
+import Waxing from "../assets/21.png";
+import Body_Scrubs from "../assets/22.png";
 
 // Reusable ServiceColumn Component
 const ServiceColumn = ({ title, imgSrc, altText }) => {

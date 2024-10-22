@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { hideLoading, showLoading } from "../redux/features/alertSlice";
 import TextArea from "antd/es/input/TextArea";
 
-import assets from "../_assets/assets.gif";
+import assets from "../assets/assets.gif";
 
 import { useState } from "react";
 import LayoutWithSidebar from "../components/LayoutwithSidebar";

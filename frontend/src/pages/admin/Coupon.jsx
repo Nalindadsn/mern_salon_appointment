@@ -10,6 +10,7 @@ import jsPDF from "jspdf";
 import "jspdf-autotable";
 import moment from "moment";
 import { Button } from "react-bootstrap";
+import { QRCodeCanvas } from "qrcode.react";
 const { Search } = Input;
 
 const Coupon = () => {
@@ -148,6 +149,17 @@ const Coupon = () => {
       render: (text, record) => (
         <span style={{ color: record.isActive == "active" ? "green" : "red" }}>
           {record.isActive}
+        </span>
+      ),
+    },
+    {
+      title: "QrCode",
+      dataIndex: "qrCode",
+      render: (text, record) => (
+        <span>
+          <QRCodeCanvas
+            value={`http://localhost:3000/service/book-appointment/${record.serviceId}?code=${record.code}`}
+          />
         </span>
       ),
     },

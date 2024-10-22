@@ -6,7 +6,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { hideLoading, showLoading } from "../redux/features/alertSlice";
 import TextArea from "antd/es/input/TextArea";
 
-import assets from "../_assets/assets.gif";
+import assets from "../assets/assets.gif";
 
 import { useState } from "react";
 import LayoutWithSidebar from "../components/LayoutwithSidebar";
@@ -22,12 +22,14 @@ const UpdateService = () => {
 
   const params = useParams();
   const handleFinish = async (values) => {
-   
-    if ((serviceInfo?.image=="" || !serviceInfo?.image) && (url=="" || !url) ) {
+    if (
+      (serviceInfo?.image == "" || !serviceInfo?.image) &&
+      (url == "" || !url)
+    ) {
       message.error("Please upload image");
       return;
     }
-    
+
     const starttime = values.starttime.format("HH:mm");
     const endtime = values.endtime.format("HH:mm");
     try {
@@ -36,10 +38,9 @@ const UpdateService = () => {
         "/api/admin/update-service",
         {
           ...values,
-          starttime:starttime,
-          endtime:endtime,
-          serviceId:params?.id
-
+          starttime: starttime,
+          endtime: endtime,
+          serviceId: params?.id,
         },
         {
           headers: {
@@ -61,9 +62,7 @@ const UpdateService = () => {
     }
   };
 
-
-
-  // upload images 
+  // upload images
   const [loading, setLoading] = useState(false);
 
   const convertBase64 = (file) => {
@@ -123,15 +122,12 @@ const UpdateService = () => {
     // uploadMultipleImages(base64s);
   };
 
-
-  
   const getServiceInfo = async (id) => {
     // alert(params?.id);
     try {
       const res = await axios.post(
         "/api/user/getServiceInfo",
-        { serviceId: params?.id ,
-        },
+        { serviceId: params?.id },
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -156,14 +152,13 @@ const UpdateService = () => {
   function UploadInput() {
     return (
       <div className="flex items-center justify-center w-full text-center">
-       
         <label
           htmlFor="dropzone-file"
           className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
         >
           <div className="flex flex-col items-center justify-center pt-5 pb-6">
             <svg
-            style={{ height: "100px", width: "100px" }}
+              style={{ height: "100px", width: "100px" }}
               aria-hidden="true"
               className="w-10 h-10 mb-3 text-gray-400"
               fill="none"
@@ -202,135 +197,143 @@ const UpdateService = () => {
       <h3 className="text-center">Update Service</h3>
       upload image
       <div className="flex justify-center flex-col m-8 ">
-      {/* -{JSON.stringify(serviceInfo)}- */}
-      <Row gutter={20}>
-        
-      <Col  xs={24} md={12} lg={12} className="border pb-5">
-          
-          <div>
-            {loading ? (
-              <div className="flex items-center justify-center">
-                <img src={assets} />{" "}
-              </div>
-            ) : (
-              <UploadInput />
-            )}
-          </div></Col>
+        {/* -{JSON.stringify(serviceInfo)}- */}
+        <Row gutter={20}>
+          <Col xs={24} md={12} lg={12} className="border pb-5">
+            <div>
+              {loading ? (
+                <div className="flex items-center justify-center">
+                  <img src={assets} />{" "}
+                </div>
+              ) : (
+                <UploadInput />
+              )}
+            </div>
+          </Col>
           <Col xs={24} md={12} lg={12}>
-          <div>
-       
-        
-        <div >
-            {url ? (
-              <div className="bg-warning text-dark p-2">
-                Access you file at{" "}
-                <div style={{overflowX:"hidden"}}>
-    
-                <a href={url} target="_blank" rel="noopener noreferrer" className="text-dark">
-                  
-                  {url}<br/>              
-                  <img src={url} alt="upload image" style={{width:"200px"}}  />{" "}
-    
-                </a></div>
-              </div>
-            ):(
-
+            <div>
               <div>
-                Access you file at{" "}
-                <div style={{overflowX:"hidden"}}>
-    
-                <a href={serviceInfo?.image} target="_blank" rel="noopener noreferrer">
-                  
-                  {serviceInfo?.image}<br/>              
-                  <img src={serviceInfo?.image} alt="upload image" style={{width:"200px"}}  />{" "}
-    
-                </a></div>
+                {url ? (
+                  <div className="bg-warning text-dark p-2">
+                    Access you file at{" "}
+                    <div style={{ overflowX: "hidden" }}>
+                      <a
+                        href={url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-dark"
+                      >
+                        {url}
+                        <br />
+                        <img
+                          src={url}
+                          alt="upload image"
+                          style={{ width: "200px" }}
+                        />{" "}
+                      </a>
+                    </div>
+                  </div>
+                ) : (
+                  <div>
+                    Access you file at{" "}
+                    <div style={{ overflowX: "hidden" }}>
+                      <a
+                        href={serviceInfo?.image}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {serviceInfo?.image}
+                        <br />
+                        <img
+                          src={serviceInfo?.image}
+                          alt="upload image"
+                          style={{ width: "200px" }}
+                        />{" "}
+                      </a>
+                    </div>
+                  </div>
+                )}
               </div>
-
-            )}
-          </div>
-      </div>
+            </div>
           </Col>
         </Row>
-      
-    </div>
-    {serviceInfo?.name}
-    {serviceInfo && <Form
+      </div>
+      {serviceInfo?.name}
+      {serviceInfo && (
+        <Form
           layout="vertical"
           onFinish={handleFinish}
           className="m-3"
           initialValues={{
-            name:serviceInfo?.name,
-            brand:serviceInfo?.brand,
-            description:serviceInfo?.description,
-            feesPerConsultation:serviceInfo?.feesPerConsultation,
+            name: serviceInfo?.name,
+            brand: serviceInfo?.brand,
+            description: serviceInfo?.description,
+            feesPerConsultation: serviceInfo?.feesPerConsultation,
 
             starttime: moment(serviceInfo.starttime, "HH:mm"),
-            endtime: moment(serviceInfo.endtime, "HH:mm")
-          }}>
-        <Row gutter={20}>
-          <Col xs={24} md={24} lg={24}>
-            <Form.Item
-              label="Name"
-              name="name"
-              required
-              rules={[{ required: true, message: "Service name is required" }]}
-            >
-              <Input type="text" placeholder="Service Name"  />
-            </Form.Item>
-          </Col>
-         
-          <Col xs={24} md={24} lg={8}>
-            <Form.Item
-              name="starttime"
-              label="Start Time"
-              rules={[{ required: true }]}
-            >
-              <TimePicker format="HH:mm" />
-            </Form.Item>
-          </Col>
-          <Col xs={24} md={24} lg={8}>
-          <Form.Item
-              label="feesPerConsultation"
-              name="feesPerConsultation"
-              required
-              rules={[{ required: true, message: " fee is required" }]}
-            >
-              <Input type="text" placeholder=" fee"  />
-            </Form.Item>
-          </Col>
-          <Col xs={24} md={24} lg={8}>
-            <Form.Item
-              name="endtime"
-              label="End Time"
-              rules={[{ required: true }]}
-            >
-              <TimePicker format="HH:mm" />
-            </Form.Item>
-          </Col>
-          <Col xs={24} md={24} lg={24}>
-            <Form.Item
-              label="Description"
-              name="description"
-            >
-              <TextArea rows={4}  placeholder="Service Description"/>
-            </Form.Item>
-          </Col>
-         
-        </Row>
-        <br />
-        <Row gutter={20}>
-          
-          <Col xs={24} md={24} lg={8}></Col>
-          <Col xs={24} md={24} lg={8}>
-            <br />
-            <button className="btn btn-primary form-btn" type="submit">
-              Submit
-            </button>
-          </Col>
-        </Row>
-      </Form>}
-      
+            endtime: moment(serviceInfo.endtime, "HH:mm"),
+          }}
+        >
+          <Row gutter={20}>
+            <Col xs={24} md={24} lg={24}>
+              <Form.Item
+                label="Name"
+                name="name"
+                required
+                rules={[
+                  { required: true, message: "Service name is required" },
+                ]}
+              >
+                <Input type="text" placeholder="Service Name" />
+              </Form.Item>
+            </Col>
+
+            <Col xs={24} md={24} lg={8}>
+              <Form.Item
+                name="starttime"
+                label="Start Time"
+                rules={[{ required: true }]}
+              >
+                <TimePicker format="HH:mm" />
+              </Form.Item>
+            </Col>
+            <Col xs={24} md={24} lg={8}>
+              <Form.Item
+                label="feesPerConsultation"
+                name="feesPerConsultation"
+                required
+                rules={[{ required: true, message: " fee is required" }]}
+              >
+                <Input type="text" placeholder=" fee" />
+              </Form.Item>
+            </Col>
+            <Col xs={24} md={24} lg={8}>
+              <Form.Item
+                name="endtime"
+                label="End Time"
+                rules={[{ required: true }]}
+              >
+                <TimePicker format="HH:mm" />
+              </Form.Item>
+            </Col>
+            <Col xs={24} md={24} lg={24}>
+              <Form.Item label="Description" name="description">
+                <TextArea rows={4} placeholder="Service Description" />
+              </Form.Item>
+            </Col>
+          </Row>
+          <br />
+          <Row gutter={20}>
+            <Col xs={24} md={24} lg={8}></Col>
+            <Col xs={24} md={24} lg={8}>
+              <br />
+              <button className="btn btn-primary form-btn" type="submit">
+                Submit
+              </button>
+            </Col>
+          </Row>
+        </Form>
+      )}
     </LayoutWithSidebar>
   );
 };

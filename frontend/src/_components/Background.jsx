@@ -1,5 +1,5 @@
-import React from 'react';
-import backgroundImage from '../_assets/bg.png';
+import React from "react";
+import backgroundImage from "../assets/bg.png";
 
 const Background = () => {
   return (
@@ -8,15 +8,15 @@ const Background = () => {
         className="bg-image"
         style={{
           backgroundImage: `url(${backgroundImage})`,
-          height: '100vh',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
+          height: "100vh",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
           opacity: 0.45,
-          position: 'absolute',
+          position: "absolute",
           top: 0,
           left: 0,
-          width: '100%',
+          width: "100%",
           zIndex: 0,
         }}
       ></div>

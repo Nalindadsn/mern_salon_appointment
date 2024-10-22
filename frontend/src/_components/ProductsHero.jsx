@@ -2,14 +2,14 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 
 // Importing images
-import sc1 from "../_assets/sc1.png";
-import sc2 from "../_assets/sc2.png";
-import sc3 from "../_assets/sc3.png";
-import d1 from "../_assets/d1.png";
-import d2 from "../_assets/d2.png";
-import d3 from "../_assets/d3.png";
-import c1 from "../_assets/c1.png";
-import a1 from "../_assets/a1.png";
+import sc1 from "../assets/sc1.png";
+import sc2 from "../assets/sc2.png";
+import sc3 from "../assets/sc3.png";
+import d1 from "../assets/d1.png";
+import d2 from "../assets/d2.png";
+import d3 from "../assets/d3.png";
+import c1 from "../assets/c1.png";
+import a1 from "../assets/a1.png";
 
 // Reusable ProductsColumn Component
 const ProductsColumn = ({ title, imgSrc, altText }) => {
@@ -30,7 +30,7 @@ const ProductsColumn = ({ title, imgSrc, altText }) => {
   );
 };
 
-const ProductsHero = ({brandList}) => {
+const ProductsHero = ({ brandList }) => {
   const navigate = useNavigate();
 
   const handleAppointmentClick = () => {
@@ -50,26 +50,26 @@ const ProductsHero = ({brandList}) => {
         </p>
       </div>
 
-
-
-
-{brandList.map((brand) => {
-  return <div>
-    
-    <h3 className="text-center mb-4 ml-5">{brand?.brand}</h3>
-      <div className="row d-flex justify-content-center">
-        {brand?.products?.map((product) => {
-          return <>
-        <ProductsColumn
-        title={product?.name}
-        imgSrc={product?.image}
-        altText="sc1"
-      /></>
-        })}
-      </div>
-  </div>
-})}
-
+      {brandList.map((brand) => {
+        return (
+          <div>
+            <h3 className="text-center mb-4 ml-5">{brand?.brand}</h3>
+            <div className="row d-flex justify-content-center">
+              {brand?.products?.map((product) => {
+                return (
+                  <>
+                    <ProductsColumn
+                      title={product?.name}
+                      imgSrc={product?.image}
+                      altText="sc1"
+                    />
+                  </>
+                );
+              })}
+            </div>
+          </div>
+        );
+      })}
 
       {/* <h3 className="text-center mb-4">Dreamron</h3>
       <div className="row d-flex justify-content-center">

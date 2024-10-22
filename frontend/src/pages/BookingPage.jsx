@@ -2,7 +2,12 @@ import { Badge, Button, DatePicker, Input, TimePicker, message } from "antd";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import {
+  useLocation,
+  useNavigate,
+  useParams,
+  useSearchParams,
+} from "react-router-dom";
 import Layout from "../components/Layout";
 import { hideLoading, showLoading } from "../redux/features/alertSlice";
 import { Col, Row, Spinner } from "react-bootstrap";
@@ -10,6 +15,7 @@ import QrReader from "../components/QrReader";
 // import "./../_styles/LayoutStyles.css";
 // import QrReader from "react-qr-scanner";
 const BookingPage = () => {
+  const location = useLocation();
   const [delay, setDelay] = useState(100);
   const [result, setResult] = useState("No result");
   const handleScan = (data) => {
@@ -22,10 +28,16 @@ const BookingPage = () => {
     height: 240,
     width: 320,
   };
-  const [coupon, setCoupon] = useState("");
+  const [coupon, setCoupon] = useState(
+    location?.search.split("code=").pop()
+      ? location?.search.split("code=").pop()
+      : ""
+  );
   const navigate = useNavigate();
   const { user } = useSelector((state) => state.user);
   const params = useParams();
+  const [searchParams] = useSearchParams();
+
   const [services, setServices] = useState([]);
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
@@ -176,6 +188,7 @@ const BookingPage = () => {
   function handleChange(e) {
     setCoupon(e.target.value);
   }
+  const [qr, setQr] = useState(false);
   return (
     <Layout>
       <div className="container pb-5">
@@ -242,6 +255,7 @@ const BookingPage = () => {
                         }
                       />
                       <hr />
+
                       <div className="d-flex justify-content-between gap-2 ">
                         <Input
                           placeholder="Coupon"
@@ -249,10 +263,15 @@ const BookingPage = () => {
                           value={coupon}
                           onChange={handleChange}
                         />
-                        <Button onClick={getCouponData}>Apply</Button>
-
-                        <QrReader />
+                        {!qr && <Button onClick={getCouponData}>Apply</Button>}
+                        <Button
+                          onClick={() => (!qr ? setQr(true) : setQr(false))}
+                        >
+                          {!qr ? "Show QR" : "Hide QR"}
+                        </Button>
                       </div>
+
+                      {qr && <QrReader />}
                       {/* <div className="d-flex justify-content-center">
                         <button
                           className="btn btn-primary mt-2 w-100"
