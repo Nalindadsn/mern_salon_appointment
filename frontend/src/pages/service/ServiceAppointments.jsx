@@ -9,6 +9,7 @@ import LayoutWithSidebar from "../../components/LayoutwithSidebar";
 
 import jsPDF from "jspdf";
 import "jspdf-autotable";
+import { render } from "react-dom";
 const { Search } = Input;
 
 const ServiceAppointments = () => {
@@ -59,6 +60,7 @@ const ServiceAppointments = () => {
     {
       title: "ID",
       dataIndex: "_id",
+      render: (text, record) => <span>{record._id.slice(-5)}</span>,
     },
 
     {

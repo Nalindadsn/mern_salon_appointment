@@ -52,6 +52,12 @@ const Appointments = () => {
     {
       title: "Appointment ID",
       dataIndex: "_id",
+      render: (text, record) => (
+        <span>
+          {record?._id.slice(-5)}
+          {/* {JSON.stringify(record)} */}
+        </span>
+      ),
     },
     {
       title: "Service Name",
